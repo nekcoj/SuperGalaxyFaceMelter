@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -46,11 +47,11 @@ public class Deck {
     }
 
     public ArrayList<Card> getCards() {
-        return null;
+        return cards;
     }
 
     public void shuffle(){
-
+        Collections.shuffle(cards);
     }
 
     /*public void addToDiscardPile(Card card){

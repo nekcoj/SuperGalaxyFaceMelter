@@ -5,8 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
@@ -28,7 +32,6 @@ class DeckTest {
     @BeforeEach
     void setUpBefore() {
         deck = new Deck(cardSettings);
-        System.out.println("deck: " + deck);
     }
 
     @Test
@@ -72,10 +75,9 @@ class DeckTest {
 
     @Test
     void shuffleDeck(){
-        List<Card> cards = deck.getCards();
+        List<Card> cards = (List<Card>) deck.getCards().clone();
         deck.shuffle();
         List<Card> cardsAfter = deck.getCards();
-        assertArrayEquals(cards.toArray(), cardsAfter.toArray(), "Arrays are different!");
-
+        assertFalse(Arrays.equals(cards.toArray(), cardsAfter.toArray()), "Arrays are equal");
     }
 }
