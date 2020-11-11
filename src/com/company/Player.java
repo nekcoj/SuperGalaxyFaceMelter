@@ -37,7 +37,7 @@ public class Player {
   }
 
   public ArrayList<Card> getCardList(){
-    return null;
+    return cardsOnHand;
   }
 
 }
