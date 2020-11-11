@@ -1,6 +1,5 @@
 package com.company;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,6 @@ class DeckTest {
 
     @Test
     void generateCards() {
-        deck.generateCards(cardSettings);
         Assertions.assertEquals(70, deck.getRemainingCardCount(), "Wrong number of cards!");
     }
 
@@ -64,5 +62,20 @@ class DeckTest {
     @Test
     void isEmpty() {
         Assertions.assertFalse(deck.isEmpty(), "Deck is empty!");
+    }
+
+    @Test
+    void getDeck(){
+        List<Card> cards = deck.getCards();
+        assertNotNull(cards, "Deck returned null");
+    }
+
+    @Test
+    void shuffleDeck(){
+        List<Card> cards = deck.getCards();
+        deck.shuffle();
+        List<Card> cardsAfter = deck.getCards();
+        assertArrayEquals(cards.toArray(), cardsAfter.toArray(), "Arrays are different!");
+
     }
 }

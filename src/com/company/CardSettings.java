@@ -2,8 +2,8 @@ package com.company;
 
 public class CardSettings {
 
-    public int power;
-    public String name;
+    private int power;
+    private String name;
     public int amount;
 
     public CardSettings(int power, String name, int amount) {
@@ -13,6 +13,6 @@ public class CardSettings {
     }
 
     public Card createCard(){
-        return null;
+       return new Card(power, name);
     }
 }

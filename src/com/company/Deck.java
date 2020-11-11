@@ -19,25 +19,42 @@ public class Deck {
     public void generateCards(List <CardSettings> cardSettings) {
         cardSettings.forEach( setting -> {
             for(int i = 0; i < setting.amount; i++){
-
+                cards.add(setting.createCard());
             }
         });
     }
 
     public Card getTopCard() {
-        return null;
-    }
-
-    public int getRemainingCardCount() {
-        return 0;
+        return cards.isEmpty() ? null : cards.remove(0);
     }
 
     public List<Card> getHand(int cardCount) {
+        List<Card> hand = new ArrayList<>();
+        for(int i = 0; i < Math.min(getRemainingCardCount(), cardCount); i++){
+            hand.add(getTopCard());
+        }
+        return hand;
+    }
+
+    public int getRemainingCardCount() {
+        return cards.size();
+    }
+
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
+    public ArrayList<Card> getCards() {
         return null;
     }
 
-    public boolean isEmpty() {
-        return true;
+    public void shuffle(){
+
     }
+
+    /*public void addToDiscardPile(Card card){
+
+    }*/
 
 }
