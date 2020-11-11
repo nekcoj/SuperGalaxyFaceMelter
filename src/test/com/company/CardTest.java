@@ -59,4 +59,9 @@ class CardTest {
         card.setCurrentPower(card.getPower());
         Assertions.assertEquals(10, card.getCurrentPower(), "Wrong power!");
     }
+
+    @Test
+    void isDead() {
+        assertFalse(card.isDead(), "isDead is wrong state!");
+    }
 }

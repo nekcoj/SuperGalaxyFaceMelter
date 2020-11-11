@@ -11,11 +11,11 @@ public class Card {
     public Card(int power, String name) {
         this.power = power;
         this.name = name;
-        //this.currentPower = power;
+        this.currentPower = power;
     }
 
     public void decreasePower(int decreaseBy) {
-
+        setCurrentPower(currentPower - decreaseBy);
     }
     public int getPower() {
         return power;
@@ -38,6 +38,13 @@ public class Card {
     }
 
     public void setCurrentPower(int currentPower) {
-        this.currentPower = currentPower;
+        if (currentPower < 0) {
+            this.currentPower = 0;
+        } else {
+            this.currentPower = currentPower;
+        }
+    }
+    public boolean isDead() {
+        return true;
     }
 }
