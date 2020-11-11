@@ -45,6 +45,6 @@ public class Card {
         }
     }
     public boolean isDead() {
-        return true;
+        return currentPower == 0;
     }
 }
