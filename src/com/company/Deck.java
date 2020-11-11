@@ -17,7 +17,11 @@ public class Deck {
     }
 
     public void generateCards(List <CardSettings> cardSettings) {
+        cardSettings.forEach( setting -> {
+            for(int i = 0; i < setting.amount; i++){
 
+            }
+        });
     }
 
     public Card getTopCard() {

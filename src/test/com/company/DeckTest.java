@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeckTest {
 
     private Deck deck;
-    List<CardSettings> cardSettings = new ArrayList() {{
-        add(new CardSettings(1, "Mutaded worm", 8));
+    List<CardSettings> cardSettings = new ArrayList<>() {{
+        add(new CardSettings(1, "Mutated worm", 8));
         add(new CardSettings(2, "Irate rat", 8));
         add(new CardSettings(3, "Orange menace", 8));
         add(new CardSettings(4, "Sleepy Joe", 10));
@@ -28,7 +28,7 @@ class DeckTest {
 
     @BeforeEach
     void setUpBefore() {
-        deck = new Deck();
+        deck = new Deck(cardSettings);
         System.out.println("deck: " + deck);
     }
 
