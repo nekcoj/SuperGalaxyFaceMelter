@@ -12,7 +12,8 @@ public class Player {
 
 
   public Player(ArrayList<Card> startHand, String name){
-    
+    this.cardsOnHand = startHand;
+    this.name = name;
   }
 
   public String getName() {
@@ -20,15 +21,19 @@ public class Player {
   }
 
   public int getScore(){
-    return 0;
+    int score = 0;
+    for(Card card : victoryPile){
+      score += card.getCurrentPower();
+    }
+    return score;
   }
 
   public Card getCard(int selectedCard){
-    return null;
+    return selectedCard != 0 && selectedCard <= cardsOnHand.size()+1 ? cardsOnHand.get(selectedCard-1) : null;
   }
 
   public void addToVictoryPile(Card wonCard){
-
+    victoryPile.add(wonCard);
   }
 
   public ArrayList<Card> getCardList(){

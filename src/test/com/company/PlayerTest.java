@@ -32,6 +32,7 @@ class PlayerTest {
 
   @Test
   void getScore(){
+    player.addToVictoryPile(card);
     assertEquals(10, player.getScore(), "Incorrect score!");
   }
 
@@ -42,8 +43,12 @@ class PlayerTest {
 
   @Test
   void addToVictoryPile(){
-    //int scoreBefore = player.getScore();
     player.addToVictoryPile(card);
     assertEquals(10, player.getScore(), "Card not added to victory pile!");
+  }
+
+  @Test
+  void getCardList(){
+    assertEquals(1, player.getCardList().size(), "Got wrong value from getCardList");
   }
 }
