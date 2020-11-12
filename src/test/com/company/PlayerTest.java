@@ -10,6 +10,7 @@ class PlayerTest {
 
   Card card = new Card(10, "Super Galaxy Face Melter");
   Player player;
+  ArrayList<Card> cards;
 
   @BeforeAll
   static void setup(){
@@ -18,9 +19,9 @@ class PlayerTest {
   @BeforeEach
   void setupBefore(){
     System.out.println("-------- @BeforeEach --------");
-    ArrayList<Card> cards = new ArrayList<>();
+    cards = new ArrayList<>();
     cards.add(card);
-    player = new Player(cards, "Tomten");
+    player = new Player("Tomten");
   }
 
   @Test
@@ -47,20 +48,28 @@ class PlayerTest {
   @Test
   void getCard(){
     System.out.println("-------- getCard test --------");
-    assertNotNull(player.getCard(1), "getCard returned null!");
+    player.addCardsToHand(cards);
+    assertNotNull(player.getCard(1), "Got null from getCard");
   }
 
   @Test
   void addToVictoryPile(){
     System.out.println("-------- addToVictoryPile test --------");
-    player.addToVictoryPile(card);
-    assertEquals(10, player.getScore(), "Card not added to victory pile!");
+    assertTrue(player.addToVictoryPile(card), "Card not added to victory pile!");
+    //assertEquals(10, player.getScore(), "Card not added to victory pile!");
   }
 
   @Test
-  void getCardList(){
-    System.out.println("-------- getCardList test --------");
-    assertEquals(1, player.getCardList().size(), "Got wrong value from getCardList");
+  void getCardOnHandAsList(){
+    System.out.println("-------- getCardOnHandAsList test --------");
+    player.addCardsToHand(cards);
+    assertEquals(1, player.getCardOnHandAsList().size(), "Got wrong value from getCardOnHandAsList");
+  }
+
+  @Test
+  void addCardsToHand() {
+    System.out.println("-------- addCardsToHand test --------");
+    assertTrue(player.addCardsToHand(cards), "Failed to add cards");
   }
 
   @AfterAll
