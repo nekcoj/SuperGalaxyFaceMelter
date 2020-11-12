@@ -11,8 +11,7 @@ public class Player {
   public Player(){}
 
 
-  public Player(ArrayList<Card> startHand, String name){
-    this.cardsOnHand = startHand;
+  public Player(String name){
     this.name = name;
   }
 
@@ -29,15 +28,19 @@ public class Player {
   }
 
   public Card getCard(int selectedCard){
-    return selectedCard != 0 && selectedCard <= cardsOnHand.size()+1 ? cardsOnHand.get(selectedCard-1) : null;
+    return selectedCard != 0 && selectedCard <= cardsOnHand.size() ? cardsOnHand.remove(selectedCard-1) : null;
   }
 
-  public void addToVictoryPile(Card wonCard){
-    victoryPile.add(wonCard);
+  public boolean addToVictoryPile(Card wonCard){
+    return victoryPile.add(wonCard);
   }
 
-  public ArrayList<Card> getCardList(){
+  public ArrayList<Card> getCardOnHandAsList(){
     return cardsOnHand;
+  }
+
+  public boolean addCardsToHand(ArrayList<Card> startHand) {
+    return this.cardsOnHand.addAll(startHand);
   }
 
 }
