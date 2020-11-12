@@ -5,21 +5,29 @@ import java.util.ArrayList;
 public class GameState {
     ArrayList<Card> playedCards = new ArrayList<>();
     int pointsToWin;
-    enum player {HOST, CLIENT};
-    player roundStarter = player.HOST;
+    ArrayList<Player> players = new ArrayList<>();
+    byte startPlayer = 0;
+
 
     public GameState() {
     }
 
-    public GameState(int pointsToWin) {
+    public GameState(int pointsToWin, ArrayList<Player> players) {
     }
 
-    public void clearPlayedCards() {
+    public boolean clearPlayedCards() {
+        return false;
     }
 
-    public void addPlayedCard() {
+    public boolean addPlayedCard(Card playedCard) {
+        return false;
     }
 
-    public void changeRoundStarter() {
+    public byte changeStartPlayer() {
+        return 0;
+    }
+
+    public Player getPlayer(int index){
+        return null;
     }
 }
