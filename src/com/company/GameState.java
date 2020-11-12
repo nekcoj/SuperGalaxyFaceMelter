@@ -13,21 +13,28 @@ public class GameState {
     }
 
     public GameState(int pointsToWin, ArrayList<Player> players) {
+        this.pointsToWin = pointsToWin;
+        this.players = players;
     }
 
     public boolean clearPlayedCards() {
-        return false;
+        return playedCards.removeAll(playedCards.subList(0, 1));
     }
 
     public boolean addPlayedCard(Card playedCard) {
-        return false;
+        return playedCards.add(playedCard);
     }
 
     public byte changeStartPlayer() {
-        return 0;
+        if(this.startPlayer == 1){
+            this.startPlayer = 0;
+        } else {
+            this.startPlayer = 1;
+        }
+        return this.startPlayer;
     }
 
     public Player getPlayer(int index){
-        return null;
+        return players.get(index);
     }
 }
