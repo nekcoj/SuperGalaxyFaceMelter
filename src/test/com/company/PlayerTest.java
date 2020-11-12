@@ -53,8 +53,8 @@ class PlayerTest {
   @Test
   void addToVictoryPile(){
     System.out.println("-------- addToVictoryPile test --------");
-    player.addToVictoryPile(card);
-    assertEquals(10, player.getScore(), "Card not added to victory pile!");
+    assertTrue(player.addToVictoryPile(card), "Card not added to victory pile!");
+    //assertEquals(10, player.getScore(), "Card not added to victory pile!");
   }
 
   @Test

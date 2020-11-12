@@ -32,8 +32,8 @@ public class Player {
     return selectedCard != 0 && selectedCard <= cardsOnHand.size()+1 ? cardsOnHand.get(selectedCard-1) : null;
   }
 
-  public void addToVictoryPile(Card wonCard){
-    victoryPile.add(wonCard);
+  public boolean addToVictoryPile(Card wonCard){
+    return victoryPile.add(wonCard);
   }
 
   public ArrayList<Card> getCardList(){
