@@ -4,15 +4,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class GameTest  {
 
     private Game game;
+    GameState gs = new GameState();
 
     @BeforeEach
     void setUp() {
-        game = new Game(new GameLobby(false), new ScreenRenderer(), "Testis");
+        game = new Game(new GameLobby(false), new ScreenRenderer(), gs);
     }
 
     @Test

@@ -23,13 +23,11 @@ public class GameHost extends Game {
     private Deck deck = new Deck(cardSettings);
     private int handSize;
     private int pointsToWin;
-    private GameState gameState;
 
-    public GameHost(GameLobby gameLobby, Renderer renderer, String playerName, int handSize, int pointsToWin) {
-        super(gameLobby, renderer, playerName);
+    public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize, int pointsToWin) {
+        super(gameLobby, renderer, gameState);
         this.handSize = handSize;
         this.pointsToWin = pointsToWin;
-        gameState = new GameState();
     }
 
     public void runGame() {
@@ -46,6 +44,7 @@ public class GameHost extends Game {
     public Card getCardFromStartPlayer() {
         // Är spelare1 först? Begär från den egna spelare direkt
         // Annars, begär kort från klienten via gameLobby
+        //Player player = 
         return null;
     }
 
@@ -55,15 +54,26 @@ public class GameHost extends Game {
         return null;
     }
 
-    public int roundWinner() {
+    public int getRoundWinner() {
         // Jämför korten i gameState och avgör vem, om någon, som vann
         // Uppdatera gameState och vinsthögen för vinnande spelare
-        return 0;
+        // -1 = ingen vann annars 0 eller 1 för respektive spelare
+        return -1;
     }
 
     public boolean isGameOver() {
         // Kolla om någon spelare uppnått poänggränsen
         // eller om kortleken tagit slut
-        return true;
+        return false;
+    }
+
+    public Card getCardFromPlayer1() {
+        //be den lokala spelare om ett kort
+        return null;
+    }
+
+    public Card getCardFromPlayer2() {
+        //be klient-spelaren om ett kort via gameLobbyn
+        return null;
     }
 }

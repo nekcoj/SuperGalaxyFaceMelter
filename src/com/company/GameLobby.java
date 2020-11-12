@@ -1,12 +1,12 @@
 package com.company;
 
 import com.company.interfaces.ComHandler;
-import com.company.interfaces.Renderer;
 import com.company.utils.GameLobbyMenu;
 
 public class GameLobby {
 
     private GameLobbyMenu menu;
+    private Dispatcher dispatcher;
 
     public GameLobby(Boolean runGame) {
         menu = new GameLobbyMenu(this);
@@ -23,11 +23,14 @@ public class GameLobby {
         // starta en GameHost med spelare 1
         // starta en GameClient med spelare 2
         // kör GameHost
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+        GameState gs = new GameState();
         ComHandler comHandler = new LocalGameHandler();
         ScreenRenderer renderer = new ScreenRenderer();
-        Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
-        GameHost host = new GameHost(this, renderer, "Player1", 5, 50);
-        GameClient client = new GameClient(this, renderer, "Player2");
+        dispatcher = new Dispatcher(comHandler, renderer);
+        GameHost host = new GameHost(this, renderer, gs, 5, 50);
+        GameClient client = new GameClient(this, renderer, gs);
         System.out.println("i startLocalGame");
     }
 

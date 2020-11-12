@@ -8,11 +8,11 @@ public class Game {
 
     protected GameLobby gameLobby;
     protected Renderer gameBoard;
-    protected Player player;
+    protected GameState gameState;
 
-    public Game(GameLobby gameLobby, Renderer gameBoard, String playerName) {
+    public Game(GameLobby gameLobby, Renderer gameBoard, GameState gameState) {
         this.gameLobby = gameLobby;
         this.gameBoard = gameBoard;
-        this.player = new Player();
+        this.gameState = gameState;
     }
 }

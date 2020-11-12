@@ -4,7 +4,7 @@ import com.company.interfaces.Renderer;
 
 public class GameClient extends Game {
 
-    public GameClient(GameLobby gameLobby, Renderer renderer, String playerName) {
-        super(gameLobby, renderer, playerName);
+    public GameClient(GameLobby gameLobby, Renderer renderer, GameState gameState) {
+        super(gameLobby, renderer, gameState);
     }
 }
