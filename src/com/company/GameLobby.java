@@ -18,6 +18,8 @@ public class GameLobby {
     }
 
     public void startLocalGame(Object o) {
+        System.out.println("i startLocalGame");
+
         // be om namnet på spelare 1
         // be om namnet på spelare 2
         // starta en GameHost med spelare 1
@@ -31,7 +33,8 @@ public class GameLobby {
         dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, gs, 5, 50);
         GameClient client = new GameClient(this, renderer, gs);
-        System.out.println("i startLocalGame");
+
+        host.runGame();
     }
 
     public void startNetworkGame(Object o) {

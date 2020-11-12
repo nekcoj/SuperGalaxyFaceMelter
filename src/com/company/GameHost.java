@@ -30,21 +30,28 @@ public class GameHost extends Game {
         this.pointsToWin = pointsToWin;
     }
 
+/**
+*   Sätt startspelare till spelare ett (Hostens spelare)
+*   Dela ut kort; skicka till klienten och den egna spelaren
+*   Do... while game not over??
+*      Be startspelaren om ett kort
+*      Be motspelaren om ett kort
+*      Avgör vinnaren av rundan
+*      Kolla om spelet är slut
+*      Byt startspelare -> gameState.changeStartPlayer()
+*/
     public void runGame() {
-        // Sätt startspelare till spelare ett (Hostens spelare)
-        // Dela ut kort; skicka till klienten och den egna spelaren
-        // Do... while game not over??
-            // Be startspelaren om ett kort
-            // Be motspelaren om ett kort
-            // Avgör vinnaren av rundan
-            // Kolla om spelet är slut
-            // Byt startspelare -> gameState.changeStartPlayer()
     }
 
+/**
+ *
+ *         // Är spelare1 först? Begär från den egna spelare direkt
+ *         // Annars, begär kort från klienten via gameLobby
+ *         //Player player =
+ *
+ */
     public Card getCardFromStartPlayer() {
-        // Är spelare1 först? Begär från den egna spelare direkt
-        // Annars, begär kort från klienten via gameLobby
-        //Player player = 
+
         return null;
     }
 
