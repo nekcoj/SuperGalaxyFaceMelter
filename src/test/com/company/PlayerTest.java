@@ -11,7 +11,7 @@ class PlayerTest {
 
   Card card = new Card(10, "Super Galaxy Face Melter");
   Player player;
-  ArrayList<Card> cards = new ArrayList<>();
+  ArrayList<Card> cards;
 
   @BeforeAll
   static void setup(){
@@ -20,6 +20,7 @@ class PlayerTest {
   @BeforeEach
   void setupBefore(){
     System.out.println("-------- @BeforeEach --------");
+    cards = new ArrayList<>();
     cards.add(card);
     player = new Player("Tomten");
   }
@@ -46,16 +47,12 @@ class PlayerTest {
   }
 
   @Test
-  void addCardsToHand() {
-    System.out.println("-------- addCardsToHand test --------");
-    assertTrue(player.addCardsToHand(cards), "Failed to add cards");
-  }
-
-  @Test
   void getCard(){
     System.out.println("-------- getCard test --------");
     player.addCardsToHand(cards);
-    assertNotNull(player.getCard(1), "getCard returned null!");
+    assertNotNull(player.getCard(1), "Got null from getCard");
+    player.addCardsToHand(cards);
+    assertEquals(1, player.getCard(1).size(), "Got wrong value from getCard");
   }
 
   @Test
@@ -68,7 +65,14 @@ class PlayerTest {
   @Test
   void getCardList(){
     System.out.println("-------- getCardList test --------");
+    player.addCardsToHand(cards);
     assertEquals(1, player.getCardList().size(), "Got wrong value from getCardList");
+  }
+
+  @Test
+  void addCardsToHand() {
+    System.out.println("-------- addCardsToHand test --------");
+    assertTrue(player.addCardsToHand(cards), "Failed to add cards");
   }
 
   @AfterAll

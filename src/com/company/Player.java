@@ -27,8 +27,8 @@ public class Player {
     return score;
   }
 
-  public Card getCard(int selectedCard){
-    return selectedCard != 0 && selectedCard <= cardsOnHand.size()+1 ? cardsOnHand.get(selectedCard-1) : null;
+  public ArrayList<Card> getCard(int selectedCard){
+    return null;
   }
 
   public boolean addToVictoryPile(Card wonCard){
@@ -40,7 +40,7 @@ public class Player {
   }
 
   public boolean addCardsToHand(ArrayList<Card> startHand) {
-    return false;
+    return this.cardsOnHand.addAll(startHand);
   }
 
 }
