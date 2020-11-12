@@ -1,7 +1,6 @@
 package com.company;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.ArrayList;
 
@@ -51,8 +50,6 @@ class PlayerTest {
     System.out.println("-------- getCard test --------");
     player.addCardsToHand(cards);
     assertNotNull(player.getCard(1), "Got null from getCard");
-    player.addCardsToHand(cards);
-    assertEquals(1, player.getCard(1).size(), "Got wrong value from getCard");
   }
 
   @Test
@@ -63,10 +60,10 @@ class PlayerTest {
   }
 
   @Test
-  void getCardList(){
-    System.out.println("-------- getCardList test --------");
+  void getCardOnHandAsList(){
+    System.out.println("-------- getCardOnHandAsList test --------");
     player.addCardsToHand(cards);
-    assertEquals(1, player.getCardList().size(), "Got wrong value from getCardList");
+    assertEquals(1, player.getCardOnHandAsList().size(), "Got wrong value from getCardOnHandAsList");
   }
 
   @Test
