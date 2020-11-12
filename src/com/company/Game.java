@@ -7,12 +7,12 @@ public class Game {
     public static final int PLAYER_COUNT = 2;
 
     protected GameLobby gameLobby;
-    protected Renderer renderer;
+    protected Renderer gameBoard;
     protected Player player;
 
-    public Game(GameLobby gameLobby, Renderer renderer, String playerName) {
+    public Game(GameLobby gameLobby, Renderer gameBoard, String playerName) {
         this.gameLobby = gameLobby;
-        this.renderer = renderer;
+        this.gameBoard = gameBoard;
         this.player = new Player();
     }
 }

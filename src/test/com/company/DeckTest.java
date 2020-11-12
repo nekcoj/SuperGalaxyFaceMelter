@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {

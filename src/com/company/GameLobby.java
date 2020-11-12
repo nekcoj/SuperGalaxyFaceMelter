@@ -8,9 +8,9 @@ public class GameLobby {
 
     private GameLobbyMenu menu;
 
-    public GameLobby() {
+    public GameLobby(Boolean runGame) {
         menu = new GameLobbyMenu(this);
-        runMenu();
+        if (runGame) runMenu();
     }
 
     public void runMenu() {
@@ -32,10 +32,12 @@ public class GameLobby {
     }
 
     public void startNetworkGame(Object o) {
+        // Create a GameHost
         System.out.println("i startNetworkGame");
     }
 
     public void connectToNetworkGame(Object o) {
+        // Create a GameClient
         System.out.println("i connectToNetworkGame");
     }
 }

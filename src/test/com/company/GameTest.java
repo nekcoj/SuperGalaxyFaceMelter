@@ -12,7 +12,7 @@ class GameTest  {
 
     @BeforeEach
     void setUp() {
-        //game = new Game(new Dispatcher(), new ScreenRenderer(), "Testis");
+        game = new Game(new GameLobby(false), new ScreenRenderer(), "Testis");
     }
 
     @Test

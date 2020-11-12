@@ -12,7 +12,7 @@ class GameLobbyTest {
 
     @BeforeEach
     void setup() {
-        gameLobby = new GameLobby();
+        gameLobby = new GameLobby(false);
     }
 
     @Test
