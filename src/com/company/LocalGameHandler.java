@@ -4,6 +4,8 @@ import com.company.interfaces.ComHandler;
 
 public class LocalGameHandler implements ComHandler {
 
+    public LocalGameHandler(){}
+
 
     @Override
     public Card getCardFromClient() {
@@ -17,6 +19,11 @@ public class LocalGameHandler implements ComHandler {
 
     @Override
     public void sendCardToClient(Card card) {
+
+    }
+
+    @Override
+    public void renderClient(GameState gameState) {
 
     }
 }

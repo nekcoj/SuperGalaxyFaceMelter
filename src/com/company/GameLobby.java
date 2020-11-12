@@ -24,8 +24,8 @@ public class GameLobby {
         // starta en GameClient med spelare 2
         // kör GameHost
         ComHandler comHandler = new LocalGameHandler();
-        Dispatcher dispatcher = new Dispatcher(comHandler);
         ScreenRenderer renderer = new ScreenRenderer();
+        Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, "Player1", 5, 50);
         GameClient client = new GameClient(this, renderer, "Player2");
         System.out.println("i startLocalGame");
