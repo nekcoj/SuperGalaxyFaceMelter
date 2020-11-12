@@ -11,8 +11,7 @@ public class Player {
   public Player(){}
 
 
-  public Player(ArrayList<Card> startHand, String name){
-    this.cardsOnHand = startHand;
+  public Player(String name){
     this.name = name;
   }
 
@@ -38,6 +37,10 @@ public class Player {
 
   public ArrayList<Card> getCardList(){
     return cardsOnHand;
+  }
+
+  public boolean addCardsToHand(ArrayList<Card> startHand) {
+    return false;
   }
 
 }

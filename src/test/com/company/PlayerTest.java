@@ -1,6 +1,7 @@
 package com.company;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ class PlayerTest {
 
   Card card = new Card(10, "Super Galaxy Face Melter");
   Player player;
+  ArrayList<Card> cards = new ArrayList<>();
 
   @BeforeAll
   static void setup(){
@@ -18,9 +20,8 @@ class PlayerTest {
   @BeforeEach
   void setupBefore(){
     System.out.println("-------- @BeforeEach --------");
-    ArrayList<Card> cards = new ArrayList<>();
     cards.add(card);
-    player = new Player(cards, "Tomten");
+    player = new Player("Tomten");
   }
 
   @Test
@@ -45,8 +46,15 @@ class PlayerTest {
   }
 
   @Test
+  void addCardsToHand() {
+    System.out.println("-------- addCardsToHand test --------");
+    assertTrue(player.addCardsToHand(cards), "Failed to add cards");
+  }
+
+  @Test
   void getCard(){
     System.out.println("-------- getCard test --------");
+    player.addCardsToHand(cards);
     assertNotNull(player.getCard(1), "getCard returned null!");
   }
 
