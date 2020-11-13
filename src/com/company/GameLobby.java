@@ -35,8 +35,11 @@ public class GameLobby {
         dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, gs, 5, 50);
         GameClient client = new GameClient(this, renderer, gs);
-
         host.runGame();
+    }
+
+    public void setDispatcher(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
     public void startNetworkGame(Object o) {
@@ -49,16 +52,16 @@ public class GameLobby {
         System.out.println("i connectToNetworkGame");
     }
 
-    public Card requestCardFromClient(){
-        return null;
+    public Card requestCardFromClient(GameState gameState){
+       return dispatcher.getCardFromClient(gameState);
     }
 
     public void addToClientVictoryPile(){
 
     }
 
-    public boolean sendCardToClient(ArrayList<Card> cardsToClient){
-        return false;
+    public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState){
+      return dispatcher.sendCardToClient(cardsToClient, gameState);
     }
 
     public void renderClient(GameState gs, byte playerToDraw){

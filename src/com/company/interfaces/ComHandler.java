@@ -4,11 +4,13 @@ import com.company.Card;
 import com.company.GameState;
 import com.company.Player;
 
+import java.util.ArrayList;
+
 public interface ComHandler {
 
-   public Card getCardFromClient();
+   public Card getCardFromClient(GameState gameState);
    public void addToVictoryPileClient(Card card);
-   public void sendCardToClient(Card card);
+   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState);
    public void renderClient(GameState gameState);
 
 }
