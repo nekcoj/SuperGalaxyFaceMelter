@@ -13,7 +13,6 @@ class CardTest {
     @BeforeEach
     void setUpBefore() {
         card = new Card(10, "SuperGalaxyFaceMelter");
-        System.out.println("card: " + card);
     }
 
     @Test

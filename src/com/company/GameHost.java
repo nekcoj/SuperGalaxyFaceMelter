@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.interfaces.Renderer;
 import com.company.utils.Menu;
+import com.company.utils.MenuChoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +54,15 @@ public class GameHost extends Game {
    *
    */
   public Card getCardFromStartPlayer() {
-    return null;
+    return gameState.getStartPlayer() == HOST ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
+  /**
+   *  Är spelare1 andraspelaren? Begär från den egna spelare direkt
+   *  Annars, begär kort från klienten via gameLobby
+   */
   public Card getCardFromSecondPlayer() {
-    // Är spelare1 andraspelaren? Begär från den egna spelare direkt
-    // Annars, begär kort från klienten via gameLobby
-    return null;
+    return gameState.getStartPlayer() == CLIENT ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
   public int getRoundWinner() {
@@ -77,7 +80,16 @@ public class GameHost extends Game {
 
   public Card getCardFromPlayer1() {
     //be den lokala spelare om ett kort
-    return null;
+
+    /* Menu cardMenu = getCardMenu();
+    if(handleMenu) {
+      cardMenu.handleMenu();
+    } else {
+      return handleCardMenu('1');
+    }*/
+
+
+    return gameState.getPlayer(HOST).getCard(1);
   }
 
   public Card getCardFromPlayer2() {
@@ -104,6 +116,18 @@ public class GameHost extends Game {
   }
 
   public Menu getCardMenu(){
-    return null;
+    ArrayList<MenuChoice> cardMenuList = new ArrayList<>();
+    GameHost host = this;
+    Menu cardMenu = new Menu() {
+      @Override
+      public ArrayList<MenuChoice> setInitialMenu() {
+        final char[] key = {'1'};
+        gameState.getPlayer(HOST).getCardOnHandAsList().forEach((card )->
+            cardMenuList.add(new MenuChoice(card.toString(), key[0]++, host::handleCardMenu, key[0]))
+        );
+        return cardMenuList;
+      }
+    };
+    return cardMenu;
   }
 }

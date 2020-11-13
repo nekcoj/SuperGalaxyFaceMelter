@@ -41,8 +41,10 @@ class GameHostTest {
   @Test
   void getCardFromStartPlayerTest() {
     System.out.println("-------- getCardFromStartPlayer Test --------");
+    gameHost.dealCardsToHost();
     Card card = gameHost.getCardFromStartPlayer();
     assertNotNull(card, "card is null!");
+    System.out.println(card);
   }
 
   @Test
