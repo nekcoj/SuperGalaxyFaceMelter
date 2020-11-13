@@ -2,26 +2,28 @@ package com.company.utils;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 abstract public class Menu {
-    protected ArrayList<MenuChoice> currentMenu;
+    protected ArrayList<MenuChoiceBaseClass> currentMenu;
 
-    abstract public ArrayList<MenuChoice> setInitialMenu();
+    abstract public ArrayList<MenuChoiceBaseClass> setInitialMenu();
 
     protected void setMenu(Object o) {
-        currentMenu = (ArrayList<MenuChoice>) o;
+        currentMenu = (ArrayList<MenuChoiceBaseClass>) o;
     } // setMenu
 
     private void printMenu() {
         System.out.println("");
-        for (MenuChoice m : currentMenu) {
+        for (MenuChoiceBaseClass m : currentMenu) {
             System.out.printf("%s%n", m.getFullTitle());
         } // for m...
         System.out.print("Ange ditt val: ");
     } // printMenu
 
     // Hämta användarens val
-    private MenuChoice getMenuChoice() {
+    private MenuChoiceBaseClass getMenuChoice() {
         String sChoice;
         Scanner scan = new Scanner(System.in);
 
@@ -31,17 +33,17 @@ abstract public class Menu {
         while (sChoice.length() == 0);
 
         // Loopa igenom och returnera rätt menyval
-        for (MenuChoice m : currentMenu) {
+        for (MenuChoiceBaseClass m : currentMenu) {
             if (m.getKey() == sChoice.charAt(0))
                 return m;
         } // for...
         return null;
     } // getMenuChoice
 
-    public void handleMenu() {
+    public void handleConsumerMenu() {
         currentMenu = setInitialMenu();
 
-        MenuChoice m;
+        MenuChoiceBaseClass m;
         boolean bStop = false;
         while (!bStop) {
             printMenu();
@@ -53,9 +55,35 @@ abstract public class Menu {
                 System.out.printf("Du valde: %s%n", m.getTitle());
                 bStop = m.getFunctionToCall() == null;
                 if (!bStop) {
-                    m.getFunctionToCall().accept(m.getParameter());
+                    Consumer consumer = (Consumer)m.getFunctionToCall();
+                    consumer.accept(m.getParameter());
                 } // if bStop...
             } // else
         } // while
-    } // handleMenu
+    } // handleConsumerMenu
+
+    public Object handleFunctionMenu(boolean skipRun) {
+        currentMenu = setInitialMenu();
+
+        MenuChoiceBaseClass m;
+        boolean bStop = false;
+        while (!bStop) {
+            printMenu();
+
+            m = skipRun ? currentMenu.get(0) : getMenuChoice();
+
+            if (m == null)
+                System.out.println("Felaktigt val, försök igen!");
+            else {
+                System.out.printf("Du valde: %s%n", m.getTitle());
+                bStop = m.getFunctionToCall() == null;
+                if (!bStop) {
+                    Function function = (Function)m.getFunctionToCall();
+                    return function.apply(m.getParameter());
+                } // if bStop...
+            } // else
+        } // while
+
+        return null;
+    } // handleFunctionMenu
 } // class Menu

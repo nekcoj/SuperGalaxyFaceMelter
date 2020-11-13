@@ -6,17 +6,17 @@ import java.util.ArrayList;
 
 public class GameLobbyMenu extends Menu {
 
-    private ArrayList<MenuChoice> mainMenu = new ArrayList<MenuChoice>();
-    private ArrayList<MenuChoice> networkGameMenu = new ArrayList<MenuChoice>();
+    private ArrayList<MenuChoiceBaseClass> mainMenu = new ArrayList<MenuChoiceBaseClass>();
+    private ArrayList<MenuChoiceBaseClass> networkGameMenu = new ArrayList<MenuChoiceBaseClass>();
 
     public GameLobbyMenu(GameLobby p){
-        mainMenu.add(new MenuChoice("Starta nytt lokalt spel", '1', p::startLocalGame));
-        mainMenu.add(new MenuChoice("Starta nytt nätverksspel", '2', this::showNetworkGameMenu));
-        mainMenu.add(new MenuChoice("Avsluta", '0', null));
+        mainMenu.add(new MenuChoiceConsumer("Starta nytt lokalt spel", '1', p::startLocalGame));
+        mainMenu.add(new MenuChoiceConsumer("Starta nytt nätverksspel", '2', this::showNetworkGameMenu));
+        mainMenu.add(new MenuChoiceConsumer("Avsluta", '0', null));
 
-        networkGameMenu.add(new MenuChoice("Starta nytt", '1', p::startNetworkGame));
-        networkGameMenu.add(new MenuChoice("Anslut till spel", '2', p::connectToNetworkGame));
-        networkGameMenu.add(new MenuChoice("Tillbaka", '0', this::backToMain));
+        networkGameMenu.add(new MenuChoiceConsumer("Starta nytt", '1', p::startNetworkGame));
+        networkGameMenu.add(new MenuChoiceConsumer("Anslut till spel", '2', p::connectToNetworkGame));
+        networkGameMenu.add(new MenuChoiceConsumer("Tillbaka", '0', this::backToMain));
     } // MainMenu
 
     private void showNetworkGameMenu(Object o) {
@@ -24,7 +24,7 @@ public class GameLobbyMenu extends Menu {
     } // showNetworkGameMenu
 
     @Override
-    public ArrayList<MenuChoice> setInitialMenu() {
+    public ArrayList<MenuChoiceBaseClass> setInitialMenu() {
         return mainMenu;
     } // setInitialMenu
 

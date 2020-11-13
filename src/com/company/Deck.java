@@ -15,6 +15,7 @@ public class Deck {
 
     public Deck(List <CardSettings> cardSettings) {
         generateCards(cardSettings);
+        shuffle();
     }
 
     public void generateCards(List <CardSettings> cardSettings) {
