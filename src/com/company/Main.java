@@ -3,6 +3,7 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        new GameLobby(true);
+        GameLobby gl = new GameLobby(true);
+        gl.startLocalGame('1');
     }
 }

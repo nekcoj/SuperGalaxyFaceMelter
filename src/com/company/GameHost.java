@@ -27,6 +27,7 @@ public class GameHost extends Game {
   private Deck deck = new Deck(cardSettings);
   private int handSize;
   private int pointsToWin;
+  GUIrenderer gr;
 
   public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize, int pointsToWin) {
     super(gameLobby, renderer, gameState);
@@ -45,6 +46,10 @@ public class GameHost extends Game {
    *      Byt startspelare -> gameState.changeStartPlayer()
    */
   public void runGame() {
+    System.out.println("In host.runGame");
+    gr = new GUIrenderer();
+    dealCardsToHost();
+    gr.render(gameState);
   }
 
   /**

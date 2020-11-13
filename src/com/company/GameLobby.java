@@ -27,9 +27,12 @@ public class GameLobby {
         // starta en GameHost med spelare 1
         // starta en GameClient med spelare 2
         // kör GameHost
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
-        GameState gs = new GameState();
+        Player p1 = new Player("Player 1");
+        Player p2 = new Player("Player 2");
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(p1);
+        players.add(p2);
+        GameState gs = new GameState(10, players);
         ComHandler comHandler = new LocalGameHandler();
         ScreenRenderer renderer = new ScreenRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
