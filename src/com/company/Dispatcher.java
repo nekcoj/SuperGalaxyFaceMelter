@@ -3,6 +3,8 @@ package com.company;
 import com.company.interfaces.ComHandler;
 import com.company.interfaces.Renderer;
 
+import java.util.ArrayList;
+
 public class Dispatcher implements ComHandler {
 
     ComHandler comHandler;
@@ -14,8 +16,8 @@ public class Dispatcher implements ComHandler {
     }
 
     @Override
-    public Card getCardFromClient() {
-       return comHandler.getCardFromClient();
+    public Card getCardFromClient(GameState gameState) {
+       return comHandler.getCardFromClient(gameState);
     }
 
     @Override
@@ -24,8 +26,8 @@ public class Dispatcher implements ComHandler {
     }
 
     @Override
-    public void sendCardToClient(Card card) {
-        comHandler.sendCardToClient(card);
+    public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
+        return comHandler.sendCardToClient(cardsToClient, gameState);
     }
 
     @Override

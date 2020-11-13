@@ -87,22 +87,21 @@ public class GameHost extends Game {
   }
 
   public Card getCardFromPlayer2() {
-    //be klient-spelaren om ett kort via gameLobbyn
-    return null;
+    return gameLobby.requestCardFromClient(gameState);
   }
 
   public void dealCards(){
     dealCardsToHost();
-    dealCardsToClient();
+   gameState = dealCardsToClient();
   }
 
   public boolean dealCardsToHost(){
     return gameState.getPlayer(HOST).addCardsToHand((ArrayList<Card>) deck.getHand(handSize));
   }
 
-  public boolean dealCardsToClient(){
+  public GameState dealCardsToClient(){
     // TODO: 2020-11-13 GameLobby code not complete for this method to work.
-    return gameLobby.sendCardToClient((ArrayList<Card>) deck.getHand(handSize));
+     return gameLobby.sendCardToClient((ArrayList<Card>) deck.getHand(handSize), gameState);
   }
 
   public Object handleCardMenu(Object obj){

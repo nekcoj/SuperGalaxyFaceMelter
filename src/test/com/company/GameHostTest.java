@@ -28,8 +28,12 @@ class GameHostTest {
     players.add(p1);
     players.add(p2);
     GameState gs = new GameState(10, players);
+    ScreenRenderer renderer = new ScreenRenderer();
     ComHandler comHandler = new LocalGameHandler();
-    gameHost = new GameHost(new GameLobby(false), new ScreenRenderer(), gs, 5, 50);
+    Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
+    GameLobby gameLobby = new GameLobby(false);
+    gameLobby.setDispatcher(dispatcher);
+    gameHost = new GameHost(gameLobby, new ScreenRenderer(), gs, 5, 50);
   }
 
   @Test
@@ -73,6 +77,7 @@ class GameHostTest {
   @Test
   void getCardFromPlayer2Test() {
     System.out.println("-------- getCardFromPlayer2 Test --------");
+    gameHost.dealCardsToClient();
     Card card = gameHost.getCardFromPlayer2();
     assertNotNull(card, "card is null!");
   }
@@ -96,7 +101,7 @@ class GameHostTest {
   @Test
   void dealCardsToClient(){
     System.out.println("-------- dealCardsToClient Test --------");
-    assertTrue(gameHost.dealCardsToClient(), "Cards not added to client!");
+    assertNotNull(gameHost.dealCardsToClient(), "Gamestate is null!");
   }
 
   @Test
