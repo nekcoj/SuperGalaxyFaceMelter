@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.interfaces.Renderer;
+import com.company.utils.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,6 @@ public class GameHost extends Game {
    *
    */
   public Card getCardFromStartPlayer() {
-
     return null;
   }
 
@@ -95,6 +95,15 @@ public class GameHost extends Game {
   }
 
   public boolean dealCardsToClient(){
-    return false;
+    // TODO: 2020-11-13 GameLobby code not complete for this method to work.
+    return gameLobby.sendCardToClient((ArrayList<Card>) deck.getHand(handSize));
+  }
+
+  public void handleCardMenu(Object obj){
+    System.out.println("handleCardMenu: " + obj);
+  }
+
+  public Menu getCardMenu(){
+    return null;
   }
 }

@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameHostTest {
 
   private GameHost gameHost;
+  Player p1 = new Player("Player 1");
+  Player p2 = new Player("Player 1");
 
   @BeforeAll
   static void start() {
@@ -22,8 +24,6 @@ class GameHostTest {
   @BeforeEach
   void setup() {
     System.out.println("-------- @BeforeEach --------");
-    Player p1 = new Player("Player 1");
-    Player p2 = new Player("Player 1");
     ArrayList<Player> players = new ArrayList<>();
     players.add(p1);
     players.add(p2);
@@ -61,8 +61,11 @@ class GameHostTest {
   @Test
   void getCardFromPlayer1Test() {
     System.out.println("-------- getCardFromPlayer1 Test --------");
-    Card card = gameHost.getCardFromPlayer1();
-    assertNotNull(card, "card is null!");
+    gameHost.dealCardsToHost();
+    Card c1 = gameHost.gameState.getPlayer(0).getCardOnHandAsList().get(0);
+    Card c2 = gameHost.getCardFromPlayer1();
+    assertNotNull(c2, "card is null!");
+    assertEquals(c1, c2, "Cards are not the same!");
   }
 
   @Test
@@ -92,6 +95,12 @@ class GameHostTest {
   void dealCardsToClient(){
     System.out.println("-------- dealCardsToClient Test --------");
     assertTrue(gameHost.dealCardsToClient(), "Cards not added to client!");
+  }
+
+  @Test
+  void getCardMenu(){
+    System.out.println("-------- getCardMenu Test --------");
+    assertNotNull(gameHost.getCardMenu(), "getCardMenu returned null!");
   }
 
   @AfterAll

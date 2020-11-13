@@ -47,4 +47,11 @@ public class Card {
     public boolean isDead() {
         return currentPower == 0;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + name +
+            ", Power: " + power +
+            ", currentPower: " + currentPower;
+    }
 }

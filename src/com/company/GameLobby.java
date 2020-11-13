@@ -3,6 +3,8 @@ package com.company;
 import com.company.interfaces.ComHandler;
 import com.company.utils.GameLobbyMenu;
 
+import java.util.ArrayList;
+
 public class GameLobby {
 
     private GameLobbyMenu menu;
@@ -45,5 +47,21 @@ public class GameLobby {
     public void connectToNetworkGame(Object o) {
         // Create a GameClient
         System.out.println("i connectToNetworkGame");
+    }
+
+    public Card requestCardFromClient(){
+        return null;
+    }
+
+    public void addToClientVictoryPile(){
+
+    }
+
+    public boolean sendCardToClient(ArrayList<Card> cardsToClient){
+        return false;
+    }
+
+    public void renderClient(GameState gs, byte playerToDraw){
+
     }
 }
