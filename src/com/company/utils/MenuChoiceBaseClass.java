@@ -1,26 +1,21 @@
 package com.company.utils;
 import java.util.function.Consumer;
 
-public class MenuChoice {
+public abstract class MenuChoiceBaseClass {
     private char key;
     private String sTitle;
-    private Consumer functionToCall;
     private Object parameter;
 
-    public MenuChoice(String sTitle, char key, Consumer functionToCall) {
-        this(sTitle,key,functionToCall,null);
-    } // MenuChoice
-
-    public MenuChoice(String sTitle, char key, Consumer functionToCall, Object parameter) {
+    public MenuChoiceBaseClass(String sTitle, char key, Object parameter) {
         this.key = key;
         this.sTitle = sTitle;
-        this.functionToCall = functionToCall;
         this.parameter = parameter;
     } // MenuChoice
 
-    public Consumer getFunctionToCall() {
-        return functionToCall;
-    } // getFunctionToCall
+    public MenuChoiceBaseClass(String sTitle, char key) {
+        this(sTitle,key, null);
+    } // MenuChoice
+
 
     public char getKey() {
         return key;
@@ -35,4 +30,6 @@ public class MenuChoice {
     } // getFullTitle
 
     public Object getParameter() { return parameter; }
+
+    public abstract Object getFunctionToCall();
 } // class MenuChoice

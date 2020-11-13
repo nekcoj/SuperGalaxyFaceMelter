@@ -16,7 +16,7 @@ public class GameLobby {
     }
 
     public void runMenu() {
-        menu.handleMenu();
+        menu.handleConsumerMenu();
     }
 
     public void startLocalGame(Object o) {

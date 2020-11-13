@@ -2,7 +2,8 @@ package com.company;
 
 import com.company.interfaces.Renderer;
 import com.company.utils.Menu;
-import com.company.utils.MenuChoice;
+import com.company.utils.MenuChoiceBaseClass;
+import com.company.utils.MenuChoiceFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,16 +81,9 @@ public class GameHost extends Game {
 
   public Card getCardFromPlayer1() {
     //be den lokala spelare om ett kort
-
-    /* Menu cardMenu = getCardMenu();
-    if(handleMenu) {
-      cardMenu.handleMenu();
-    } else {
-      return handleCardMenu('1');
-    }*/
-
-
-    return gameState.getPlayer(HOST).getCard(1);
+    Menu cardMenu = getCardMenu();
+    int chosenCard = (Integer) cardMenu.handleFunctionMenu(true);
+    return gameState.getPlayer(HOST).getCard(chosenCard);
   }
 
   public Card getCardFromPlayer2() {
@@ -111,20 +105,21 @@ public class GameHost extends Game {
     return gameLobby.sendCardToClient((ArrayList<Card>) deck.getHand(handSize));
   }
 
-  public void handleCardMenu(Object obj){
-    System.out.println("handleCardMenu: " + obj);
+  public Object handleCardMenu(Object obj){
+    return obj;
   }
 
   public Menu getCardMenu(){
-    ArrayList<MenuChoice> cardMenuList = new ArrayList<>();
+    ArrayList<MenuChoiceBaseClass> cardMenuList = new ArrayList<>();
     GameHost host = this;
     Menu cardMenu = new Menu() {
       @Override
-      public ArrayList<MenuChoice> setInitialMenu() {
+      public ArrayList<MenuChoiceBaseClass> setInitialMenu() {
         final char[] key = {'1'};
-        gameState.getPlayer(HOST).getCardOnHandAsList().forEach((card )->
-            cardMenuList.add(new MenuChoice(card.toString(), key[0]++, host::handleCardMenu, key[0]))
-        );
+        gameState.getPlayer(HOST).getCardOnHandAsList().forEach((card )-> {
+            cardMenuList.add(new MenuChoiceFunction(card.toString(), key[0], host::handleCardMenu, Character.getNumericValue(key[0])));
+            key[0]++;
+          });
         return cardMenuList;
       }
     };

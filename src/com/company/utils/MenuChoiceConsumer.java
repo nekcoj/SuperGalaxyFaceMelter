@@ -1,0 +1,22 @@
+package com.company.utils;
+
+import java.util.function.Consumer;
+
+public class MenuChoiceConsumer extends MenuChoiceBaseClass {
+    private Consumer functionToCall;
+
+    public MenuChoiceConsumer(String sTitle, char key, Consumer functionToCall) {
+        super(sTitle, key, functionToCall);
+    }
+
+    public MenuChoiceConsumer(String sTitle, char key, Consumer functionToCall, Object parameter) {
+        super(sTitle, key, parameter);
+        this.functionToCall = functionToCall;
+    }
+
+    @Override
+    public Object getFunctionToCall() {
+        return functionToCall;
+    } // getFunctionToCall
+
+}
