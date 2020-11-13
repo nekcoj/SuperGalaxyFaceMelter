@@ -7,6 +7,7 @@ import java.util.List;
 
 public class GameHost extends Game {
 
+
     private final List<CardSettings> cardSettings = new ArrayList<>() {{
         add(new CardSettings(1, "Mutated worm", 8));
         add(new CardSettings(2, "Irate rat", 8));
@@ -82,5 +83,18 @@ public class GameHost extends Game {
     public Card getCardFromPlayer2() {
         //be klient-spelaren om ett kort via gameLobbyn
         return null;
+    }
+
+    public void dealCards(){
+        dealCardsToHost();
+        dealCardsToClient();
+    }
+
+    public boolean dealCardsToHost(){
+        return false;
+    }
+
+    public boolean dealCardsToClient(){
+        return false;
     }
 }
