@@ -82,6 +82,10 @@ class GameHostTest {
   void dealCardsToHost(){
     System.out.println("-------- dealCardsToHost Test --------");
     assertTrue(gameHost.dealCardsToHost(), "Cards not added to host!");
+    assertEquals(5,
+        gameHost.gameState.getPlayer(Game.HOST)
+            .getCardOnHandAsList().size(),
+        "Wrong hand size!");
   }
 
   @Test
