@@ -62,11 +62,12 @@ class GameHostTest {
   @Test
   void getRoundWinnerTest() {
     gameHost.dealCards();
-    Card card1 = gameHost.getCardFromStartPlayer();
-    Card card2 = gameHost.getCardFromSecondPlayer();
+    Card card1 = new Card(5, "Angry teacher");
+    Card card2 = new Card(5, "Angry teacher");
     System.out.println("-------- roundWinner Test --------");
     assertNotNull(card1, "card1 is null!");
     assertNotNull(card2, "card2 is null!");
+    assertEquals(0, gameHost.gameState.getStartPlayer());
     assertEquals(-1, gameHost.getRoundWinner(card1, card2));
   }
 
