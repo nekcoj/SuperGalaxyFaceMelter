@@ -43,6 +43,14 @@ class GameHostTest {
   }
 
   @Test
+  void runGameTest() {
+    System.out.println("-------- runGameTest Test --------");
+    gameHost.runGame();
+    assertEquals(5, gameHost.gameState.getPlayer(Game.HOST).getCardOnHandAsList().size());
+    assertEquals(5, gameHost.gameState.getPlayer(Game.CLIENT).getCardOnHandAsList().size());
+  }
+
+  @Test
   void getCardFromStartPlayerTest() {
     System.out.println("-------- getCardFromStartPlayer Test --------");
     gameHost.dealCardsToHost();
@@ -72,6 +80,17 @@ class GameHostTest {
   }
 
   @Test
+  void finalizingRoundTest() {
+    int winner = 0;
+    Card card1 = new Card(10, "Super Galaxy Face Melter");
+    Card card2 = new Card(5, "Angry teacher");
+    gameHost.finalizingRound(winner, card1, card2);
+    assertEquals(5, gameHost.gameState.getPlayer(Game.HOST).getScore());
+    assertEquals(1, gameHost.gameState.getPlayer(Game.HOST).getCardOnHandAsList().size());
+    assertEquals(1, gameHost.gameState.getPlayer(Game.CLIENT).getCardOnHandAsList().size());
+  }
+
+  @Test
   void getCardFromPlayer1Test() {
     System.out.println("-------- getCardFromPlayer1 Test --------");
     gameHost.dealCardsToHost();
@@ -90,9 +109,10 @@ class GameHostTest {
   }
 
   @Test
-  void isGameOver() {
+  void isGameOverTest() {
+    gameHost.runGame();
     System.out.println("-------- isGameOver Test --------");
-    assertFalse(gameHost.isGameOver(), "Game is over!");
+    assertTrue(gameHost.isGameOver(), "Game is over!");
   }
 
   @Test

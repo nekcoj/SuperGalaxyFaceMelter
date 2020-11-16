@@ -72,6 +72,12 @@ class PlayerTest {
     assertTrue(player.addCardsToHand(cards), "Failed to add cards");
   }
 
+  @Test
+  void addCardToHandTest() {
+    System.out.println("-------- addCardToHand test --------");
+    assertTrue(player.addCardToHand(card), "Failed to add card");
+  }
+
   @AfterAll
   static void end(){
     System.out.println("======== PLAYER TESTS ENDED ========");
