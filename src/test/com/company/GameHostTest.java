@@ -33,7 +33,7 @@ class GameHostTest {
     Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
     GameLobby gameLobby = new GameLobby(false);
     gameLobby.setDispatcher(dispatcher);
-    gameHost = new GameHost(gameLobby, new ScreenRenderer(), gs, 5, 50);
+    gameHost = new GameHost(gameLobby, new ScreenRenderer(), gs, 5);
   }
 
   @Test
@@ -54,14 +54,20 @@ class GameHostTest {
   @Test
   void getCardFromSecondPlayerTest() {
     System.out.println("-------- getCardFromSecondPlayer Test --------");
+    gameHost.dealCardsToClient();
     Card card = gameHost.getCardFromSecondPlayer();
     assertNotNull(card, "card is null!");
   }
 
   @Test
-  void roundWinnerTest() {
+  void getRoundWinnerTest() {
+    gameHost.dealCards();
+    Card card1 = gameHost.getCardFromStartPlayer();
+    Card card2 = gameHost.getCardFromSecondPlayer();
     System.out.println("-------- roundWinner Test --------");
-    assertEquals(-1, gameHost.getRoundWinner());
+    assertNotNull(card1, "card1 is null!");
+    assertNotNull(card2, "card2 is null!");
+    assertEquals(-1, gameHost.getRoundWinner(card1, card2));
   }
 
   @Test
