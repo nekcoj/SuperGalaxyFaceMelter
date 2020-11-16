@@ -30,7 +30,7 @@ public class ScreenRenderer implements Renderer {
   }
 
   public String generateGameOverRow(GameState gameState) {
-    return "";
+    return String.format("Game Over!\nWinner is %s", gameState.getPlayer(gameState.getWinner()).getName());
   }
 
   public String generateCardsString(ArrayList<Card> cards){

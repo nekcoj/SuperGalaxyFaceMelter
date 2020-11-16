@@ -75,6 +75,7 @@ class ScreenRendererTest {
   void generateGameOverRow(){
     System.out.println("-------- generateGameOverRow Test --------");
     String str = "Game Over!\nWinner is Player 1";
+    gs.setWinner(GameHost.HOST);
     assertTrue(sr.generateGameOverRow(gs).equals(str), "generateGameOverRow returned incorrect value!");
   }
 }
