@@ -26,7 +26,14 @@ public class ScreenRenderer implements Renderer {
     output += generateCardsString(gameState.getPlayer(playerToDraw).getCardOnHandAsList());
     if(gameState.isGameOver()){
       output += generateGameOverRow(gameState);
+    } else {
+      if(gameState.getStartPlayer() == playerToDraw){
+        output += "Please select a card: ";
+      } else {
+        output += "Waiting for player...";
+      }
     }
+    System.out.println(output);
   }
 
   public String generateGameOverRow(GameState gameState) {

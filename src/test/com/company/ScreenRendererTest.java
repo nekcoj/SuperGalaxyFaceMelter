@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.utils.TextUtil;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,5 +78,10 @@ class ScreenRendererTest {
     String str = "Game Over!\nWinner is Player 1";
     gs.setWinner(GameHost.HOST);
     assertTrue(sr.generateGameOverRow(gs).equals(str), "generateGameOverRow returned incorrect value!");
+  }
+
+  @AfterAll
+  void end(){
+    System.out.println("======== ScreenRenderer Tests Ended ========");
   }
 }
