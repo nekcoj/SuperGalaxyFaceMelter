@@ -19,13 +19,14 @@ public class ScreenRenderer implements Renderer {
   private static final int OFFSET = 3;
 
   @Override
-  public void render(GameState gameState) {
-    String boardRow = generateGameBoardRow(gameState);
-    //generatePrintString(gameState.getPlayer(gameState.getStartPlayer()).getCardOnHandAsList());
-
+  public void render(GameState gameState, int playerToDraw) {
+    String scoreRow = generateScoreRow(gameState);
+    String playedCardsRow = generateCardsString(gameState.getPlayedCards());
+    String playerHandRow = generateCardsString(gameState.getPlayer(playerToDraw).getCardOnHandAsList());
+    //if(gameState)
   }
 
-  public String generatePrintString(ArrayList<Card> cards){
+  public String generateCardsString(ArrayList<Card> cards){
     String [][] cardOutput = new String[cards.size()][CARD_HEIGHT];
     for (int i = 0; i < cards.size(); i++){
       var ref = new Object() {
@@ -75,7 +76,11 @@ public class ScreenRenderer implements Renderer {
     return String.format("%s", TextUtil.pimpString(input, TextUtil.LEVEL_INFO));
   }
 
-  public String generateGameBoardRow(GameState gameState){
-    return "";
+  public String generateScoreRow(GameState gameState){
+    return String.format("<Player 1> %s, %d points, <Player 2> %s, %d points",
+        gameState.getPlayer(Game.HOST).getName(),
+        gameState.getPlayer(Game.HOST).getScore(),
+        gameState.getPlayer(Game.CLIENT).getName(),
+        gameState.getPlayer(Game.CLIENT).getScore());
   }
 }

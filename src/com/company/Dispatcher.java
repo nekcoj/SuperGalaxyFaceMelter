@@ -32,7 +32,7 @@ public class Dispatcher implements ComHandler {
 
     @Override
     public void renderClient(GameState gameState) {
-        renderer.render(gameState);
+        renderer.render(gameState, Game.CLIENT);
     }
 
 

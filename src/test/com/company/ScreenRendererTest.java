@@ -34,9 +34,9 @@ class ScreenRendererTest {
   }
 
   @Test
-  void generatePrintString() {
+  void generateCardsString() {
     System.out.println("-------- generatePrintString Test --------");
-    assertEquals(0, sr.generatePrintString(cards).indexOf("╔"), "Missing top left corner!");
+    assertEquals(0, sr.generateCardsString(cards).indexOf("╔"), "Missing top left corner!");
   }
 
   @Test
@@ -51,7 +51,7 @@ class ScreenRendererTest {
 
   @Test
   void generatePowerRow(){
-    System.out.println("-------- generatePowerRow --------");
+    System.out.println("-------- generatePowerRow Test --------");
     String str = String.format("[%s/%s]", TextUtil.pimpString(10, TextUtil.LEVEL_BOLD), TextUtil.pimpString(10, TextUtil.LEVEL_STRESSED));
     assertTrue(sr.generatePowerRow(cards.get(0)).contains(str), "Incorrect power row!");
 
@@ -65,9 +65,9 @@ class ScreenRendererTest {
   }
 
   @Test
-  void generateGameBoardRow(){
-    System.out.println("-------- generateGameBoardRow Test --------");
+  void generateScoreRow(){
+    System.out.println("-------- generateScoreRow Test --------");
     String str = "<Player 1> Player 1, 0 points, <Player 2> Player 2, 0 points";
-    assertTrue(sr.generateGameBoardRow(gs).equals(str), "generateGameBoardRow returned wrong string!");
+    assertTrue(sr.generateScoreRow(gs).equals(str), "generateGameBoardRow returned wrong string!");
   }
 }

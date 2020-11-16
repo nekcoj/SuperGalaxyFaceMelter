@@ -4,5 +4,5 @@ import com.company.GameState;
 
 public interface Renderer {
 
-    public void render(GameState gameState);
+    public void render(GameState gameState, int playerToDraw);
 }
