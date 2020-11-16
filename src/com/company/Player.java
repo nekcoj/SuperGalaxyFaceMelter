@@ -43,4 +43,8 @@ public class Player {
     return this.cardsOnHand.addAll(startHand);
   }
 
+  public boolean addCardToHand(Card card) {
+    return this.cardsOnHand.add(card);
+  }
+
 }

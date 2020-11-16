@@ -26,25 +26,38 @@ public class GameHost extends Game {
 
   private Deck deck = new Deck(cardSettings);
   private int handSize;
-  private int pointsToWin;
+  //private int pointsToWin;
 
-  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize, int pointsToWin) {
+  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize/*, int pointsToWin*/) {
     super(gameLobby, renderer, gameState);
     this.handSize = handSize;
-    this.pointsToWin = pointsToWin;
+    //this.pointsToWin = pointsToWin;
   }
 
   /**
-   *   Sätt startspelare till spelare ett (Hostens spelare)
-   *   Dela ut kort; skicka till klienten och den egna spelaren
+   *   Sätt startspelare till spelare ett (Hostens spelare)-
+   *   Dela ut kort; skicka till klienten och den egna spelaren-
    *   Do... while game not over??
-   *      Be startspelaren om ett kort
-   *      Be motspelaren om ett kort
-   *      Avgör vinnaren av rundan
+   *      Be startspelaren om ett kort-
+   *      Be motspelaren om ett kort-
+   *      Avgör vinnaren av rundan-
    *      Kolla om spelet är slut
    *      Byt startspelare -> gameState.changeStartPlayer()
    */
   public void runGame() {
+    dealCards();
+    do {
+      Card card1 = getCardFromStartPlayer();
+      gameState.addPlayedCard(card1);
+      Card card2 = getCardFromSecondPlayer();
+      gameState.addPlayedCard(card2);
+      getRoundWinner(card1, card2);
+      gameState.clearPlayedCards();
+      gameState.changeStartPlayer();
+    } while (!isGameOver());
+    System.out.println("P1: " + gameState.getPlayer(0).getScore());
+    System.out.println("P2: " + gameState.getPlayer(1).getScore());
+    System.out.println("kort kvar: " + deck.getCards().size());
   }
 
   /**
@@ -66,17 +79,46 @@ public class GameHost extends Game {
     return gameState.getStartPlayer() == CLIENT ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
-  public int getRoundWinner() {
-    // Jämför korten i gameState och avgör vem, om någon, som vann
+  public int getRoundWinner(Card card1, Card card2) {
+    int result = card1.getCurrentPower() - card2.getCurrentPower();
+    int winner;
+
+    if (result > 0) { winner = gameState.getStartPlayer() == HOST ? 0 : 1; }
+    else if (result < 0) { winner = gameState.getStartPlayer() == HOST ? 1 : 0; }
+    else  { winner = -1; }
+
+    finalizingRound(winner, card1, card2);
+    return winner;
+    // Jämför korten i gameState och avgör vem, om någon, som vann-
     // Uppdatera gameState och vinsthögen för vinnande spelare
     // -1 = ingen vann annars 0 eller 1 för respektive spelare
-    return -1;
+  }
+
+  public void finalizingRound(int winner, Card card1, Card card2) {
+    if (winner >= 0) {
+      if (winner == gameState.getStartPlayer()) {
+        gameState.getPlayer(winner).addToVictoryPile(card2);
+        card1.decreasePower(card2.getCurrentPower());
+        gameState.getPlayer(winner).addCardToHand(card1);
+      } else {
+        gameState.getPlayer(winner).addToVictoryPile(card1);
+        card2.decreasePower(card1.getCurrentPower());
+        gameState.getPlayer(winner).addCardToHand(card2);
+      }
+
+      if (winner == HOST) {
+        gameState.getPlayer(CLIENT).addCardToHand(deck.getTopCard());
+      } else {
+        gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+      }
+    } else {
+      gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+      gameState.getPlayer(CLIENT).addCardToHand(deck.getTopCard());
+    }
   }
 
   public boolean isGameOver() {
-    // Kolla om någon spelare uppnått poänggränsen
-    // eller om kortleken tagit slut
-    return false;
+    return gameState.getPlayer(HOST).getScore() >= gameState.getPointsToWin() || gameState.getPlayer(CLIENT).getScore() >= gameState.getPointsToWin() || deck.isEmpty();
   }
 
   public Card getCardFromPlayer1() {

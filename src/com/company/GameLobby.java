@@ -29,11 +29,14 @@ public class GameLobby {
         // kör GameHost
         Player player1 = new Player("Player 1");
         Player player2 = new Player("Player 2");
-        GameState gs = new GameState();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        GameState gs = new GameState(50, players);
         ComHandler comHandler = new LocalGameHandler();
         ScreenRenderer renderer = new ScreenRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
-        GameHost host = new GameHost(this, renderer, gs, 5, 50);
+        GameHost host = new GameHost(this, renderer, gs, 5);
         GameClient client = new GameClient(this, renderer, gs);
         host.runGame();
     }
