@@ -20,10 +20,17 @@ public class ScreenRenderer implements Renderer {
 
   @Override
   public void render(GameState gameState, int playerToDraw) {
-    String scoreRow = generateScoreRow(gameState);
-    String playedCardsRow = generateCardsString(gameState.getPlayedCards());
-    String playerHandRow = generateCardsString(gameState.getPlayer(playerToDraw).getCardOnHandAsList());
-    //if(gameState)
+    String output = "";
+    output += generateScoreRow(gameState);
+    output += generateCardsString(gameState.getPlayedCards());
+    output += generateCardsString(gameState.getPlayer(playerToDraw).getCardOnHandAsList());
+    if(gameState.isGameOver()){
+      output += generateGameOverRow(gameState);
+    }
+  }
+
+  public String generateGameOverRow(GameState gameState) {
+    return "";
   }
 
   public String generateCardsString(ArrayList<Card> cards){

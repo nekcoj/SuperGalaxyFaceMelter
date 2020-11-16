@@ -64,6 +64,8 @@ class GameStateTest {
   @Test
   void isGameOver(){
     System.out.println("-------- isGameOver Test --------");
-    assertFalse(gs.isGameOver(), "isGameOver returned wrong!");
+    assertFalse(gs.isGameOver(), "isGameOver returned wrong boolean!");
+    gs.setWinner(Game.HOST);
+    assertTrue(gs.isGameOver(), "isGameOver returned wrong boolean!");
   }
 }

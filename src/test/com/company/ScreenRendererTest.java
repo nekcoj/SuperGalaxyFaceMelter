@@ -70,4 +70,11 @@ class ScreenRendererTest {
     String str = "<Player 1> Player 1, 0 points, <Player 2> Player 2, 0 points";
     assertTrue(sr.generateScoreRow(gs).equals(str), "generateGameBoardRow returned wrong string!");
   }
+
+  @Test
+  void generateGameOverRow(){
+    System.out.println("-------- generateGameOverRow Test --------");
+    String str = "Game Over!\nWinner is Player 1";
+    assertTrue(sr.generateGameOverRow(gs).equals(str), "generateGameOverRow returned incorrect value!");
+  }
 }

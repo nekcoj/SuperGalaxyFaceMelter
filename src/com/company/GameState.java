@@ -60,6 +60,6 @@ public class GameState {
   }
 
   public boolean isGameOver(){
-    return true;
+    return getWinner() > -1;
   }
 }
