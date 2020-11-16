@@ -13,6 +13,10 @@ class ScreenRendererTest {
 
   ScreenRenderer sr = new ScreenRenderer();
   ArrayList<Card> cards = new ArrayList<>();
+  Player p1 = new Player("Player 1");
+  Player p2 = new Player("Player 2");
+  ArrayList<Player> players  = new ArrayList<>();
+  GameState gs;
 
   @BeforeAll
   static void start(){
@@ -24,6 +28,9 @@ class ScreenRendererTest {
     System.out.println("-------- @BeforeEach --------");
     cards.add(new Card(10, "Super Galaxy Face Melter"));
     cards.add(new Card(5, "Orange Menace"));
+    players.add(p1);
+    players.add(p2);
+    gs = new GameState(10, players);
   }
 
   @Test
@@ -52,8 +59,15 @@ class ScreenRendererTest {
 
   @Test
   void generateContentRow(){
-    System.out.println("-------- generateContentRow --------");
+    System.out.println("-------- generateContentRow Test --------");
     String contentTest = "Content Test";
     assertTrue(sr.generateContentRow(contentTest, 0).contains(contentTest), "Got wrong value from generateContentRow!");
+  }
+
+  @Test
+  void generateGameBoardRow(){
+    System.out.println("-------- generateGameBoardRow Test --------");
+    String str = "<Player 1> Player 1, 0 points, <Player 2> Player 2, 0 points";
+    assertTrue(sr.generateGameBoardRow(gs).equals(str), "generateGameBoardRow returned wrong string!");
   }
 }

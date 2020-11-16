@@ -5,8 +5,6 @@ import com.company.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ScreenRenderer implements Renderer {
 
@@ -22,6 +20,8 @@ public class ScreenRenderer implements Renderer {
 
   @Override
   public void render(GameState gameState) {
+    String boardRow = generateGameBoardRow(gameState);
+    //generatePrintString(gameState.getPlayer(gameState.getStartPlayer()).getCardOnHandAsList());
 
   }
 
@@ -73,5 +73,9 @@ public class ScreenRenderer implements Renderer {
 
   public String generateNameRow(String input){
     return String.format("%s", TextUtil.pimpString(input, TextUtil.LEVEL_INFO));
+  }
+
+  public String generateGameBoardRow(GameState gameState){
+    return "";
   }
 }
