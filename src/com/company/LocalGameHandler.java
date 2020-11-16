@@ -53,7 +53,7 @@ public class LocalGameHandler implements ComHandler {
     }
 
     @Override
-    public void renderClient(GameState gameState) {
+    public void renderClient(GameState gameState, int playerToDraw) {
 
     }
 }

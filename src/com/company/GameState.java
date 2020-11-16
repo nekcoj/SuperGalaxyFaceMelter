@@ -7,6 +7,7 @@ public class GameState {
   private int pointsToWin;
   private ArrayList<Player> players = new ArrayList<>();
   private byte startPlayer = 0;
+  private int winner = -1;
 
 
   public GameState() {
@@ -23,6 +24,10 @@ public class GameState {
 
   public boolean addPlayedCard(Card playedCard) {
     return playedCards.add(playedCard);
+  }
+
+  public ArrayList<Card> getPlayedCards() {
+    return playedCards;
   }
 
   public byte changeStartPlayer() {
@@ -44,5 +49,17 @@ public class GameState {
 
   public int getPointsToWin() {
     return pointsToWin;
+  }
+
+  public int getWinner() {
+    return winner;
+  }
+
+  public void setWinner(int winner) {
+    this.winner = winner;
+  }
+
+  public boolean isGameOver(){
+    return getWinner() > -1;
   }
 }

@@ -67,7 +67,7 @@ public class GameLobby {
       return dispatcher.sendCardToClient(cardsToClient, gameState);
     }
 
-    public void renderClient(GameState gs, byte playerToDraw){
-
+    public void renderClient(GameState gs, int playerToDraw){
+        dispatcher.renderClient(gs, playerToDraw);
     }
 }

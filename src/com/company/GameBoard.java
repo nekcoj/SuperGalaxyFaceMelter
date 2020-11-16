@@ -4,7 +4,7 @@ import com.company.interfaces.Renderer;
 
 public class GameBoard implements Renderer {
     @Override
-    public void render(GameState gameState) {
+    public void render(GameState gameState, int playerToDraw) {
         System.out.println(generatePrintString());
     }
 
