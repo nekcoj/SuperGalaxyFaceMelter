@@ -131,12 +131,6 @@ class GameHostTest {
     assertNotNull(gameHost.dealCardsToClient(), "Gamestate is null!");
   }
 
-  @Test
-  void getCardMenu(){
-    System.out.println("-------- getCardMenu Test --------");
-    assertNotNull(gameHost.getCardMenu(), "getCardMenu returned null!");
-  }
-
   @AfterAll
   static void end(){
     System.out.println("======== GAMEHOST TESTS ENDED ========");

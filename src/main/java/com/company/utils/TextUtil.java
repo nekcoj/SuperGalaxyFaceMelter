@@ -20,6 +20,15 @@ public class TextUtil {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String BRIGHT_BLACK =  "\u001b[30;1m";
+    public static final String BRIGHT_RED = "\u001b[31;1m";
+    public static final String BRIGHT_GREEN =  "\u001b[32;1m";
+    public static final String BRIGHT_YELLOW = "\u001b[33;1m";
+    public static final String BRIGHT_MAGENTA = "\u001b[35;1m";
+    public static final String BRIGHT_CYAN =  "\u001b[36;1m";
+    public static final String BRIGHT_WHITE = "\u001b[37;1m";
+
+    public static final int RESET_COLOR_TOKEN_COUNT = 9;
 
     public static final int LEVEL_NORMAL = 0;
     public static final int LEVEL_BOLD = 1;
@@ -36,7 +45,7 @@ public class TextUtil {
                 break;
 
             case LEVEL_BOLD:
-                prefix = ANSI_YELLOW;
+                prefix = ANSI_PURPLE;
                 break;
 
             case LEVEL_STRESSED:
@@ -99,5 +108,5 @@ public class TextUtil {
         int right = width - left;
         String str = "%" + left + "s%-" + right + "s";
         return String.format(str, " " , input);
-    }
+    } // centerText
 } // class TextUtil

@@ -1,6 +1,9 @@
 package com.company;
 
 import com.company.interfaces.Renderer;
+import com.company.utils.Menu;
+import com.company.utils.MenuChoiceBaseClass;
+import com.company.utils.MenuChoiceFunction;
 import com.company.utils.TextUtil;
 
 import java.util.ArrayList;
@@ -8,15 +11,17 @@ import java.util.Arrays;
 
 public class ScreenRenderer implements Renderer {
 
-  private String topLeft = "╔";
-  private String lineHor = "═";
-  private String lineVert = "║";
-  private String topRight = "╗";
-  private String bottomLeft = "╚";
-  private String bottomRight = "╝";
-  public final static int CARD_WIDTH = 18;
-  private final static int CARD_HEIGHT = 12;
+  private static final String topLeft = "╔";
+  private static final String lineHor = "═";
+  private static final String lineVert = "║";
+  private static final String topRight = "╗";
+  private static final String bottomLeft = "╚";
+  private static final String bottomRight = "╝";
+
   private static final int OFFSET = 3;
+  public final static int CARD_WIDTH = 18;
+  private final static int CARD_HEIGHT = 11;
+  public static final int MAX_NAME_PART_COUNT = 4;
 
   @Override
   public void render(GameState gameState, int playerToDraw) {
@@ -27,8 +32,8 @@ public class ScreenRenderer implements Renderer {
     if(gameState.isGameOver()){
       output += generateGameOverRow(gameState);
     } else {
-      if(gameState.getStartPlayer() == playerToDraw){
-        output += "Please select a card: ";
+      if(gameState.getCurrentPlayer() == playerToDraw){
+        output += String.format("%s%s", TextUtil.pimpString(String.format("\n%s", gameState.getPlayer(playerToDraw).getName()), TextUtil.LEVEL_STRESSED), ", please select a card: ");
       } else {
         output += "Waiting for player...";
       }
@@ -48,18 +53,17 @@ public class ScreenRenderer implements Renderer {
       };
       cardOutput[i][ref.rowCounter++] = generateRow(topLeft, lineHor, topRight);
       cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
-      cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
       cardOutput[i][ref.rowCounter++] = generateContentRow(generatePowerRow(cards.get(i)), 2);
+      cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
       cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
       String[] cardName = cards.get(i).getName().split(" ");
       int finalI = i;
       Arrays.stream(cardName).forEach(name -> cardOutput[finalI][ref.rowCounter++] = generateContentRow(generateNameRow(name), 1));
       if(cardName.length < 4){
-        for (int j = cardName.length; j < 4; j++ ){
+        for (int j = cardName.length; j < MAX_NAME_PART_COUNT; j++ ){
           cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
         }
       }
-      cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
       cardOutput[i][ref.rowCounter++] = generateRow(lineVert, " ", lineVert);
       cardOutput[i][ref.rowCounter++] = generateRow(bottomLeft, lineHor, bottomRight);
     }
@@ -75,11 +79,15 @@ public class ScreenRenderer implements Renderer {
   }
 
   public String generateContentRow(String input, int changeColorCount){
-    return String.format("%s%s%s", lineVert, TextUtil.centerText(input, CARD_WIDTH + changeColorCount * 9 - 2), lineVert);
+    return String.format("%s%s%s", lineVert,
+            TextUtil.centerText(input, CARD_WIDTH + changeColorCount * TextUtil.RESET_COLOR_TOKEN_COUNT - 2),
+            lineVert);
   }
 
   public String generatePowerRow(Card card){
-    return String.format("[%s/%s]", TextUtil.pimpString(card.getCurrentPower(), TextUtil.LEVEL_BOLD), TextUtil.pimpString(card.getPower(), TextUtil.LEVEL_STRESSED));
+    return String.format("[%s/%s]",
+            TextUtil.pimpString(card.getCurrentPower(), TextUtil.LEVEL_BOLD),
+            TextUtil.pimpString(card.getPower(), TextUtil.LEVEL_STRESSED));
   }
 
   public String generateRow(String firstLetter, String fillLetter, String lastLetter){
@@ -91,10 +99,36 @@ public class ScreenRenderer implements Renderer {
   }
 
   public String generateScoreRow(GameState gameState){
-    return String.format("<Player 1> %s, %d points, <Player 2> %s, %d points",
+    return String.format("<Player 1> %s, %d points\n<Player 2> %s, %d points\n",
         gameState.getPlayer(Game.HOST).getName(),
         gameState.getPlayer(Game.HOST).getScore(),
         gameState.getPlayer(Game.CLIENT).getName(),
         gameState.getPlayer(Game.CLIENT).getScore());
+  }
+
+  public Card getCard(GameState gameState, int playerToGetCardFrom) {
+    Menu cardMenu = getCardMenu(gameState, playerToGetCardFrom);
+    int chosenCard = (Integer) cardMenu.handleFunctionMenu(false);
+    return gameState.getPlayer(playerToGetCardFrom).getCard(chosenCard);
+  }
+
+  public Menu getCardMenu(GameState gameState, int playerToGetCardFrom){
+    ArrayList<MenuChoiceBaseClass> cardMenuList = new ArrayList<>();
+    Menu cardMenu = new Menu() {
+      @Override
+      public ArrayList<MenuChoiceBaseClass> setInitialMenu() {
+        final char[] key = {'1'};
+        gameState.getPlayer(playerToGetCardFrom).getCardOnHandAsList().forEach((card )-> {
+          cardMenuList.add(new MenuChoiceFunction(card.toString(), key[0], this::handleCardMenu, Character.getNumericValue(key[0])));
+          key[0]++;
+        });
+        return cardMenuList;
+      }
+
+      private Object handleCardMenu(Object o) {
+        return o;
+      }
+    };
+    return cardMenu;
   }
 }
