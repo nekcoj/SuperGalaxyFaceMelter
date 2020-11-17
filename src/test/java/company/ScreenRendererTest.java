@@ -81,7 +81,7 @@ class ScreenRendererTest {
   }
 
   @AfterAll
-  void end(){
+  static void end(){
     System.out.println("======== ScreenRenderer Tests Ended ========");
   }
 }

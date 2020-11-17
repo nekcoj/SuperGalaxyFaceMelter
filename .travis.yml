@@ -1,0 +1,9 @@
+language: java
+jdk: openjdk13
+
+script: mvn clean install
+
+jobs:
+  include:
+    - stage: Test
+      script: mvn clean test
