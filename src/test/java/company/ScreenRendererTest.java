@@ -83,5 +83,6 @@ class ScreenRendererTest {
   @AfterAll
   static void end(){
     System.out.println("======== ScreenRenderer Tests Ended ========");
+    System.out.println("hoppsan kerstin, funkar travis nu då?!??!?!");
   }
 }
