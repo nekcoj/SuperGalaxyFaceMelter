@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.utils.TextUtil;
+
 public class Card {
 
     private int power;
@@ -50,8 +52,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Name: " + name +
-            ", Power: " + power +
-            ", currentPower: " + currentPower;
+        return String.format("%s, Power: %s, current power: %s", TextUtil.pimpString(name, TextUtil.LEVEL_BOLD), power, currentPower);
     }
 }

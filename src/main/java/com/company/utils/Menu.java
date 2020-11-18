@@ -19,7 +19,7 @@ abstract public class Menu {
         for (MenuChoiceBaseClass m : currentMenu) {
             System.out.printf("%s%n", m.getFullTitle());
         } // for m...
-        System.out.print("Ange ditt val: ");
+        System.out.print("Choose wisely: ");
     } // printMenu
 
     // Hämta användarens val
@@ -50,9 +50,9 @@ abstract public class Menu {
 
             m = getMenuChoice();
             if (m == null)
-                System.out.println("Felaktigt val, försök igen!");
+                System.out.println("No such choice, please try again!");
             else {
-                System.out.printf("Du valde: %s%n", m.getTitle());
+                System.out.printf("You selected: %s%n", m.getTitle());
                 bStop = m.getFunctionToCall() == null;
                 if (!bStop) {
                     Consumer consumer = (Consumer)m.getFunctionToCall();
@@ -73,9 +73,9 @@ abstract public class Menu {
             m = skipRun ? currentMenu.get(0) : getMenuChoice();
 
             if (m == null)
-                System.out.println("Felaktigt val, försök igen!");
+                System.out.println("No such choice, please try again!");
             else {
-                System.out.printf("Du valde: %s%n", m.getTitle());
+                System.out.printf("You selected: %s%n", m.getTitle());
                 bStop = m.getFunctionToCall() == null;
                 if (!bStop) {
                     Function function = (Function)m.getFunctionToCall();

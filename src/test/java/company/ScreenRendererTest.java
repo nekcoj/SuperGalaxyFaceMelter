@@ -1,5 +1,6 @@
-package com.company;
+package company;
 
+import com.company.*;
 import com.company.utils.TextUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,6 +30,7 @@ class ScreenRendererTest {
     System.out.println("-------- @BeforeEach --------");
     cards.add(new Card(10, "Super Galaxy Face Melter"));
     cards.add(new Card(5, "Orange Menace"));
+    cards.add(new Card(6, "Angry Teacher"));
     players.add(p1);
     players.add(p2);
     gs = new GameState(10, players);
@@ -38,6 +40,7 @@ class ScreenRendererTest {
   void generateCardsString() {
     System.out.println("-------- generatePrintString Test --------");
     assertEquals(0, sr.generateCardsString(cards).indexOf("╔"), "Missing top left corner!");
+    System.out.println(sr.generateCardsString(cards));
   }
 
   @Test
@@ -55,7 +58,6 @@ class ScreenRendererTest {
     System.out.println("-------- generatePowerRow Test --------");
     String str = String.format("[%s/%s]", TextUtil.pimpString(10, TextUtil.LEVEL_BOLD), TextUtil.pimpString(10, TextUtil.LEVEL_STRESSED));
     assertTrue(sr.generatePowerRow(cards.get(0)).contains(str), "Incorrect power row!");
-
   }
 
   @Test
@@ -68,21 +70,27 @@ class ScreenRendererTest {
   @Test
   void generateScoreRow(){
     System.out.println("-------- generateScoreRow Test --------");
-    String str = "<Player 1> Player 1, 0 points, <Player 2> Player 2, 0 points";
-    assertTrue(sr.generateScoreRow(gs).equals(str), "generateGameBoardRow returned wrong string!");
+    String str = "<Player 1>";
+//    String str = "<Player 1> Player 1, 0 points, <Player 2> Player 2, 0 points";
+    assertTrue(sr.generateScoreRow(gs).contains(str), "generateGameBoardRow returned wrong string!");
   }
 
   @Test
   void generateGameOverRow(){
     System.out.println("-------- generateGameOverRow Test --------");
     String str = "Game Over!\nWinner is Player 1";
-    gs.setWinner(GameHost.HOST);
+    gs.setWinner(Game.HOST);
     assertTrue(sr.generateGameOverRow(gs).equals(str), "generateGameOverRow returned incorrect value!");
+  }
+
+  @Test
+  void getCardMenu(){
+    System.out.println("-------- getCardMenu Test --------");
+    assertNotNull(sr.getCardMenu(gs, Game.HOST), "getCardMenu returned null!");
   }
 
   @AfterAll
   static void end(){
     System.out.println("======== ScreenRenderer Tests Ended ========");
-    System.out.println("hoppsan kerstin, funkar travis nu då?!??!?!");
   }
 }

@@ -1,15 +1,12 @@
 package com.company;
 
 import com.company.interfaces.Renderer;
-import com.company.utils.Menu;
-import com.company.utils.MenuChoiceBaseClass;
-import com.company.utils.MenuChoiceFunction;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameHost extends Game {
-
 
   private final List<CardSettings> cardSettings = new ArrayList<>() {{
     add(new CardSettings(1, "Mutated worm", 8));
@@ -26,12 +23,10 @@ public class GameHost extends Game {
 
   private Deck deck = new Deck(cardSettings);
   private int handSize;
-  //private int pointsToWin;
 
-  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize/*, int pointsToWin*/) {
+  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize) {
     super(gameLobby, renderer, gameState);
     this.handSize = handSize;
-    //this.pointsToWin = pointsToWin;
   }
 
   /**
@@ -55,9 +50,6 @@ public class GameHost extends Game {
       gameState.clearPlayedCards();
       gameState.changeStartPlayer();
     } while (!isGameOver());
-    System.out.println("P1: " + gameState.getPlayer(0).getScore());
-    System.out.println("P2: " + gameState.getPlayer(1).getScore());
-    System.out.println("kort kvar: " + deck.getCards().size());
   }
 
   /**
@@ -79,6 +71,11 @@ public class GameHost extends Game {
     return gameState.getStartPlayer() == CLIENT ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
+   /**
+    *     Jämför korten i gameState och avgör vem, om någon, som vann-
+    *     Uppdatera gameState och vinsthögen för vinnande spelare
+    *     @return -1 = ingen vann annars 0 eller 1 för respektive spelare
+   * */
   public int getRoundWinner(Card card1, Card card2) {
     int result = card1.getCurrentPower() - card2.getCurrentPower();
     int winner;
@@ -89,32 +86,54 @@ public class GameHost extends Game {
 
     finalizingRound(winner, card1, card2);
     return winner;
-    // Jämför korten i gameState och avgör vem, om någon, som vann-
-    // Uppdatera gameState och vinsthögen för vinnande spelare
-    // -1 = ingen vann annars 0 eller 1 för respektive spelare
   }
 
   public void finalizingRound(int winner, Card card1, Card card2) {
+
     if (winner >= 0) {
       if (winner == gameState.getStartPlayer()) {
-        gameState.getPlayer(winner).addToVictoryPile(card2);
-        card1.decreasePower(card2.getCurrentPower());
-        gameState.getPlayer(winner).addCardToHand(card1);
+        handleWinnerCardForStartPlayer(winner, card1, card2);
       } else {
-        gameState.getPlayer(winner).addToVictoryPile(card1);
-        card2.decreasePower(card1.getCurrentPower());
-        gameState.getPlayer(winner).addCardToHand(card2);
+        handleWinnerCardForSecondPlayer(winner, card2, card1);
       }
 
       if (winner == HOST) {
-        gameState.getPlayer(CLIENT).addCardToHand(deck.getTopCard());
+        gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
       } else {
         gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
       }
     } else {
       gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      gameState.getPlayer(CLIENT).addCardToHand(deck.getTopCard());
+      gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
     }
+  }
+
+  public void handleWinnerCardForStartPlayer(int winner, Card card1, Card card2){
+    if (winner == HOST) {
+      handleWinnerCardForPlayer1(card1, card2);
+    } else {
+      handleWinnerCardForPlayer2(card1, card2);
+    }
+  }
+
+  public void handleWinnerCardForSecondPlayer(int winner, Card card1, Card card2){
+      if (winner == CLIENT) {
+      handleWinnerCardForPlayer2(card1, card2);
+    } else {
+      handleWinnerCardForPlayer1(card1, card2);
+    }
+  }
+
+  public void handleWinnerCardForPlayer1(Card card1, Card card2){
+    gameState.getPlayer(HOST).addToVictoryPile(card2);
+    card1.decreasePower(card2.getCurrentPower());
+    gameState.getPlayer(HOST).addCardToHand(card1);
+  }
+
+  public void handleWinnerCardForPlayer2(Card card1, Card card2){
+    gameLobby.addToClientVictoryPile(card2, gameState);
+    card1.decreasePower(card2.getCurrentPower());
+    gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(card1)), gameState);
   }
 
   public boolean isGameOver() {
@@ -122,13 +141,14 @@ public class GameHost extends Game {
   }
 
   public Card getCardFromPlayer1() {
-    //be den lokala spelare om ett kort
-    Menu cardMenu = getCardMenu();
-    int chosenCard = (Integer) cardMenu.handleFunctionMenu(true);
-    return gameState.getPlayer(HOST).getCard(chosenCard);
+    //be den lokala spelaren om ett kort
+    gameState.setCurrentPlayer(Game.HOST);
+    gameBoard.render(gameState, Game.HOST);
+    return gameBoard.getCard(gameState, Game.HOST);
   }
 
   public Card getCardFromPlayer2() {
+    gameState.setCurrentPlayer(Game.CLIENT);
     return gameLobby.requestCardFromClient(gameState);
   }
 
@@ -142,28 +162,6 @@ public class GameHost extends Game {
   }
 
   public GameState dealCardsToClient(){
-    // TODO: 2020-11-13 GameLobby code not complete for this method to work.
      return gameLobby.sendCardToClient((ArrayList<Card>) deck.getHand(handSize), gameState);
-  }
-
-  public Object handleCardMenu(Object obj){
-    return obj;
-  }
-
-  public Menu getCardMenu(){
-    ArrayList<MenuChoiceBaseClass> cardMenuList = new ArrayList<>();
-    GameHost host = this;
-    Menu cardMenu = new Menu() {
-      @Override
-      public ArrayList<MenuChoiceBaseClass> setInitialMenu() {
-        final char[] key = {'1'};
-        gameState.getPlayer(HOST).getCardOnHandAsList().forEach((card )-> {
-            cardMenuList.add(new MenuChoiceFunction(card.toString(), key[0], host::handleCardMenu, Character.getNumericValue(key[0])));
-            key[0]++;
-          });
-        return cardMenuList;
-      }
-    };
-    return cardMenu;
   }
 }

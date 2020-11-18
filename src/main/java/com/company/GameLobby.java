@@ -4,6 +4,7 @@ import com.company.interfaces.ComHandler;
 import com.company.utils.GameLobbyMenu;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameLobby {
 
@@ -20,25 +21,45 @@ public class GameLobby {
     }
 
     public void startLocalGame(Object o) {
-        System.out.println("i startLocalGame");
-
-        // be om namnet på spelare 1
-        // be om namnet på spelare 2
-        // starta en GameHost med spelare 1
-        // starta en GameClient med spelare 2
-        // kör GameHost
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
+        Player player1 = new Player(inputPlayerName("player 1"));
+        Player player2 = new Player(inputPlayerName("player 2"));
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
-        GameState gs = new GameState(50, players);
+        GameState gs = new GameState(inputGameSettings("Enter points to win", 10, 20, 15), players);
         ComHandler comHandler = new LocalGameHandler();
         ScreenRenderer renderer = new ScreenRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
-        GameHost host = new GameHost(this, renderer, gs, 5);
-        GameClient client = new GameClient(this, renderer, gs);
+        GameHost host = new GameHost(this, renderer, gs, inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
+//        GameClient client = new GameClient(this, renderer, gs);
         host.runGame();
+    }
+
+    public String inputPlayerName(String player) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nEnter name for " + player + ": ");
+        return scanner.nextLine();
+    }
+
+    public int inputGameSettings(String prompt, int min, int max, int def) {
+        boolean isValueOk;
+        int value;
+        String input;
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.printf("\n%s (%d - %d) [%d]: ", prompt, min, max, def);
+            input = scanner.nextLine();
+            if (input.isEmpty()) {
+                input = String.format("%d", def);
+            }
+            try {
+                value = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                value = -1;
+            }
+            isValueOk = value >= min && value <= max;
+        } while (!isValueOk);
+        return value;
     }
 
     public void setDispatcher(Dispatcher dispatcher) {
@@ -59,8 +80,8 @@ public class GameLobby {
        return dispatcher.getCardFromClient(gameState);
     }
 
-    public void addToClientVictoryPile(){
-
+    public void addToClientVictoryPile(Card cardToClient, GameState gameState){
+        dispatcher.addToClientVictoryPile(cardToClient, gameState);
     }
 
     public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState){

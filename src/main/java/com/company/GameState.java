@@ -6,9 +6,14 @@ public class GameState {
   private ArrayList<Card> playedCards = new ArrayList<>();
   private int pointsToWin;
   private ArrayList<Player> players = new ArrayList<>();
-  private byte startPlayer = 0;
-  private int winner = -1;
+  private int startPlayer = 0;
+  private int currentPlayer = 0;
 
+  // -1: game still going,
+  //  0: host (player 1) won,
+  //  1: client (player 2) won,
+  //  2: game over, a tie
+  private int winner = -1;
 
   public GameState() {
     }
@@ -18,8 +23,16 @@ public class GameState {
     this.players = players;
   }
 
+  public int getCurrentPlayer() {
+    return currentPlayer;
+  }
+
+  public void setCurrentPlayer(int currentPlayer) {
+    this.currentPlayer = currentPlayer;
+  }
+
   public boolean clearPlayedCards() {
-    return playedCards.removeAll(playedCards.subList(0, 1));
+    return playedCards.removeAll(playedCards);
   }
 
   public boolean addPlayedCard(Card playedCard) {
@@ -30,7 +43,7 @@ public class GameState {
     return playedCards;
   }
 
-  public byte changeStartPlayer() {
+  public int changeStartPlayer() {
     if(this.startPlayer == 1){
       this.startPlayer = 0;
     } else {
@@ -43,7 +56,7 @@ public class GameState {
     return players.get(index);
   }
 
-  public byte getStartPlayer() {
+  public int getStartPlayer() {
     return startPlayer;
   }
 

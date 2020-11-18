@@ -16,4 +16,8 @@ public class Game {
         this.gameBoard = gameBoard;
         this.gameState = gameState;
     }
+
+    public GameState getGameState() {
+        return gameState;
+    }
 }

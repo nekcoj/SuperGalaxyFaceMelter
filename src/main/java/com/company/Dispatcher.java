@@ -5,7 +5,7 @@ import com.company.interfaces.Renderer;
 
 import java.util.ArrayList;
 
-public class Dispatcher implements ComHandler {
+public class Dispatcher {
 
     ComHandler comHandler;
     Renderer renderer;
@@ -15,25 +15,19 @@ public class Dispatcher implements ComHandler {
         this.renderer = renderer;
     }
 
-    @Override
     public Card getCardFromClient(GameState gameState) {
-       return comHandler.getCardFromClient(gameState);
+       return comHandler.getCardFromClient(renderer, gameState);
     }
 
-    @Override
-    public void addToVictoryPileClient(Card card) {
-        comHandler.addToVictoryPileClient(card);
+    public void addToClientVictoryPile(Card card, GameState gameState) {
+        comHandler.addToClientVictoryPile(card, gameState);
     }
 
-    @Override
     public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
         return comHandler.sendCardToClient(cardsToClient, gameState);
     }
 
-    @Override
     public void renderClient(GameState gameState, int playerToDraw) {
         renderer.render(gameState, playerToDraw);
     }
-
-
 }

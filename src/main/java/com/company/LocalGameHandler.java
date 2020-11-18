@@ -1,9 +1,7 @@
 package com.company;
 
 import com.company.interfaces.ComHandler;
-import com.company.utils.Menu;
-import com.company.utils.MenuChoiceBaseClass;
-import com.company.utils.MenuChoiceFunction;
+import com.company.interfaces.Renderer;
 
 import java.util.ArrayList;
 
@@ -11,39 +9,15 @@ public class LocalGameHandler implements ComHandler {
 
     public LocalGameHandler(){}
 
+    @Override
+    public Card getCardFromClient(Renderer renderer, GameState gameState) {
+        renderer.render(gameState, Game.CLIENT);
+        return renderer.getCard(gameState, Game.CLIENT);
+    }
 
     @Override
-    public Card getCardFromClient(GameState gameState) {
-        Menu cardMenu = getCardMenu(gameState);
-        System.out.println("cardmenu: " + cardMenu);
-        int chosenCard = (Integer) cardMenu.handleFunctionMenu(true);
-        return gameState.getPlayer(Game.CLIENT).getCard(chosenCard);
-    }
-
-    public Menu getCardMenu(GameState gameState){
-        ArrayList<MenuChoiceBaseClass> cardMenuList = new ArrayList<>();
-        LocalGameHandler gameHandler = this;
-        return new Menu() {
-            @Override
-            public ArrayList<MenuChoiceBaseClass> setInitialMenu() {
-                final char[] key = {'1'};
-                gameState.getPlayer(Game.CLIENT).getCardOnHandAsList().forEach((card )-> {
-                    cardMenuList.add(new MenuChoiceFunction(card.toString(), key[0], gameHandler::handleCardMenu, Character.getNumericValue(key[0])));
-                    key[0]++;
-                });
-                return cardMenuList;
-            }
-        };
-    }
-
-    public Object handleCardMenu(Object obj){
-        return obj;
-    }
-
-
-    @Override
-    public void addToVictoryPileClient(Card card) {
-
+    public void addToClientVictoryPile(Card card, GameState gameState) {
+        gameState.getPlayer(Game.CLIENT).addToVictoryPile(card);
     }
 
     @Override
@@ -52,6 +26,7 @@ public class LocalGameHandler implements ComHandler {
         return gameState;
     }
 
+    // TODO: 2020-11-18 Implement 
     @Override
     public void renderClient(GameState gameState, int playerToDraw) {
 
