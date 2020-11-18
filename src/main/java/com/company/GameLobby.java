@@ -26,12 +26,11 @@ public class GameLobby {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
-        int test = inputGameSettings("Enter points to win", 10, 20, 15);
-        GameState gs = new GameState(15, players);
+        GameState gs = new GameState(inputGameSettings("Enter points to win", 10, 20, 15), players);
         ComHandler comHandler = new LocalGameHandler();
         ScreenRenderer renderer = new ScreenRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
-        GameHost host = new GameHost(this, renderer, gs, 5);
+        GameHost host = new GameHost(this, renderer, gs, inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
 //        GameClient client = new GameClient(this, renderer, gs);
         host.runGame();
     }
