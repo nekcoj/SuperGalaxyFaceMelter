@@ -3,7 +3,7 @@ package com.company;
 import com.company.interfaces.Renderer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GameHost extends Game {
@@ -98,13 +98,13 @@ public class GameHost extends Game {
       }
 
       if (winner == HOST) {
-        gameLobby.sendCardToClient(new ArrayList<>(Arrays.asList(deck.getTopCard())), gameState);
+        gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
       } else {
         gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
       }
     } else {
       gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      gameLobby.sendCardToClient(new ArrayList<>(Arrays.asList(deck.getTopCard())), gameState);
+      gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
     }
   }
 
@@ -133,7 +133,7 @@ public class GameHost extends Game {
   public void handleWinnerCardForPlayer2(Card card1, Card card2){
     gameLobby.addToClientVictoryPile(card2, gameState);
     card1.decreasePower(card2.getCurrentPower());
-    gameLobby.sendCardToClient(new ArrayList<>(Arrays.asList(card1)), gameState);
+    gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(card1)), gameState);
   }
 
   public boolean isGameOver() {
