@@ -18,8 +18,9 @@ public class LocalGameHandler implements ComHandler {
         return renderer.getCard(gameState, Game.CLIENT);
     }
 
+    // TODO: 2020-11-18 Implement
     @Override
-    public void addToVictoryPileClient(Card card) {
+    public void addToClientVictoryPile(Card card) {
 
     }
 
@@ -29,6 +30,7 @@ public class LocalGameHandler implements ComHandler {
         return gameState;
     }
 
+    // TODO: 2020-11-18 Implement 
     @Override
     public void renderClient(GameState gameState, int playerToDraw) {
 

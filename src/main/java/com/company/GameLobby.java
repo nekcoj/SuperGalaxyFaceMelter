@@ -52,6 +52,7 @@ public class GameLobby {
        return dispatcher.getCardFromClient(gameState);
     }
 
+    // TODO: 2020-11-18 Use dispatcher...
     public void addToClientVictoryPile(){
 
     }

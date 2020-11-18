@@ -2,7 +2,6 @@ package com.company;
 
 import com.company.interfaces.Renderer;
 
-import javax.net.ssl.HostnameVerifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +22,10 @@ public class GameHost extends Game {
 
   private Deck deck = new Deck(cardSettings);
   private int handSize;
-  //private int pointsToWin;
 
-  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize/*, int pointsToWin*/) {
+  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize) {
     super(gameLobby, renderer, gameState);
     this.handSize = handSize;
-    //this.pointsToWin = pointsToWin;
   }
 
   /**
@@ -90,6 +87,7 @@ public class GameHost extends Game {
     return winner;
   }
 
+  // TODO: 2020-11-18 Connect to dispatcher 
   public void finalizingRound(int winner, Card card1, Card card2) {
     if (winner >= 0) {
       if (winner == gameState.getStartPlayer()) {
@@ -139,7 +137,6 @@ public class GameHost extends Game {
   }
 
   public GameState dealCardsToClient(){
-    // TODO: 2020-11-13 GameLobby code not complete for this method to work.
      return gameLobby.sendCardToClient((ArrayList<Card>) deck.getHand(handSize), gameState);
   }
 }

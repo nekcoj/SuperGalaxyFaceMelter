@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface ComHandler {
 
    public Card getCardFromClient(Renderer renderer, GameState gameState);
-   public void addToVictoryPileClient(Card card);
+   public void addToClientVictoryPile(Card card);
    public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState);
    public void renderClient(GameState gameState, int playerToDraw);
 
