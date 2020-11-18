@@ -9,7 +9,7 @@ import com.company.utils.TextUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ScreenRenderer implements Renderer {
+public class ConsoleRenderer implements Renderer {
 
   private static final String topLeft = "╔";
   private static final String lineHor = "═";
@@ -32,17 +32,34 @@ public class ScreenRenderer implements Renderer {
     if(gameState.isGameOver()){
       output += generateGameOverRow(gameState);
     } else {
-      if(gameState.getCurrentPlayer() == playerToDraw){
-        output += String.format("%s%s", TextUtil.pimpString(String.format("\n%s", gameState.getPlayer(playerToDraw).getName()), TextUtil.LEVEL_STRESSED), ", please select a card: ");
+      if (gameState.isRoundOver()) {
+        output += generateRoundWinnerRow(gameState);
       } else {
-        output += "Waiting for player...";
+        if (gameState.getCurrentPlayer() == playerToDraw) {
+          output += String.format("%s%s",
+                  TextUtil.pimpString(String.format("\n%s", gameState.getPlayer(playerToDraw).getName()), TextUtil.LEVEL_STRESSED),
+                  ", please select a card: ");
+        } else {
+          output += "Waiting for player...";
+        }
       }
     }
     System.out.println(output);
   }
 
   public String generateGameOverRow(GameState gameState) {
-    return String.format("Game Over!\nWinner is %s", gameState.getPlayer(gameState.getWinner()).getName());
+    return String.format("Game Over!\nWinner is %s with the score %d",
+           TextUtil.pimpString(gameState.getPlayer(gameState.getGameWinner()).getName(), TextUtil.LEVEL_INFO),
+            gameState.getPlayer(gameState.getGameWinner()).getScore());
+  }
+
+  public String generateRoundWinnerRow(GameState gameState) {
+    if (gameState.getRoundWinner() == Game.TIE) {
+      return "Round is a tie, both players lose their cards!";
+    }
+    return String.format("Round winner is %s with the current score %d",
+            TextUtil.pimpString(gameState.getPlayer(gameState.getRoundWinner()).getName(), TextUtil.LEVEL_INFO),
+            gameState.getPlayer(gameState.getRoundWinner()).getScore());
   }
 
   public String generateCardsString(ArrayList<Card> cards){

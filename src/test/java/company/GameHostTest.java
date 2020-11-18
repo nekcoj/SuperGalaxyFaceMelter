@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameHostTest {
 
   private GameHost gameHost;
+  private GameState gameState;
   Player p1 = new Player("Player 1");
   Player p2 = new Player("Player 2");
 
@@ -33,13 +34,13 @@ class GameHostTest {
     ArrayList<Player> players = new ArrayList<>();
     players.add(p1);
     players.add(p2);
-    GameState gs = new GameState(1, players);
-    ScreenRenderer renderer = new ScreenRenderer();
+    gameState = new GameState(1, players);
+    ConsoleRenderer renderer = new ConsoleRenderer();
     ComHandler comHandler = new LocalGameHandler();
     Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
     GameLobby gameLobby = new GameLobby(false);
     gameLobby.setDispatcher(dispatcher);
-    gameHost = new GameHost(gameLobby, new ScreenRenderer(), gs, 5);
+    gameHost = new GameHost(gameLobby, new ConsoleRenderer(), gameState, 5, true);
   }
 
   @Test
@@ -113,12 +114,12 @@ class GameHostTest {
 
   @Test
   void isGameOverTest() {
-    int winner = 0;
     Card card1 = new Card(10, "Super Galaxy Face Melter");
     Card card2 = new Card(5, "Angry teacher");
-    gameHost.finalizingRound(winner, card1, card2);
+    gameHost.finalizingRound(0, card1, card2);
     System.out.println("-------- isGameOver Test --------");
     assertTrue(gameHost.isGameOver(), "Game is over!");
+    assertEquals(gameState.getGameWinner(), 0, "Wrong player won!");
   }
 
   @Test
