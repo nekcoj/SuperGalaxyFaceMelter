@@ -78,7 +78,7 @@ class GameHostTest {
     assertNotNull(card1, "card1 is null!");
     assertNotNull(card2, "card2 is null!");
     assertEquals(0, gameHost.getGameState().getStartPlayer());
-    assertEquals(-1, gameHost.getRoundWinner(card1, card2));
+    assertEquals(2, gameHost.getRoundWinner(card1, card2));
   }
 
   @Test
