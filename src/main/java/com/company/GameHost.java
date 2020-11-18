@@ -3,6 +3,7 @@ package com.company;
 import com.company.interfaces.Renderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameHost extends Game {
@@ -87,28 +88,52 @@ public class GameHost extends Game {
     return winner;
   }
 
-  // TODO: 2020-11-18 Connect to dispatcher 
   public void finalizingRound(int winner, Card card1, Card card2) {
+
     if (winner >= 0) {
       if (winner == gameState.getStartPlayer()) {
-        gameState.getPlayer(winner).addToVictoryPile(card2);
-        card1.decreasePower(card2.getCurrentPower());
-        gameState.getPlayer(winner).addCardToHand(card1);
+        handleWinnerCardForStartPlayer(winner, card1, card2);
       } else {
-        gameState.getPlayer(winner).addToVictoryPile(card1);
-        card2.decreasePower(card1.getCurrentPower());
-        gameState.getPlayer(winner).addCardToHand(card2);
+        handleWinnerCardForSecondPlayer(winner, card2, card1);
       }
 
       if (winner == HOST) {
-        gameState.getPlayer(CLIENT).addCardToHand(deck.getTopCard());
+        gameLobby.sendCardToClient(new ArrayList<>(Arrays.asList(deck.getTopCard())), gameState);
       } else {
         gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
       }
     } else {
       gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      gameState.getPlayer(CLIENT).addCardToHand(deck.getTopCard());
+      gameLobby.sendCardToClient(new ArrayList<>(Arrays.asList(deck.getTopCard())), gameState);
     }
+  }
+
+  public void handleWinnerCardForStartPlayer(int winner, Card card1, Card card2){
+    if (winner == HOST) {
+      handleWinnerCardForPlayer1(card1, card2);
+    } else {
+      handleWinnerCardForPlayer2(card1, card2);
+    }
+  }
+
+  public void handleWinnerCardForSecondPlayer(int winner, Card card1, Card card2){
+      if (winner == CLIENT) {
+      handleWinnerCardForPlayer2(card1, card2);
+    } else {
+      handleWinnerCardForPlayer1(card1, card2);
+    }
+  }
+
+  public void handleWinnerCardForPlayer1(Card card1, Card card2){
+    gameState.getPlayer(HOST).addToVictoryPile(card2);
+    card1.decreasePower(card2.getCurrentPower());
+    gameState.getPlayer(HOST).addCardToHand(card1);
+  }
+
+  public void handleWinnerCardForPlayer2(Card card1, Card card2){
+    gameLobby.addToClientVictoryPile(card2, gameState);
+    card1.decreasePower(card2.getCurrentPower());
+    gameLobby.sendCardToClient(new ArrayList<>(Arrays.asList(card1)), gameState);
   }
 
   public boolean isGameOver() {

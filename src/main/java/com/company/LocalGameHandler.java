@@ -2,9 +2,6 @@ package com.company;
 
 import com.company.interfaces.ComHandler;
 import com.company.interfaces.Renderer;
-import com.company.utils.Menu;
-import com.company.utils.MenuChoiceBaseClass;
-import com.company.utils.MenuChoiceFunction;
 
 import java.util.ArrayList;
 
@@ -18,10 +15,9 @@ public class LocalGameHandler implements ComHandler {
         return renderer.getCard(gameState, Game.CLIENT);
     }
 
-    // TODO: 2020-11-18 Implement
     @Override
-    public void addToClientVictoryPile(Card card) {
-
+    public void addToClientVictoryPile(Card card, GameState gameState) {
+        gameState.getPlayer(Game.CLIENT).addToVictoryPile(card);
     }
 
     @Override

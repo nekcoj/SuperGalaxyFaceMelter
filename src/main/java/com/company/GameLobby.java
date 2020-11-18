@@ -52,9 +52,8 @@ public class GameLobby {
        return dispatcher.getCardFromClient(gameState);
     }
 
-    // TODO: 2020-11-18 Use dispatcher...
-    public void addToClientVictoryPile(){
-
+    public void addToClientVictoryPile(Card cardToClient, GameState gameState){
+        dispatcher.addToClientVictoryPile(cardToClient, gameState);
     }
 
     public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState){
