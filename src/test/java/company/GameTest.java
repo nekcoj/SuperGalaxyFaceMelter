@@ -1,5 +1,6 @@
-package com.company;
+package company;
 
+import com.company.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ class GameTest  {
 
     @BeforeEach
     void setUp() {
-        game = new Game(new GameLobby(false), new ScreenRenderer(), gs);
+        game = new Game(new GameLobby(false), new ConsoleRenderer(), gs);
     }
 
     @Test

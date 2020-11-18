@@ -28,7 +28,7 @@ public class LocalGameHandler implements ComHandler {
 
     // TODO: 2020-11-18 Implement 
     @Override
-    public void renderClient(GameState gameState, int playerToDraw) {
-
+    public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
+        renderer.render(gameState, playerToDraw);
     }
 }

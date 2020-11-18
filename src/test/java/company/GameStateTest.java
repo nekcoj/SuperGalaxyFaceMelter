@@ -1,4 +1,6 @@
-package com.company;
+package company;
+
+import com.company.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -65,7 +67,7 @@ class GameStateTest {
   void isGameOver(){
     System.out.println("-------- isGameOver Test --------");
     assertFalse(gs.isGameOver(), "isGameOver returned wrong boolean!");
-    gs.setWinner(Game.HOST);
+    gs.setGameWinner(Game.HOST);
     assertTrue(gs.isGameOver(), "isGameOver returned wrong boolean!");
   }
 }

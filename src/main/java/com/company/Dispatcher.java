@@ -28,6 +28,6 @@ public class Dispatcher {
     }
 
     public void renderClient(GameState gameState, int playerToDraw) {
-        renderer.render(gameState, playerToDraw);
+        comHandler.renderClient(renderer, gameState, playerToDraw);
     }
 }

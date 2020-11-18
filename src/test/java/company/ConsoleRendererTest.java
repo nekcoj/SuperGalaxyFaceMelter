@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ScreenRendererTest {
+class ConsoleRendererTest {
 
-  ScreenRenderer sr = new ScreenRenderer();
+  ConsoleRenderer sr = new ConsoleRenderer();
   ArrayList<Card> cards = new ArrayList<>();
   Player p1 = new Player("Player 1");
   Player p2 = new Player("Player 2");
@@ -47,7 +47,7 @@ class ScreenRendererTest {
   void generateRow(){
     System.out.println("-------- generateRow Test --------");
     String str = sr.generateRow("<", "!", ">");
-    assertEquals(str.length(), ScreenRenderer.CARD_WIDTH, "Got incorrect row length!");
+    assertEquals(str.length(), ConsoleRenderer.CARD_WIDTH, "Got incorrect row length!");
     assertTrue(str.charAt(0) == '<', "Wrong character at index 0!");
     assertTrue(str.charAt(1) == '!', "Wrong character at index 1!");
     assertTrue(str.charAt(str.length() - 1) == '>', "Wrong character at index .length() - 1!");
@@ -78,9 +78,17 @@ class ScreenRendererTest {
   @Test
   void generateGameOverRow(){
     System.out.println("-------- generateGameOverRow Test --------");
-    String str = "Game Over!\nWinner is Player 1";
-    gs.setWinner(Game.HOST);
-    assertTrue(sr.generateGameOverRow(gs).equals(str), "generateGameOverRow returned incorrect value!");
+    String str = "Game Over!";
+    gs.setGameWinner(Game.HOST);
+    assertTrue(sr.generateGameOverRow(gs).contains(str), "generateGameOverRow returned incorrect value!");
+  }
+
+  @Test
+  void generateRoundWinnerRow(){
+    System.out.println("-------- generateRoundWinnerRow Test --------");
+    String str = "Round winner";
+    gs.setRoundWinner(Game.HOST);
+    assertTrue(sr.generateRoundWinnerRow(gs).contains(str), "generateRoundWinnerRow returned incorrect value!");
   }
 
   @Test

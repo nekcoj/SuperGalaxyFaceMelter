@@ -13,7 +13,8 @@ public class GameState {
   //  0: host (player 1) won,
   //  1: client (player 2) won,
   //  2: game over, a tie
-  private int winner = -1;
+  private int gameWinner = -1;
+  private int roundWinner = -1;
 
   public GameState() {
     }
@@ -64,15 +65,27 @@ public class GameState {
     return pointsToWin;
   }
 
-  public int getWinner() {
-    return winner;
+  public int getGameWinner() {
+    return gameWinner;
   }
 
-  public void setWinner(int winner) {
-    this.winner = winner;
+  public void setGameWinner(int gameWinner) {
+    this.gameWinner = gameWinner;
   }
 
   public boolean isGameOver(){
-    return getWinner() > -1;
+    return getGameWinner() > -1;
+  }
+
+  public int getRoundWinner() {
+    return roundWinner;
+  }
+
+  public void setRoundWinner(int roundWinner) {
+    this.roundWinner = roundWinner;
+  }
+
+  public boolean isRoundOver() {
+    return getRoundWinner() > -1;
   }
 }

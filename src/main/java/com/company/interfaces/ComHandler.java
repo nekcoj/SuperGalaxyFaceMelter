@@ -10,6 +10,6 @@ public interface ComHandler {
    public Card getCardFromClient(Renderer renderer, GameState gameState);
    public void addToClientVictoryPile(Card card, GameState gameState);
    public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState);
-   public void renderClient(GameState gameState, int playerToDraw);
+   public void renderClient(Renderer renderer, GameState gameState, int playerToDraw);
 
 }

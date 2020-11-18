@@ -1,5 +1,6 @@
-package com.company;
+package company;
 
+import com.company.GameLobby;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
