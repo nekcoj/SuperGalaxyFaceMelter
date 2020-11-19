@@ -1,22 +1,21 @@
 package com.company.network;
 
-import com.company.Card;
-import com.company.GameState;
 import com.company.interfaces.ComHandler;
-import com.company.interfaces.Renderer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.net.Socket;
 
 abstract public class NetworkGameHandler implements ComHandler {
 
+  protected static final int PORT = 42069;
+
+  protected Socket socket;
   protected ObjectOutputStream oos;
   protected ObjectInputStream ois;
 
   public NetworkGameHandler(){
-    getStreams();
   }
 
   public ObjectOutputStream getOutputStream() {
@@ -27,7 +26,18 @@ abstract public class NetworkGameHandler implements ComHandler {
     return ois;
   }
 
-  abstract void getStreams();
+  public void getStreams() {
+    try {
+      oos = new ObjectOutputStream(socket.getOutputStream());
+      ois = new ObjectInputStream(socket.getInputStream());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-  abstract void closeServer() throws IOException;
+  void close() throws IOException {
+    oos.close();
+    ois.close();
+    socket.close();
+  }
 }

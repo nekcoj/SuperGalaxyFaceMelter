@@ -9,22 +9,16 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ClientHandler extends NetworkGameHandler{
-  Socket socket;
+
 
   public ClientHandler(String ipaddress) throws IOException {
-
-    socket = new Socket(ipaddress, ServerHandler.PORT);
-
+    this(ipaddress, NetworkGameHandler.PORT);
   }
 
-  @Override
-  void getStreams() {
-
-  }
-
-  @Override
-  void closeServer() throws IOException {
-    socket.close();
+  public ClientHandler(String ipaddress, int port) throws IOException {
+    super();
+    socket = new Socket(ipaddress, port);
+    getStreams();
   }
 
   @Override

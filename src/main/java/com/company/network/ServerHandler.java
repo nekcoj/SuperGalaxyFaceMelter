@@ -10,27 +10,28 @@ import java.util.ArrayList;
 
 public class ServerHandler extends NetworkGameHandler{
 
-  protected static final int PORT = 42069;
   private ServerSocket serverSocket;
 
   public ServerHandler() throws IOException {
+    super();
     serverSocket = new ServerSocket(PORT);
+
   }
   public ServerHandler(int port) throws IOException {
+    super();
     serverSocket = new ServerSocket(port);
   }
 
   public void startServer() throws IOException {
-    serverSocket.accept();
+    System.out.println("Server will accept");
+    socket = serverSocket.accept();
+    getStreams();
   }
 
   @Override
-  void getStreams() {
-
-  }
-
-  @Override
-  void closeServer() throws IOException {
+  void close() throws IOException {
+    System.out.println("closing server");
+    super.close();
     serverSocket.close();
   }
 

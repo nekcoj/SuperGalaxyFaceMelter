@@ -27,7 +27,7 @@ class ServerHandlerTest{
     ServerHandler serverHandler = new ServerHandler(12345);
     System.out.println("ServerHandler in setup: " + serverHandler);
     assertNotNull(serverHandler.getOutputStream(), "OutputStream returned null!");
-    serverHandler.closeServer();
+    serverHandler.close();
   }
 
   @Test
@@ -36,12 +36,11 @@ class ServerHandlerTest{
     ServerHandler serverHandler = new ServerHandler(13246);
     System.out.println("ServerHandler in setup: " + serverHandler);
     assertNotNull(serverHandler.getInputStream(), "InputStream returned null!");
-    serverHandler.closeServer();
+    serverHandler.close();
   }
 
   @AfterAll
   static void end() throws IOException {
-    System.out.println("======== ENDING NetworkGameHandler TESTS ========");
-
+    System.out.println("======== ENDING ServerHandler TESTS ========");
   }
 }
