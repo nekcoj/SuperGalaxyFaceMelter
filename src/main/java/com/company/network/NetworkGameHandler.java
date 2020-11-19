@@ -5,6 +5,7 @@ import com.company.GameState;
 import com.company.interfaces.ComHandler;
 import com.company.interfaces.Renderer;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -18,26 +19,6 @@ abstract public class NetworkGameHandler implements ComHandler {
     getStreams();
   }
 
-  @Override
-  public Card getCardFromClient(Renderer renderer, GameState gameState) {
-    return null;
-  }
-
-  @Override
-  public void addToClientVictoryPile(Card card) {
-
-  }
-
-  @Override
-  public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
-    return null;
-  }
-
-  @Override
-  public void renderClient(GameState gameState, int playerToDraw) {
-
-  }
-
   public ObjectOutputStream getOutputStream() {
     return oos;
   }
@@ -47,4 +28,6 @@ abstract public class NetworkGameHandler implements ComHandler {
   }
 
   abstract void getStreams();
+
+  abstract void closeServer() throws IOException;
 }
