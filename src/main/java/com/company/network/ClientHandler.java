@@ -23,6 +23,7 @@ public class ClientHandler extends NetworkComHandler {
 
   @Override
   public Card getCardFromClient(Renderer renderer, GameState gameState) {
+    renderer.render(gameState, Game.CLIENT);
     Card card = renderer.getCard(gameState, Game.CLIENT);
     Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, new Card[]{card});
     send(p);
@@ -30,8 +31,9 @@ public class ClientHandler extends NetworkComHandler {
   }
 
   @Override
-  public void addToClientVictoryPile(Card card, GameState gameState) {
-
+  public GameState addToClientVictoryPile(Card card, GameState gameState) {
+    gameState.getPlayer(Game.CLIENT).addToVictoryPile(card);
+    return gameState;
   }
 
   @Override

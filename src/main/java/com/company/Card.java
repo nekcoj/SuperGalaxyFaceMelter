@@ -2,7 +2,9 @@ package com.company;
 
 import com.company.utils.TextUtil;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
 
     private int power;
     private String name;

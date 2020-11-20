@@ -30,7 +30,7 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   @Override
-  void close() throws IOException {
+  public void close() throws IOException {
     System.out.println("closing server");
     super.close();
     serverSocket.close();
@@ -57,17 +57,15 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   @Override
-  public void addToClientVictoryPile(Card card, GameState gameState) {
-
+  public GameState addToClientVictoryPile(Card card, GameState gameState) {
+    Packet packet = new Packet(CommandType.ADD_TO_CLIENT_VICTORY_PILE,new Object[]{card, gameState});
+    send(packet);
+    return gameState;
   }
 
   @Override
   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
-    Object[] params = new Object[2];
-    params[0] = cardsToClient;
-    params[1] = gameState;
-
-    Packet packet = new Packet(CommandType.SEND_CARD_TO_CLIENT, params);
+    Packet packet = new Packet(CommandType.SEND_CARD_TO_CLIENT, new Object[]{cardsToClient, gameState});
     send(packet);
 
     packet = receive();

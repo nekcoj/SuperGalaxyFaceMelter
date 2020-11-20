@@ -8,13 +8,9 @@ import com.company.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ConsoleRenderer implements Renderer {
-  @Override
-  // TODO: 2020-11-20 Add code to get name from the keyboard 
-  public String getPlayerNameFromClient() {
-    return "Player Two";
-  }
 
   private static final String topLeft = "╔";
   private static final String lineHor = "═";
@@ -152,5 +148,12 @@ public class ConsoleRenderer implements Renderer {
       }
     };
     return cardMenu;
+  }
+
+  @Override
+  public String getPlayerName() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("\nEnter name: ");
+    return scanner.nextLine();
   }
 }

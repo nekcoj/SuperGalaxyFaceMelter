@@ -2,9 +2,11 @@ package com.company;
 
 import com.company.interfaces.ComHandler;
 import com.company.network.ClientHandler;
+import com.company.network.ServerHandler;
 import com.company.utils.GameLobbyMenu;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -35,18 +37,15 @@ public class GameLobby {
         dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, gs,
                 inputGameSettings("Enter amount of cards on hand", 1, 8, 5), true);
-//        GameClient client = new GameClient(this, renderer, gs);
         host.runGame();
     }
 
-    // TODO: 2020-11-20 Move to Renderer...
     public String inputPlayerName(String player) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nEnter name for " + player + ": ");
         return scanner.nextLine();
     }
 
-    // TODO: 2020-11-20 Move to Renderer...
     public int inputGameSettings(String prompt, int min, int max, int def) {
         boolean isValueOk;
         int value;
@@ -73,15 +72,41 @@ public class GameLobby {
     }
 
     public void startNetworkGame(Object o) {
-        // Create a GameHost
-        System.out.println("i startNetworkGame");
+        Player player1 = new Player(inputPlayerName("player 1"));
+        Player player2 = new Player("Player 2");
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        GameState gameState = new GameState(
+            inputGameSettings("Enter points to win", 10, 20, 15), players);
+        ConsoleRenderer renderer = new ConsoleRenderer();
+        ServerHandler serverHandler = null;
+        try {
+          serverHandler = new ServerHandler();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        dispatcher = new Dispatcher(serverHandler, renderer);
+
+        GameHost gameHost = new GameHost(this, renderer, gameState,
+            inputGameSettings("Enter amount of cards on hand", 1, 8, 5), false);
+      try {
+        assert serverHandler != null;
+        serverHandler.startServer();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      gameHost.runGame();
     }
 
     public void connectToNetworkGame(Object o) {
         ComHandler comHandler = null;
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter ip to connect to [localhost]: ");
+        String ipaddress = scanner.nextLine();
+        if(ipaddress.isEmpty()) ipaddress = "localhost";
         try {
-            comHandler = new ClientHandler("localhost");
+            comHandler = new ClientHandler(ipaddress);
         } catch (IOException e) {
             e.printStackTrace();
             return;

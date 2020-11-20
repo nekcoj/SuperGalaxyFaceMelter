@@ -18,7 +18,7 @@ public class Dispatcher {
   }
 
   public String getPlayerNameFromClient() {
-    return comHandler.getPlayerNameFromClient(renderer.getPlayerNameFromClient());
+    return comHandler.getPlayerNameFromClient(renderer.getPlayerName());
   }
 
   public Card getCardFromClient(GameState gameState) {
@@ -41,8 +41,8 @@ public class Dispatcher {
     NetworkComHandler nch = (NetworkComHandler)comHandler;
     Packet p = nch.receive();
     GameState gs = null;
-
-    System.out.printf("getCommandFromHost: command is %d!\n", p.getCommandType());
+    Card card = null;
+    System.out.printf("getCommandFromHost: command is %s!\n", p.getCommandType());
 
     switch (p.getCommandType()) {
       case RENDER_CLIENT:
@@ -52,16 +52,20 @@ public class Dispatcher {
         break;
 
       case ADD_TO_CLIENT_VICTORY_PILE:
+        card = (Card)p.getParams()[0];
+        gs =  (GameState)p.getParams()[1];
+        addToClientVictoryPile(card, gs);
         break;
 
       case GET_CARD_FROM_CLIENT:
         gs = (GameState) p.getParams()[0];
-        Card card = getCardFromClient(gs);
+        getCardFromClient(gs);
         break;
 
       case GET_PLAYER_NAME_FROM_CLIENT:
-        String name = renderer.getPlayerNameFromClient();
+        String name = renderer.getPlayerName();
         nch.getPlayerNameFromClient(name);
+        System.out.println(name);
         break;
 
       case SEND_CARD_TO_CLIENT:
