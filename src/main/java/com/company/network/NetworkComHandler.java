@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-abstract public class NetworkGameHandler implements ComHandler {
+abstract public class NetworkComHandler implements ComHandler {
 
   protected static final int PORT = 42069;
 
@@ -15,7 +15,7 @@ abstract public class NetworkGameHandler implements ComHandler {
   protected ObjectOutputStream oos;
   protected ObjectInputStream ois;
 
-  public NetworkGameHandler(){
+  public NetworkComHandler(){
   }
 
   public ObjectOutputStream getOutputStream() {
@@ -33,6 +33,28 @@ abstract public class NetworkGameHandler implements ComHandler {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public void send(Packet packet) {
+    try {
+      oos.writeObject(packet);
+      oos.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public Packet receive() {
+    Packet packet = null;
+    try {
+      packet = (Packet)ois.readObject();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+
+    return packet;
   }
 
   void close() throws IOException {

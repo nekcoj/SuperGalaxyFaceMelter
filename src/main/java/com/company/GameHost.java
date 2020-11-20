@@ -42,6 +42,10 @@ public class GameHost extends Game {
    *      Byt startspelare -> gameState.changeStartPlayer()
    */
   public void runGame() {
+    if (!isLocalGame) {
+      getPlayerNameFromClient();
+    }
+
     dealCards();
     do {
       gameState.setRoundWinner(-1);
@@ -59,6 +63,10 @@ public class GameHost extends Game {
     redrawGameBoard();
   }
 
+  private void getPlayerNameFromClient() {
+    gameState.getPlayer(Game.CLIENT).setName(gameLobby.getPlayerNameFromClient());
+  }
+
   private void redrawGameBoard() {
     gameBoard.render(gameState, Game.HOST);
     if (!isLocalGame) {
@@ -66,12 +74,15 @@ public class GameHost extends Game {
     }
   }
 
+  // TODO: 2020-11-20 Move keyboard input to rendererererer
   private void continueGame() {
-    System.out.println("Press enter to continue game..");
-    try {
-      System.in.read();
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (isLocalGame) {
+      System.out.println("Press enter to continue game..");
+      try {
+        System.in.read();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 

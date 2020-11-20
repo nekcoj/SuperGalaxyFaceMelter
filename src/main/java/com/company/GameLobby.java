@@ -1,8 +1,10 @@
 package com.company;
 
 import com.company.interfaces.ComHandler;
+import com.company.network.ClientHandler;
 import com.company.utils.GameLobbyMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,12 +39,14 @@ public class GameLobby {
         host.runGame();
     }
 
+    // TODO: 2020-11-20 Move to Renderer...
     public String inputPlayerName(String player) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nEnter name for " + player + ": ");
         return scanner.nextLine();
     }
 
+    // TODO: 2020-11-20 Move to Renderer...
     public int inputGameSettings(String prompt, int min, int max, int def) {
         boolean isValueOk;
         int value;
@@ -74,8 +78,19 @@ public class GameLobby {
     }
 
     public void connectToNetworkGame(Object o) {
-        // Create a GameClient
-        System.out.println("i connectToNetworkGame");
+        ComHandler comHandler = null;
+
+        try {
+            comHandler = new ClientHandler("localhost");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        ConsoleRenderer renderer = new ConsoleRenderer();
+        dispatcher = new Dispatcher(comHandler, renderer);
+        GameClient gameClient = new GameClient(this);
+        gameClient.runGame();
     }
 
     public Card requestCardFromClient(GameState gameState){
@@ -92,5 +107,13 @@ public class GameLobby {
 
     public void renderClient(GameState gs, int playerToDraw){
         dispatcher.renderClient(gs, playerToDraw);
+    }
+
+    public String getPlayerNameFromClient() {
+        return dispatcher.getPlayerNameFromClient();
+    }
+
+    public void getCommandFromHost() {
+        dispatcher.getCommandFromHost();
     }
 }

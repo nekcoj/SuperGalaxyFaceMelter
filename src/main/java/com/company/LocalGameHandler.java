@@ -10,6 +10,11 @@ public class LocalGameHandler implements ComHandler {
     public LocalGameHandler(){}
 
     @Override
+    public String getPlayerNameFromClient(String name) {
+        return null;
+    }
+
+    @Override
     public Card getCardFromClient(Renderer renderer, GameState gameState) {
         renderer.render(gameState, Game.CLIENT);
         return renderer.getCard(gameState, Game.CLIENT);
@@ -26,7 +31,6 @@ public class LocalGameHandler implements ComHandler {
         return gameState;
     }
 
-    // TODO: 2020-11-18 Implement 
     @Override
     public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
         renderer.render(gameState, playerToDraw);

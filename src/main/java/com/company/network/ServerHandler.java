@@ -1,6 +1,7 @@
 package com.company.network;
 
 import com.company.Card;
+import com.company.Game;
 import com.company.GameState;
 import com.company.interfaces.Renderer;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 
-public class ServerHandler extends NetworkGameHandler{
+public class ServerHandler extends NetworkComHandler {
 
   private ServerSocket serverSocket;
 
@@ -36,8 +37,23 @@ public class ServerHandler extends NetworkGameHandler{
   }
 
   @Override
+  public String getPlayerNameFromClient(String name) {
+    Packet packet = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
+    send(packet);
+    packet = receive();
+    String s = (String) packet.getParams()[0];
+    System.out.printf("getPlayerNameFromClient - Received %s from client\n", s);
+    return s;
+  }
+
+  @Override
   public Card getCardFromClient(Renderer renderer, GameState gameState) {
-    return null;
+    Packet packet = new Packet(CommandType.GET_CARD_FROM_CLIENT, new GameState[]{gameState});
+    send(packet);
+    packet = receive();
+    Card card = (Card) packet.getParams()[0];
+    System.out.printf("getCardFromClient - Received %s from client\n", card);
+    return card;
   }
 
   @Override
@@ -47,7 +63,17 @@ public class ServerHandler extends NetworkGameHandler{
 
   @Override
   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
-    return null;
+    Object[] params = new Object[2];
+    params[0] = cardsToClient;
+    params[1] = gameState;
+
+    Packet packet = new Packet(CommandType.SEND_CARD_TO_CLIENT, params);
+    send(packet);
+
+    packet = receive();
+    GameState returnState = (GameState) packet.getParams()[0];
+    System.out.printf("getCardFromClient - Received %s from client\n", returnState);
+    return returnState;
   }
 
   @Override

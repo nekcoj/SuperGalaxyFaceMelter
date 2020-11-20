@@ -10,7 +10,6 @@ public class Player {
 
   public Player(){}
 
-
   public Player(String name){
     this.name = name;
   }
@@ -47,4 +46,7 @@ public class Player {
     return this.cardsOnHand.add(card);
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
 }

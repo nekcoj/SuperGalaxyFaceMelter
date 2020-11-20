@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ConsoleRenderer implements Renderer {
+  @Override
+  // TODO: 2020-11-20 Add code to get name from the keyboard 
+  public String getPlayerNameFromClient() {
+    return "Player Two";
+  }
 
   private static final String topLeft = "╔";
   private static final String lineHor = "═";

@@ -1,6 +1,7 @@
 package com.company.network;
 
 import com.company.Card;
+import com.company.Game;
 import com.company.GameState;
 import com.company.interfaces.Renderer;
 
@@ -8,11 +9,10 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ClientHandler extends NetworkGameHandler{
-
+public class ClientHandler extends NetworkComHandler {
 
   public ClientHandler(String ipaddress) throws IOException {
-    this(ipaddress, NetworkGameHandler.PORT);
+    this(ipaddress, NetworkComHandler.PORT);
   }
 
   public ClientHandler(String ipaddress, int port) throws IOException {
@@ -23,7 +23,10 @@ public class ClientHandler extends NetworkGameHandler{
 
   @Override
   public Card getCardFromClient(Renderer renderer, GameState gameState) {
-    return null;
+    Card card = renderer.getCard(gameState, Game.CLIENT);
+    Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, new Card[]{card});
+    send(p);
+    return card;
   }
 
   @Override
@@ -33,11 +36,23 @@ public class ClientHandler extends NetworkGameHandler{
 
   @Override
   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
-    return null;
+    Object[] params = new Object[2];
+    params[0] = cardsToClient;
+    params[1] = gameState;
+    Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, params);
+    send(p);
+    return gameState;
+  }
+
+  @Override
+  public String getPlayerNameFromClient(String name) {
+    Packet p = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, new String[]{name});
+    send(p);
+    return name;
   }
 
   @Override
   public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
-
+    renderer.render(gameState, playerToDraw);
   }
 }
