@@ -10,7 +10,7 @@ public class LocalGameHandler implements ComHandler {
     public LocalGameHandler(){}
 
     @Override
-    public String getPlayerNameFromClient(String name) {
+    public String getPlayerNameFromClient() {
         return null;
     }
 

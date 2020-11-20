@@ -42,7 +42,7 @@ public class GameHost extends Game {
    *      Byt startspelare -> gameState.changeStartPlayer()
    */
   public void runGame() {
-    if (isLocalGame) {
+    if (!isLocalGame) {
       getPlayerNameFromClient();
     }
 

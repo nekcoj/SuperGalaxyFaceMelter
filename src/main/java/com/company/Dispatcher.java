@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.interfaces.ComHandler;
 import com.company.interfaces.Renderer;
+import com.company.network.ClientHandler;
 import com.company.network.NetworkComHandler;
 import com.company.network.Packet;
 
@@ -18,7 +19,7 @@ public class Dispatcher {
   }
 
   public String getPlayerNameFromClient() {
-    return comHandler.getPlayerNameFromClient(renderer.getPlayerName());
+    return comHandler.getPlayerNameFromClient();
   }
 
   public Card getCardFromClient(GameState gameState) {
@@ -38,7 +39,7 @@ public class Dispatcher {
   }
 
   public void getCommandFromHost() {
-    NetworkComHandler nch = (NetworkComHandler)comHandler;
+    ClientHandler nch = (ClientHandler)comHandler;
     Packet p = nch.receive();
     GameState gs = null;
     Card card = null;
@@ -64,7 +65,7 @@ public class Dispatcher {
 
       case GET_PLAYER_NAME_FROM_CLIENT:
         String name = renderer.getPlayerName();
-        nch.getPlayerNameFromClient(name);
+        nch.sendPlayerNameToHost(name);
         System.out.println(name);
         break;
 

@@ -37,9 +37,10 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   @Override
-  public String getPlayerNameFromClient(String name) {
+  public String getPlayerNameFromClient() {
     Packet packet = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
     send(packet);
+    System.out.println("Packet sent! - getPlayerNameFromClient");
     packet = receive();
     String s = (String) packet.getParams()[0];
     System.out.printf("getPlayerNameFromClient - Received %s from client\n", s);
@@ -69,7 +70,7 @@ public class ServerHandler extends NetworkComHandler {
     send(packet);
 
     packet = receive();
-    GameState returnState = (GameState) packet.getParams()[0];
+    GameState returnState = (GameState) packet.getParams()[1];
     System.out.printf("getCardFromClient - Received %s from client\n", returnState);
     return returnState;
   }

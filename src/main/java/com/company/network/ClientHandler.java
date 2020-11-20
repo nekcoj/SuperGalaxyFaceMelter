@@ -38,6 +38,7 @@ public class ClientHandler extends NetworkComHandler {
 
   @Override
   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
+    gameState.getPlayer(Game.CLIENT).addCardsToHand(cardsToClient);
     Object[] params = new Object[2];
     params[0] = cardsToClient;
     params[1] = gameState;
@@ -46,8 +47,7 @@ public class ClientHandler extends NetworkComHandler {
     return gameState;
   }
 
-  @Override
-  public String getPlayerNameFromClient(String name) {
+  public String sendPlayerNameToHost(String name) {
     Packet p = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, new String[]{name});
     send(p);
     return name;
@@ -56,5 +56,10 @@ public class ClientHandler extends NetworkComHandler {
   @Override
   public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
     renderer.render(gameState, playerToDraw);
+  }
+
+  @Override
+  public String getPlayerNameFromClient() {
+    return null;
   }
 }
