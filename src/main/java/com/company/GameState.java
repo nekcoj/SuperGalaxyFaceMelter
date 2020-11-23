@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class GameState implements Serializable {
-  private ArrayList<Card> playedCards = new ArrayList<>();
   private int pointsToWin;
   private ArrayList<Player> players = new ArrayList<>();
+  private ArrayList<Card> playedCards = new ArrayList<>();
+  public Card playedCard1;
+  public Card playedCard2;
   private int startPlayer = 0;
   private int currentPlayer = 0;
 
@@ -38,7 +40,13 @@ public class GameState implements Serializable {
   }
 
   public boolean addPlayedCard(Card playedCard) {
-    return playedCards.add(playedCard);
+    boolean temp = playedCards.add(playedCard);
+    playedCard1 = playedCards.get(0);
+    if (playedCards.size() > 1) {
+      playedCard2 = playedCards.get(1);
+    }
+   // return playedCards.add(playedCard);
+    return temp;
   }
 
   public ArrayList<Card> getPlayedCards() {

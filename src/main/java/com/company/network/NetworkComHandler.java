@@ -37,7 +37,7 @@ abstract public class NetworkComHandler implements ComHandler {
 
   public void send(Packet packet) {
     try {
-      oos.writeObject(packet);
+      oos.writeUnshared(packet);
       oos.flush();
     } catch (IOException e) {
       e.printStackTrace();
@@ -47,7 +47,7 @@ abstract public class NetworkComHandler implements ComHandler {
   public Packet receive() {
     Packet packet = null;
     try {
-      packet = (Packet)ois.readObject();
+      packet = (Packet)ois.readUnshared();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (ClassNotFoundException e) {
