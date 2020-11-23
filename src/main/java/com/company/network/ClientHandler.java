@@ -25,7 +25,7 @@ public class ClientHandler extends NetworkComHandler {
   public Card getCardFromClient(Renderer renderer, GameState gameState) {
     renderer.render(gameState, Game.CLIENT);
     Card card = renderer.getCard(gameState, Game.CLIENT);
-    Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, new Card[]{card});
+    Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, new Object[]{card, gameState});
     send(p);
     return card;
   }
@@ -42,11 +42,8 @@ public class ClientHandler extends NetworkComHandler {
   @Override
   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {
     gameState.getPlayer(Game.CLIENT).addCardsToHand(cardsToClient);
-    Object[] params = new Object[2];
-    params[0] = cardsToClient;
-    params[1] = gameState;
-    Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, params);
-    send(p);
+    Packet packet = new Packet(CommandType.SEND_CARD_TO_CLIENT, new Object[]{gameState});
+    send(packet);
     return gameState;
   }
 

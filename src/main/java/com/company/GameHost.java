@@ -70,6 +70,7 @@ public class GameHost extends Game {
   private void redrawGameBoard() {
     gameBoard.render(gameState, Game.HOST);
     if (!isLocalGame) {
+      System.out.println("är vi i redraw?");
       gameLobby.renderClient(gameState, Game.CLIENT);
     }
   }

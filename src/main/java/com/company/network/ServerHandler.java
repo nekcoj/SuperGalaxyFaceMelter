@@ -53,6 +53,7 @@ public class ServerHandler extends NetworkComHandler {
     send(packet);
     packet = receive();
     Card card = (Card) packet.getParams()[0];
+    gameState = (GameState) packet.getParams()[1];
     System.out.printf("getCardFromClient - Received %s from client\n", card);
     return card;
   }
@@ -72,7 +73,7 @@ public class ServerHandler extends NetworkComHandler {
     send(packet);
 
     packet = receive();
-    GameState returnState = (GameState) packet.getParams()[1];
+    GameState returnState = (GameState) packet.getParams()[0];
     System.out.printf("getCardFromClient - Received %s from client\n", returnState);
     return returnState;
   }
