@@ -40,7 +40,8 @@ public class Dispatcher {
 
   public void getCommandFromHost() {
     ClientHandler nch = (ClientHandler)comHandler;
-    Packet p = nch.receive();
+    Packet p = null;
+    p = nch.receive();
     GameState gs = null;
     Card card = null;
     System.out.printf("getCommandFromHost: command is %s!\n", p.getCommandType());
