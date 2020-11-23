@@ -15,7 +15,7 @@ public class LocalGameHandler implements ComHandler {
     }
 
     @Override
-    public Card getCardFromClient(Renderer renderer, GameState gameState) {
+    public int getCardFromClient(Renderer renderer, GameState gameState) {
         renderer.render(gameState, Game.CLIENT);
         return renderer.getCard(gameState, Game.CLIENT);
     }

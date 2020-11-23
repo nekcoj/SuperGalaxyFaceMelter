@@ -117,7 +117,7 @@ public class GameLobby {
         gameClient.runGame();
     }
 
-    public Card requestCardFromClient(GameState gameState){
+    public int requestCardFromClient(GameState gameState){
        return dispatcher.getCardFromClient(gameState);
     }
 

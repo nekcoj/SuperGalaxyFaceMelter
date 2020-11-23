@@ -22,9 +22,9 @@ public class ClientHandler extends NetworkComHandler {
   }
 
   @Override
-  public Card getCardFromClient(Renderer renderer, GameState gameState) {
+  public int getCardFromClient(Renderer renderer, GameState gameState) {
     renderer.render(gameState, Game.CLIENT);
-    Card card = renderer.getCard(gameState, Game.CLIENT);
+    int card = renderer.getCard(gameState, Game.CLIENT);
     Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, new Object[]{card, gameState});
     send(p);
     return card;

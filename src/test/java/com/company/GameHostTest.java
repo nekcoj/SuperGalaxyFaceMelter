@@ -54,7 +54,7 @@ class GameHostTest {
     System.out.println("-------- getCardFromStartPlayer Test --------");
     gameHost.dealCardsToHost();
     simulateUserInput("1");
-    Card card = gameHost.getCardFromStartPlayer();
+    int card = gameHost.getCardFromStartPlayer();
     assertNotNull(card, "card is null!");
     System.out.println(card);
   }
@@ -64,7 +64,7 @@ class GameHostTest {
     System.out.println("-------- getCardFromSecondPlayer Test --------");
     gameHost.dealCardsToClient();
     simulateUserInput("2");
-    Card card = gameHost.getCardFromSecondPlayer();
+    int card = gameHost.getCardFromSecondPlayer();
     assertNotNull(card, "card is null!");
     System.out.println(card);
   }
@@ -98,7 +98,7 @@ class GameHostTest {
     gameHost.dealCardsToHost();
     simulateUserInput("1");
     Card c1 = gameHost.getGameState().getPlayer(0).getCardOnHandAsList().get(0);
-    Card c2 = gameHost.getCardFromPlayer1();
+    int c2 = gameHost.getCardFromPlayer1();
     assertNotNull(c2, "card is null!");
     assertEquals(c1, c2, "Cards are not the same!");
   }
@@ -108,7 +108,7 @@ class GameHostTest {
     System.out.println("-------- getCardFromPlayer2 Test --------");
     simulateUserInput("1");
     gameHost.dealCardsToClient();
-    Card card = gameHost.getCardFromPlayer2();
+    int card = gameHost.getCardFromPlayer2();
     assertNotNull(card, "card is null!");
   }
 

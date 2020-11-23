@@ -40,13 +40,7 @@ public class GameState implements Serializable {
   }
 
   public boolean addPlayedCard(Card playedCard) {
-    boolean temp = playedCards.add(playedCard);
-    playedCard1 = playedCards.get(0);
-    if (playedCards.size() > 1) {
-      playedCard2 = playedCards.get(1);
-    }
-   // return playedCards.add(playedCard);
-    return temp;
+    return playedCards.add(playedCard);
   }
 
   public ArrayList<Card> getPlayedCards() {

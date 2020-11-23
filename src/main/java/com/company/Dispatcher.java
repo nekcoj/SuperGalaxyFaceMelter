@@ -3,7 +3,6 @@ package com.company;
 import com.company.interfaces.ComHandler;
 import com.company.interfaces.Renderer;
 import com.company.network.ClientHandler;
-import com.company.network.NetworkComHandler;
 import com.company.network.Packet;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class Dispatcher {
     return comHandler.getPlayerNameFromClient();
   }
 
-  public Card getCardFromClient(GameState gameState) {
+  public int getCardFromClient(GameState gameState) {
     return comHandler.getCardFromClient(renderer, gameState);
   }
 

@@ -49,11 +49,13 @@ public class GameHost extends Game {
     dealCards();
     do {
       gameState.setRoundWinner(-1);
-      Card card1 = getCardFromStartPlayer();
-      gameState.addPlayedCard(card1);
-      Card card2 = getCardFromSecondPlayer();
-      gameState.addPlayedCard(card2);
-      gameState.setRoundWinner(getRoundWinner(card1, card2));
+      int index1 = getCardFromStartPlayer();
+      Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
+      gameState.addPlayedCard(c1);
+      int index2 = getCardFromSecondPlayer();
+      Card c2 = gameState.getPlayer(gameState.getCurrentPlayer()).getCard(index2);
+      gameState.addPlayedCard(c2);
+      gameState.setRoundWinner(getRoundWinner(c1, c2));
       redrawGameBoard();
       continueGame();
       gameState.clearPlayedCards();
@@ -92,16 +94,18 @@ public class GameHost extends Game {
    * Är spelare1 först? Begär från den egna spelare direkt
    * Annars, begär kort från klienten via gameLobby
    *
+   * @return
    */
-  public Card getCardFromStartPlayer() {
+  public int getCardFromStartPlayer() {
     return gameState.getStartPlayer() == HOST ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
   /**
    *  Är spelare1 andraspelaren? Begär från den egna spelare direkt
    *  Annars, begär kort från klienten via gameLobby
+   * @return
    */
-  public Card getCardFromSecondPlayer() {
+  public int getCardFromSecondPlayer() {
     return gameState.getStartPlayer() == CLIENT ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
@@ -123,7 +127,8 @@ public class GameHost extends Game {
   }
 
   public void finalizingRound(int winner, Card card1, Card card2) {
-
+    gameState.getPlayer(gameState.getStartPlayer()).getCardOnHandAsList().remove(card1);
+    gameState.getPlayer(gameState.getCurrentPlayer()).getCardOnHandAsList().remove(card2);
     if (winner >= 0) {
       if (winner == gameState.getStartPlayer()) {
         handleWinnerCardForStartPlayer(winner, card1, card2);
@@ -161,7 +166,7 @@ public class GameHost extends Game {
   public void handleWinnerCardForPlayer1(Card card1, Card card2){
     gameState.getPlayer(HOST).addToVictoryPile(card2);
     card1.decreasePower(card2.getCurrentPower());
-    gameState.getPlayer(HOST).addCardToHand(card1);
+    //gameState.getPlayer(HOST).addCardToHand(card1);
   }
 
   public void handleWinnerCardForPlayer2(Card card1, Card card2){
@@ -182,14 +187,14 @@ public class GameHost extends Game {
     return false;
   }
 
-  public Card getCardFromPlayer1() {
+  public int getCardFromPlayer1() {
     //be den lokala spelaren om ett kort
     gameState.setCurrentPlayer(Game.HOST);
     gameBoard.render(gameState, Game.HOST);
     return gameBoard.getCard(gameState, Game.HOST);
   }
 
-  public Card getCardFromPlayer2() {
+  public int getCardFromPlayer2() {
     gameState.setCurrentPlayer(Game.CLIENT);
     return gameLobby.requestCardFromClient(gameState);
   }

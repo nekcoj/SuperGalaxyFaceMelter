@@ -1,7 +1,6 @@
 package com.company.network;
 
 import com.company.Card;
-import com.company.Game;
 import com.company.GameState;
 import com.company.interfaces.Renderer;
 
@@ -24,7 +23,7 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   public void startServer() throws IOException {
-    System.out.println("Server will accept");
+    System.out.println("Waiting for player to connect!");
     socket = serverSocket.accept();
     getStreams();
   }
@@ -48,11 +47,11 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   @Override
-  public Card getCardFromClient(Renderer renderer, GameState gameState) {
+  public int getCardFromClient(Renderer renderer, GameState gameState) {
     Packet packet = new Packet(CommandType.GET_CARD_FROM_CLIENT, new GameState[]{gameState});
     send(packet);
     packet = receive();
-    Card card = (Card) packet.getParams()[0];
+    int card = (int) packet.getParams()[0];
     gameState = (GameState) packet.getParams()[1];
     System.out.printf("getCardFromClient - Received %s from client\n", card);
     return card;

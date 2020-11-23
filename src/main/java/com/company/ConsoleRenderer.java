@@ -124,10 +124,11 @@ public class ConsoleRenderer implements Renderer {
         gameState.getPlayer(Game.CLIENT).getScore());
   }
 
-  public Card getCard(GameState gameState, int playerToGetCardFrom) {
+  public int getCard(GameState gameState, int playerToGetCardFrom) {
     Menu cardMenu = getCardMenu(gameState, playerToGetCardFrom);
     int chosenCard = (Integer) cardMenu.handleFunctionMenu(false);
-    return gameState.getPlayer(playerToGetCardFrom).getCard(chosenCard);
+//    return gameState.getPlayer(playerToGetCardFrom).getCard(chosenCard);
+    return chosenCard;
   }
 
   public Menu getCardMenu(GameState gameState, int playerToGetCardFrom){

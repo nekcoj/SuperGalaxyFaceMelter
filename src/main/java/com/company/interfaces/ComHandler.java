@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface ComHandler {
 
    public String getPlayerNameFromClient();
-   public Card getCardFromClient(Renderer renderer, GameState gameState);
+   public int getCardFromClient(Renderer renderer, GameState gameState);
    public GameState addToClientVictoryPile(Card card, GameState gameState, Renderer renderer);
    public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState);
    public void renderClient(Renderer renderer, GameState gameState, int playerToDraw);
