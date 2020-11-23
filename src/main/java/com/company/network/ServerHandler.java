@@ -61,7 +61,9 @@ public class ServerHandler extends NetworkComHandler {
   public GameState addToClientVictoryPile(Card card, GameState gameState, Renderer renderer) {
     Packet packet = new Packet(CommandType.ADD_TO_CLIENT_VICTORY_PILE,new Object[]{card, gameState});
     send(packet);
-    return gameState;
+    packet = receive();
+    GameState returnState = (GameState) packet.getParams()[0];
+    return returnState;
   }
 
   @Override

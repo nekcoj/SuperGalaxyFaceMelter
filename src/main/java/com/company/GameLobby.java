@@ -6,7 +6,6 @@ import com.company.network.ServerHandler;
 import com.company.utils.GameLobbyMenu;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -122,8 +121,8 @@ public class GameLobby {
        return dispatcher.getCardFromClient(gameState);
     }
 
-    public void addToClientVictoryPile(Card cardToClient, GameState gameState){
-        dispatcher.addToClientVictoryPile(cardToClient, gameState);
+    public GameState addToClientVictoryPile(Card cardToClient, GameState gameState){
+       return dispatcher.addToClientVictoryPile(cardToClient, gameState);
     }
 
     public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState){

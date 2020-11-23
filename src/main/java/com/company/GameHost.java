@@ -164,9 +164,9 @@ public class GameHost extends Game {
   }
 
   public void handleWinnerCardForPlayer2(Card card1, Card card2){
-    gameLobby.addToClientVictoryPile(card2, gameState);
+    gameState = gameLobby.addToClientVictoryPile(card2, gameState);
     card1.decreasePower(card2.getCurrentPower());
-    gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(card1)), gameState);
+    gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(card1)), gameState);
   }
 
   public boolean isGameOver() {

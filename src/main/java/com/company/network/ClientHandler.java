@@ -34,6 +34,8 @@ public class ClientHandler extends NetworkComHandler {
   public GameState addToClientVictoryPile(Card card, GameState gameState, Renderer renderer) {
     renderer.render(gameState, Game.CLIENT);
     gameState.getPlayer(Game.CLIENT).addToVictoryPile(card);
+    Packet p = new Packet(CommandType.ADD_TO_CLIENT_VICTORY_PILE, new Object[]{gameState});
+    send(p);
     return gameState;
   }
 
