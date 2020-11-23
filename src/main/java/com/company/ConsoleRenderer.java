@@ -126,9 +126,7 @@ public class ConsoleRenderer implements Renderer {
 
   public int getCard(GameState gameState, int playerToGetCardFrom) {
     Menu cardMenu = getCardMenu(gameState, playerToGetCardFrom);
-    int chosenCard = (Integer) cardMenu.handleFunctionMenu(false);
-//    return gameState.getPlayer(playerToGetCardFrom).getCard(chosenCard);
-    return chosenCard;
+    return (Integer) cardMenu.handleFunctionMenu(false);
   }
 
   public Menu getCardMenu(GameState gameState, int playerToGetCardFrom){
