@@ -27,7 +27,7 @@ public class Dispatcher {
   }
 
   public void addToClientVictoryPile(Card card, GameState gameState) {
-    comHandler.addToClientVictoryPile(card, gameState);
+    comHandler.addToClientVictoryPile(card, gameState, renderer);
   }
 
   public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState) {

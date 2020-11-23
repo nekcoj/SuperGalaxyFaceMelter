@@ -21,7 +21,7 @@ public class LocalGameHandler implements ComHandler {
     }
 
     @Override
-    public GameState addToClientVictoryPile(Card card, GameState gameState) {
+    public GameState addToClientVictoryPile(Card card, GameState gameState, Renderer renderer) {
         gameState.getPlayer(Game.CLIENT).addToVictoryPile(card);
         return gameState;
     }

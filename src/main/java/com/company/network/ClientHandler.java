@@ -31,7 +31,8 @@ public class ClientHandler extends NetworkComHandler {
   }
 
   @Override
-  public GameState addToClientVictoryPile(Card card, GameState gameState) {
+  public GameState addToClientVictoryPile(Card card, GameState gameState, Renderer renderer) {
+    renderer.render(gameState, Game.CLIENT);
     gameState.getPlayer(Game.CLIENT).addToVictoryPile(card);
     return gameState;
   }
