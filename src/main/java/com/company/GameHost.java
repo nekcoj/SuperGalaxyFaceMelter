@@ -63,6 +63,7 @@ public class GameHost extends Game {
     } while (!isGameOver());
 
     redrawGameBoard();
+    gameLobby.sendGameOver();
   }
 
   private void getPlayerNameFromClient() {

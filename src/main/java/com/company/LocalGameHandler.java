@@ -36,4 +36,9 @@ public class LocalGameHandler implements ComHandler {
     public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
         renderer.render(gameState, playerToDraw);
     }
+
+    @Override
+    public void sendGameOver() {
+
+    }
 }

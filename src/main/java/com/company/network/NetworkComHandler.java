@@ -58,7 +58,7 @@ abstract public class NetworkComHandler implements ComHandler {
     return packet;
   }
 
-  void close() throws IOException {
+  public void close() throws IOException {
     oos.close();
     ois.close();
     socket.close();

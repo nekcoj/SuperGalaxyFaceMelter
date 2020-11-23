@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.interfaces.ComHandler;
 import com.company.network.ClientHandler;
+import com.company.network.NetworkComHandler;
 import com.company.network.ServerHandler;
 import com.company.utils.GameLobbyMenu;
 
@@ -96,10 +97,15 @@ public class GameLobby {
         e.printStackTrace();
       }
       gameHost.runGame();
+      try {
+        serverHandler.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
 
     public void connectToNetworkGame(Object o) {
-        ComHandler comHandler = null;
+        NetworkComHandler comHandler = null;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter ip to connect to [localhost]: ");
         String ipaddress = scanner.nextLine();
@@ -115,6 +121,12 @@ public class GameLobby {
         dispatcher = new Dispatcher(comHandler, renderer);
         GameClient gameClient = new GameClient(this);
         gameClient.runGame();
+
+      try {
+        comHandler.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
 
     public int requestCardFromClient(GameState gameState){
@@ -139,5 +151,9 @@ public class GameLobby {
 
     public boolean getCommandFromHost() {
         return dispatcher.getCommandFromHost();
+    }
+
+    public void sendGameOver(){
+      dispatcher.sendGameOver();
     }
 }

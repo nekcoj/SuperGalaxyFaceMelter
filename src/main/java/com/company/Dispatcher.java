@@ -37,6 +37,10 @@ public class Dispatcher {
     comHandler.renderClient(renderer, gameState, playerToDraw);
   }
 
+  public void sendGameOver(){
+    comHandler.sendGameOver();
+  }
+
   public boolean getCommandFromHost() {
     ClientHandler nch = (ClientHandler)comHandler;
     Packet p = null;

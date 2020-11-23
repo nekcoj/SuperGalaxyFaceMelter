@@ -59,6 +59,11 @@ public class ClientHandler extends NetworkComHandler {
   }
 
   @Override
+  public void sendGameOver() {
+
+  }
+
+  @Override
   public String getPlayerNameFromClient() {
     return null;
   }

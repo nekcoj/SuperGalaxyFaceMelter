@@ -30,7 +30,6 @@ public class ServerHandler extends NetworkComHandler {
 
   @Override
   public void close() throws IOException {
-    System.out.println("closing server");
     super.close();
     serverSocket.close();
   }
@@ -39,10 +38,8 @@ public class ServerHandler extends NetworkComHandler {
   public String getPlayerNameFromClient() {
     Packet packet = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
     send(packet);
-    System.out.println("Packet sent! - getPlayerNameFromClient");
     packet = receive();
     String s = (String) packet.getParams()[0];
-    System.out.printf("getPlayerNameFromClient - Received %s from client\n", s);
     return s;
   }
 
@@ -53,7 +50,6 @@ public class ServerHandler extends NetworkComHandler {
     packet = receive();
     int card = (int) packet.getParams()[0];
     gameState = (GameState) packet.getParams()[1];
-    System.out.printf("getCardFromClient - Received %s from client\n", card);
     return card;
   }
 
@@ -74,13 +70,17 @@ public class ServerHandler extends NetworkComHandler {
 
     packet = receive();
     GameState returnState = (GameState) packet.getParams()[0];
-    System.out.printf("getCardFromClient - Received %s from client\n", returnState);
     return returnState;
   }
 
   @Override
   public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
     Packet packet = new Packet(CommandType.RENDER_CLIENT, new Object[]{gameState, playerToDraw});
+    send(packet);
+  }
+
+  public void sendGameOver(){
+    Packet packet = new Packet(CommandType.QUIT, null);
     send(packet);
   }
 }
