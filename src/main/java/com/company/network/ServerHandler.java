@@ -23,7 +23,7 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   public void startServer() throws IOException {
-    System.out.println("Waiting for player to connect!");
+    System.out.println("Waiting for player to connect...");
     socket = serverSocket.accept();
     getStreams();
   }

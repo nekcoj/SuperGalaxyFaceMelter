@@ -136,15 +136,35 @@ public class GameHost extends Game {
         handleWinnerCardForSecondPlayer(winner, card2, card1);
       }
 
-      if (winner == HOST) {
-       gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+      //Deal new card to LOSER, if TIE both players receive a new card.
+      switch (winner) {
+        case HOST:
+          gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+          break;
+
+        case CLIENT:
+          gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+          break;
+
+        case TIE:
+          gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+          gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+          break;
+
+        default:
+          System.out.println("Wrong winner state!");
+          break;
+      }
+    }
+      /*if (winner == HOST) {
+        gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
       } else {
         gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
       }
     } else {
       gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
       gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
-    }
+    }*/
   }
 
   public void handleWinnerCardForStartPlayer(int winner, Card card1, Card card2){
@@ -166,7 +186,7 @@ public class GameHost extends Game {
   public void handleWinnerCardForPlayer1(Card card1, Card card2){
     gameState.getPlayer(HOST).addToVictoryPile(card2);
     card1.decreasePower(card2.getCurrentPower());
-    //gameState.getPlayer(HOST).addCardToHand(card1);
+    gameState.getPlayer(HOST).addCardToHand(card1);
   }
 
   public void handleWinnerCardForPlayer2(Card card1, Card card2){
