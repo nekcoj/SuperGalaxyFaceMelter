@@ -37,6 +37,7 @@ abstract public class NetworkComHandler implements ComHandler {
 
   public void send(Packet packet) {
     try {
+      oos.reset();
       oos.writeUnshared(packet);
       oos.flush();
     } catch (IOException e) {
