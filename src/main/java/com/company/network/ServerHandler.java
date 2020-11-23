@@ -77,6 +77,7 @@ public class ServerHandler extends NetworkComHandler {
 
   @Override
   public void renderClient(Renderer renderer, GameState gameState, int playerToDraw) {
-
+    Packet packet = new Packet(CommandType.RENDER_CLIENT, new Object[]{gameState, playerToDraw});
+    send(packet);
   }
 }
