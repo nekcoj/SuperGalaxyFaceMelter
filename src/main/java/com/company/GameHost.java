@@ -131,14 +131,13 @@ public class GameHost extends Game {
       }
 
       if (winner == HOST) {
-        gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+       gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
       } else {
-
         gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
       }
     } else {
       gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+      gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
     }
   }
 
