@@ -137,7 +137,7 @@ public class GameLobby {
         return dispatcher.getPlayerNameFromClient();
     }
 
-    public void getCommandFromHost() {
-        dispatcher.getCommandFromHost();
+    public boolean getCommandFromHost() {
+        return dispatcher.getCommandFromHost();
     }
 }

@@ -37,12 +37,13 @@ public class Dispatcher {
     comHandler.renderClient(renderer, gameState, playerToDraw);
   }
 
-  public void getCommandFromHost() {
+  public boolean getCommandFromHost() {
     ClientHandler nch = (ClientHandler)comHandler;
     Packet p = null;
     p = nch.receive();
     GameState gs = null;
     Card card = null;
+    boolean quit = false;
     System.out.printf("getCommandFromHost: command is %s!\n", p.getCommandType());
 
     switch (p.getCommandType()) {
@@ -75,8 +76,12 @@ public class Dispatcher {
         sendCardToClient(cardsToClient, gs);
         break;
 
+      case QUIT:
+        quit = true;
+        break;
       default:
         System.out.printf("Unknown command: %d!\n" + p.getCommandType());
     }
+    return quit;
   }
 }

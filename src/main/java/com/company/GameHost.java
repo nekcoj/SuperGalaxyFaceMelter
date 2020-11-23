@@ -72,7 +72,6 @@ public class GameHost extends Game {
   private void redrawGameBoard() {
     gameBoard.render(gameState, Game.HOST);
     if (!isLocalGame) {
-      System.out.println("är vi i redraw?");
       gameLobby.renderClient(gameState, Game.CLIENT);
     }
   }
@@ -132,7 +131,7 @@ public class GameHost extends Game {
     if (winner >= 0) {
       if (winner == gameState.getStartPlayer()) {
         handleWinnerCardForStartPlayer(winner, card1, card2);
-      } else {
+      } else if( winner == gameState.getCurrentPlayer() ) {
         handleWinnerCardForSecondPlayer(winner, card2, card1);
       }
 
@@ -156,15 +155,6 @@ public class GameHost extends Game {
           break;
       }
     }
-      /*if (winner == HOST) {
-        gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
-      } else {
-        gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      }
-    } else {
-      gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
-    }*/
   }
 
   public void handleWinnerCardForStartPlayer(int winner, Card card1, Card card2){

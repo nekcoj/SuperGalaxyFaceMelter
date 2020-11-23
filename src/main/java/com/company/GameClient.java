@@ -6,8 +6,9 @@ public class GameClient extends Game {
     }
 
     public void runGame() {
-        while (true) {
-           gameLobby.getCommandFromHost();
+        boolean quit = false;
+        while (!quit) {
+           quit = gameLobby.getCommandFromHost();
         }
     }
 }

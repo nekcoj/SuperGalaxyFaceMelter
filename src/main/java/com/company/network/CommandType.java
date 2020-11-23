@@ -5,5 +5,6 @@ public enum CommandType {
     GET_CARD_FROM_CLIENT,
     ADD_TO_CLIENT_VICTORY_PILE,
     SEND_CARD_TO_CLIENT,
-    RENDER_CLIENT
+    RENDER_CLIENT,
+    QUIT
 }
