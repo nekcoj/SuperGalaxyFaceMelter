@@ -47,7 +47,6 @@ abstract public class NetworkComHandler implements ComHandler {
   public Packet receive() {
     Packet packet = null;
     try {
-      System.out.println("available: " + ois.available());
       packet = (Packet)ois.readObject();
     } catch (IOException e) {
       e.printStackTrace();

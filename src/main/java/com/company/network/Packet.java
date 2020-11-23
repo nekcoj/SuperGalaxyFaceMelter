@@ -7,6 +7,7 @@ import java.time.LocalTime;
 public class Packet implements Serializable {
 
     private static final long SerialVersionUID = 10L;
+    public int cardsInPlayedCards = 0;
     private LocalTime localTime = LocalTime.now();
     CommandType commandType;
     Object[] params;
