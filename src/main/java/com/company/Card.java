@@ -42,11 +42,7 @@ public class Card implements Serializable {
     }
 
     public void setCurrentPower(int currentPower) {
-        if (currentPower < 0) {
-            this.currentPower = 0;
-        } else {
-            this.currentPower = currentPower;
-        }
+        this.currentPower = Math.max(currentPower, 0);
     }
     public boolean isDead() {
         return currentPower == 0;

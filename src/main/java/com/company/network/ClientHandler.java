@@ -47,10 +47,9 @@ public class ClientHandler extends NetworkComHandler {
     return gameState;
   }
 
-  public String sendPlayerNameToHost(String name) {
+  public void sendPlayerNameToHost(String name) {
     Packet p = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, new String[]{name});
     send(p);
-    return name;
   }
 
   @Override

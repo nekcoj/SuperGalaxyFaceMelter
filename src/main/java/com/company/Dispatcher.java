@@ -43,11 +43,13 @@ public class Dispatcher {
 
   public boolean getCommandFromHost() {
     ClientHandler nch = (ClientHandler)comHandler;
-    Packet p = null;
-    p = nch.receive();
-    GameState gs = null;
-    Card card = null;
+    Packet p = nch.receive();
+    GameState gs;
+    Card card;
     boolean quit = false;
+
+    // Abort on network error
+    if (p == null) return true;
 
     switch (p.getCommandType()) {
       case RENDER_CLIENT:
@@ -82,7 +84,7 @@ public class Dispatcher {
         quit = true;
         break;
       default:
-        System.out.printf("Unknown command: %d!\n" + p.getCommandType());
+        System.out.printf("Unknown command: %s!\n", p.getCommandType());
     }
     return quit;
   }

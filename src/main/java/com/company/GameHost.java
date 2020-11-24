@@ -2,10 +2,9 @@ package com.company;
 
 import com.company.interfaces.Renderer;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class GameHost extends Game {
 
@@ -98,7 +97,7 @@ public class GameHost extends Game {
    * Är spelare1 först? Begär från den egna spelare direkt
    * Annars, begär kort från klienten via gameLobby
    *
-   * @return
+   * @return an integer with the selected card
    */
   public int getCardFromStartPlayer() {
     return gameState.getStartPlayer() == HOST ? getCardFromPlayer1() : getCardFromPlayer2();
@@ -107,7 +106,7 @@ public class GameHost extends Game {
   /**
    *  Är spelare1 andraspelaren? Begär från den egna spelare direkt
    *  Annars, begär kort från klienten via gameLobby
-   * @return
+   * @return an integer with the selected card
    */
   public int getCardFromSecondPlayer() {
     return gameState.getStartPlayer() == CLIENT ? getCardFromPlayer1() : getCardFromPlayer2();

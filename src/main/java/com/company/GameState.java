@@ -6,9 +6,7 @@ import java.util.ArrayList;
 public class GameState implements Serializable {
   private int pointsToWin;
   private ArrayList<Player> players = new ArrayList<>();
-  private ArrayList<Card> playedCards = new ArrayList<>();
-  public Card playedCard1;
-  public Card playedCard2;
+  private final ArrayList<Card> playedCards = new ArrayList<>();
   private int startPlayer = 0;
   private int currentPlayer = 0;
 

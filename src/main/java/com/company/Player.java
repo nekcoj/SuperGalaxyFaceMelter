@@ -6,10 +6,8 @@ import java.util.ArrayList;
 public class Player implements Serializable {
 
   private String name;
-  private ArrayList<Card> victoryPile = new ArrayList<>();
-  private ArrayList<Card> cardsOnHand = new ArrayList<>();
-
-  public Player(){}
+  private final ArrayList<Card> victoryPile = new ArrayList<>();
+  private final ArrayList<Card> cardsOnHand = new ArrayList<>();
 
   public Player(String name){
     this.name = name;

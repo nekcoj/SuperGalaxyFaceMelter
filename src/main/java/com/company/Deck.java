@@ -6,12 +6,9 @@ import java.util.List;
 
 public class Deck {
 
-    private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Card> discardPile = new ArrayList<>();
-
-    public Deck() {
-
-    }
+    private final ArrayList<Card> cards = new ArrayList<>();
+    // Feature unused at the moment; remove comment if we want to implement at discrad pile
+//    private final ArrayList<Card> discardPile = new ArrayList<>();
 
     public Deck(List <CardSettings> cardSettings) {
         generateCards(cardSettings);

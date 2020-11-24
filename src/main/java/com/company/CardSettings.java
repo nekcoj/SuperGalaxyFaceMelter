@@ -2,8 +2,8 @@ package com.company;
 
 public class CardSettings {
 
-    private int power;
-    private String name;
+    private final int power;
+    private final String name;
     public int amount;
 
     public CardSettings(int power, String name, int amount) {
