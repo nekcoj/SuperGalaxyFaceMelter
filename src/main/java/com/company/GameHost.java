@@ -20,14 +20,12 @@ public class GameHost extends Game {
     add(new CardSettings(9, "Radiated zombie", 4));
     add(new CardSettings(10, "Super Galaxy Face Melter", 2));
   }};
-  private final boolean isLocalGame;
   private final Deck deck = new Deck(cardSettings);
   private final int handSize;
 
-  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize, boolean isLocalGame) {
+  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize) {
     super(gameLobby, renderer, gameState);
     this.handSize = handSize;
-    this.isLocalGame = isLocalGame;
   }
 
   /**
@@ -41,7 +39,7 @@ public class GameHost extends Game {
    *      Byt startspelare -> gameState.changeStartPlayer()
    */
   public void runGame() {
-    if (!isLocalGame) {
+    if (!gameState.isLocalGame()) {
       getPlayerNameFromClient();
     }
 
@@ -54,7 +52,7 @@ public class GameHost extends Game {
       Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
       gameState.addPlayedCard(c1);
 
-      if (!isLocalGame && gameState.getStartPlayer() == CLIENT) {
+      if (!gameState.isLocalGame() && gameState.getStartPlayer() == CLIENT) {
         gameLobby.renderClient(gameState, Game.CLIENT);
       }
 
@@ -81,13 +79,13 @@ public class GameHost extends Game {
 
   private void redrawGameBoard() {
     gameBoard.render(gameState, Game.HOST);
-    if (!isLocalGame) {
+    if (!gameState.isLocalGame()) {
       gameLobby.renderClient(gameState, Game.CLIENT);
     }
   }
 
   private void continueGame() {
-    if (isLocalGame) {
+    if (gameState.isLocalGame()) {
       gameBoard.continueGame();
     }
   }

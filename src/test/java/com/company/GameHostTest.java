@@ -34,13 +34,13 @@ class GameHostTest {
     ArrayList<Player> players = new ArrayList<>();
     players.add(p1);
     players.add(p2);
-    gameState = new GameState(1, players);
+    gameState = new GameState(1, players, true);
     ConsoleRenderer renderer = new ConsoleRenderer();
     ComHandler comHandler = new LocalGameHandler();
     Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
     GameLobby gameLobby = new GameLobby(false);
     gameLobby.setDispatcher(dispatcher);
-    gameHost = new GameHost(gameLobby, new ConsoleRenderer(), gameState, 5, true);
+    gameHost = new GameHost(gameLobby, new ConsoleRenderer(), gameState, 5);
   }
 
   @Test

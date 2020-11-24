@@ -37,7 +37,7 @@ class DispatcherTest {
     players.add(p2);
     Card card1 = new Card(5, "Angry teacher");
     Card card2 = new Card(6, "Ooga booga");
-    GameState gs = new GameState(10, players);
+    GameState gs = new GameState(10, players, false);
     MyRunnable myRunnable = new MyRunnable(12345);
     Thread thread = new Thread(myRunnable);
     thread.start();

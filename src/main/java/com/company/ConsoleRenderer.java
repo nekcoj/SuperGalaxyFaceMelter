@@ -36,17 +36,15 @@ public class ConsoleRenderer implements Renderer {
     } else {
       if (gameState.isRoundOver()) {
         output += generateRoundWinnerRow(gameState);
-        if (gameState.getCurrentPlayer() == Game.HOST) {
+        if (gameState.getCurrentPlayer() == Game.HOST && !gameState.isLocalGame()) {
           output += "\nWaiting for player...";
         }
-      } else {
-        if (gameState.getCurrentPlayer() == playerToDraw) {
-          output += String.format("%s%s",
-                  TextUtil.pimpString(String.format("\n%s", gameState.getPlayer(playerToDraw).getName()), TextUtil.LEVEL_STRESSED),
-                  ", please select a card: ");
-        } else {
-          output += "Waiting for player...";
-        }
+      } else
+        if (gameState.getStartPlayer() == Game.CLIENT &&
+            gameState.getPlayedCards().size() == 1 &&
+            playerToDraw == Game.CLIENT &&
+            !gameState.isLocalGame()) {
+          output += "\nWaiting for player...";
       }
     }
     System.out.println(output);
@@ -133,6 +131,9 @@ public class ConsoleRenderer implements Renderer {
   }
 
   public int getCard(GameState gameState, int playerToGetCardFrom) {
+    System.out.printf("%s%s",
+        TextUtil.pimpString(String.format("\n%s", gameState.getPlayer(playerToGetCardFrom).getName()), TextUtil.LEVEL_STRESSED),
+        ", please select a card: ");
     Menu cardMenu = getCardMenu(gameState, playerToGetCardFrom);
     return (Integer) cardMenu.handleFunctionMenu(false);
   }
@@ -165,7 +166,7 @@ public class ConsoleRenderer implements Renderer {
 
   @Override
   public void continueGame() {
-    System.out.println("Press <Enter> to continue game..");
+    System.out.print("Press <Enter> to continue game..");
     try {
       System.in.read();
     } catch (IOException e) {

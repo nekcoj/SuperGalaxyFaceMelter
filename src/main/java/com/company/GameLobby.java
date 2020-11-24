@@ -31,12 +31,12 @@ public class GameLobby {
         players.add(player1);
         players.add(player2);
         GameState gs = new GameState(
-                inputGameSettings("Enter points to win", 10, 20, 15), players);
+                inputGameSettings("Enter points to win", 10, 20, 15), players, true);
         ComHandler comHandler = new LocalGameHandler();
         ConsoleRenderer renderer = new ConsoleRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, gs,
-                inputGameSettings("Enter amount of cards on hand", 1, 8, 5), true);
+                inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
         host.runGame();
     }
 
@@ -78,7 +78,7 @@ public class GameLobby {
         players.add(player1);
         players.add(player2);
         GameState gameState = new GameState(
-            inputGameSettings("Enter points to win", 10, 20, 15), players);
+            inputGameSettings("Enter points to win", 10, 20, 15), players, false);
         ConsoleRenderer renderer = new ConsoleRenderer();
         ServerHandler serverHandler = null;
         try {
@@ -89,7 +89,7 @@ public class GameLobby {
         dispatcher = new Dispatcher(serverHandler, renderer);
 
         GameHost gameHost = new GameHost(this, renderer, gameState,
-            inputGameSettings("Enter amount of cards on hand", 1, 8, 5), false);
+            inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
       try {
         assert serverHandler != null;
         serverHandler.startServer();

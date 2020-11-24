@@ -26,7 +26,7 @@ class GameStateTest {
     System.out.println("-------- @BeforeEach --------");
     players.add(p1);
     players.add(p2);
-    gs = new GameState(10, players);
+    gs = new GameState(10, players, true);
   }
 
   @Test
