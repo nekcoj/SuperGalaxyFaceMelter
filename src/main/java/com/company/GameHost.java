@@ -63,10 +63,10 @@ public class GameHost extends Game {
       gameState.addPlayedCard(c2);
       int winner = getRoundWinner(c1, c2);
       gameState.setRoundWinner(winner);
+      gameState.changeStartPlayer();
       redrawGameBoard();
       continueGame();
       gameState.clearPlayedCards();
-      gameState.changeStartPlayer();
     } while (!isGameOver());
 
     redrawGameBoard();
