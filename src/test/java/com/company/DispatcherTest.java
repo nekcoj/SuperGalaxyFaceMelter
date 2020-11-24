@@ -104,18 +104,15 @@ class DispatcherTest {
       while(keepRunning()) {
         // keep doing what this thread should do.
         System.out.println("Running");
-        ;
+
         try {
           Thread.sleep(3L * 1000L);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
-      try {
-        serverHandler.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+
+      serverHandler.close();
       System.out.println("Thread stopped!");
     }
   }

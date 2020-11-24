@@ -19,7 +19,7 @@ class ClientHandlerTest {
     }
 
     @BeforeEach
-    void setup() throws IOException {
+    void setup()  {
         System.out.println("-------- @BeforeEach --------");
     }
 
@@ -101,7 +101,7 @@ class ClientHandlerTest {
   }
 
   @AfterAll
-    static void end() throws IOException {
+    static void end()  {
         System.out.println("======== ENDING ClientHandler TESTS ========");
     }
 
@@ -137,19 +137,16 @@ class ClientHandlerTest {
       while(keepRunning()) {
         // keep doing what this thread should do.
         System.out.println("Running");
-        ;
+
         try {
           Thread.sleep(3L * 1000L);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
-        try {
-            serverHandler.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Thread stopped!");
+
+      serverHandler.close();
+      System.out.println("Thread stopped!");
     }
   }
 }

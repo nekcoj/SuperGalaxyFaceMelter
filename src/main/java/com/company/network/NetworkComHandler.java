@@ -31,7 +31,7 @@ abstract public class NetworkComHandler implements ComHandler {
       oos = new ObjectOutputStream(socket.getOutputStream());
       ois = new ObjectInputStream(socket.getInputStream());
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println(e.getMessage());
     }
   }
 
@@ -41,7 +41,7 @@ abstract public class NetworkComHandler implements ComHandler {
       oos.writeUnshared(packet);
       oos.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println(e.getMessage());
     }
   }
 
@@ -49,18 +49,20 @@ abstract public class NetworkComHandler implements ComHandler {
     Packet packet = null;
     try {
       packet = (Packet)ois.readUnshared();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+    } catch (IOException | ClassNotFoundException e) {
+      System.out.println(e.getMessage());
     }
 
     return packet;
   }
 
-  public void close() throws IOException {
-    oos.close();
-    ois.close();
-    socket.close();
+  public void close()  {
+    try {
+      oos.close();
+      ois.close();
+      socket.close();
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+    }
   }
 }

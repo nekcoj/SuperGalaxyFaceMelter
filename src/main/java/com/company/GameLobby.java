@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class GameLobby {
 
-    private GameLobbyMenu menu;
+    private final GameLobbyMenu menu;
     private Dispatcher dispatcher;
 
     public GameLobby(Boolean runGame) {
@@ -97,18 +97,15 @@ public class GameLobby {
         e.printStackTrace();
       }
       gameHost.runGame();
-      try {
-        serverHandler.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      serverHandler.close();
     }
 
     public void connectToNetworkGame(Object o) {
-        NetworkComHandler comHandler = null;
+        NetworkComHandler comHandler;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter ip to connect to [localhost]: ");
         String ipaddress = scanner.nextLine();
+        System.out.println("Connecting to game...");
         if(ipaddress.isEmpty()) ipaddress = "localhost";
         try {
             comHandler = new ClientHandler(ipaddress);
@@ -122,11 +119,7 @@ public class GameLobby {
         GameClient gameClient = new GameClient(this);
         gameClient.runGame();
 
-      try {
         comHandler.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
     }
 
     public int requestCardFromClient(GameState gameState){

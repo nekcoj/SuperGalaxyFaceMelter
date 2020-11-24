@@ -139,7 +139,7 @@ public class ConsoleRenderer implements Renderer {
 
   public Menu getCardMenu(GameState gameState, int playerToGetCardFrom){
     ArrayList<MenuChoiceBaseClass> cardMenuList = new ArrayList<>();
-    Menu cardMenu = new Menu() {
+    return new Menu() {
       @Override
       public ArrayList<MenuChoiceBaseClass> setInitialMenu() {
         final char[] key = {'1'};
@@ -154,7 +154,6 @@ public class ConsoleRenderer implements Renderer {
         return o;
       }
     };
-    return cardMenu;
   }
 
   @Override

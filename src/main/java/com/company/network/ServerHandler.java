@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ServerHandler extends NetworkComHandler {
 
-  private ServerSocket serverSocket;
+  private final ServerSocket serverSocket;
 
   public ServerHandler() throws IOException {
     super();
@@ -29,9 +29,13 @@ public class ServerHandler extends NetworkComHandler {
   }
 
   @Override
-  public void close() throws IOException {
+  public void close() {
     super.close();
-    serverSocket.close();
+    try {
+      serverSocket.close();
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   @Override
@@ -39,8 +43,7 @@ public class ServerHandler extends NetworkComHandler {
     Packet packet = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
     send(packet);
     packet = receive();
-    String s = (String) packet.getParams()[0];
-    return s;
+    return (String) packet.getParams()[0];
   }
 
   @Override
@@ -63,8 +66,7 @@ public class ServerHandler extends NetworkComHandler {
     packet.cardsInPlayedCards = gameState.getPlayedCards().size();
     send(packet);
     packet = receive();
-    GameState returnState = (GameState) packet.getParams()[0];
-    return returnState;
+    return (GameState) packet.getParams()[0];
   }
 
   @Override
@@ -73,8 +75,7 @@ public class ServerHandler extends NetworkComHandler {
     send(packet);
 
     packet = receive();
-    GameState returnState = (GameState) packet.getParams()[0];
-    return returnState;
+    return (GameState) packet.getParams()[0];
   }
 
   @Override
