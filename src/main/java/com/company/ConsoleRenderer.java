@@ -41,7 +41,6 @@ public class ConsoleRenderer implements Renderer {
           output += "\nWaiting for opponent...";
         }
       } else {
-        System.out.printf("start: %d, current: %d, playertodraw: %d\n", gameState.getStartPlayer(), gameState.getCurrentPlayer(), playerToDraw);
         if (!gameState.isLocalGame() &&
                 ((gameState.getPlayedCards().size() == 0 && gameState.getCurrentPlayer() != playerToDraw ) ||
                 (gameState.getPlayedCards().size() == 1 && gameState.getCurrentPlayer() ==

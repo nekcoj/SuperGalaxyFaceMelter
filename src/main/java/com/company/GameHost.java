@@ -53,10 +53,6 @@ public class GameHost extends Game {
       Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
       gameState.addPlayedCard(c1);
 
-      /*if (!gameState.isLocalGame() && gameState.getStartPlayer() == CLIENT) {
-        gameLobby.renderClient(gameState, Game.CLIENT);
-      }*/
-
       renderStartPlayer();
 
       int index2 = getCardFromSecondPlayer();
