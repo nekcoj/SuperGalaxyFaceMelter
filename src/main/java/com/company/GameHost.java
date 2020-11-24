@@ -52,10 +52,16 @@ public class GameHost extends Game {
       int index1 = getCardFromStartPlayer();
       Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
       gameState.addPlayedCard(c1);
+
+      if (!isLocalGame && gameState.getStartPlayer() == CLIENT) {
+        gameLobby.renderClient(gameState, Game.CLIENT);
+      }
+
       int index2 = getCardFromSecondPlayer();
       Card c2 = gameState.getPlayer(gameState.getCurrentPlayer()).getCard(index2);
       gameState.addPlayedCard(c2);
-      gameState.setRoundWinner(getRoundWinner(c1, c2));
+      int winner = getRoundWinner(c1, c2);
+      gameState.setRoundWinner(winner);
       redrawGameBoard();
       continueGame();
       gameState.clearPlayedCards();
@@ -77,15 +83,9 @@ public class GameHost extends Game {
     }
   }
 
-  // TODO: 2020-11-20 Move keyboard input to rendererererer
   private void continueGame() {
     if (isLocalGame) {
-      System.out.println("Press enter to continue game..");
-      try {
-        System.in.read();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      gameBoard.continueGame();
     }
   }
 

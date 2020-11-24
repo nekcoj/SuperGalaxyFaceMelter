@@ -48,7 +48,6 @@ public class Dispatcher {
     GameState gs = null;
     Card card = null;
     boolean quit = false;
-    System.out.printf("getCommandFromHost: command is %s!\n", p.getCommandType());
 
     switch (p.getCommandType()) {
       case RENDER_CLIENT:
@@ -71,7 +70,6 @@ public class Dispatcher {
       case GET_PLAYER_NAME_FROM_CLIENT:
         String name = renderer.getPlayerName();
         nch.sendPlayerNameToHost(name);
-        System.out.println(name);
         break;
 
       case SEND_CARD_TO_CLIENT:

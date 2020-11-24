@@ -6,6 +6,7 @@ import com.company.utils.MenuChoiceBaseClass;
 import com.company.utils.MenuChoiceFunction;
 import com.company.utils.TextUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -35,6 +36,9 @@ public class ConsoleRenderer implements Renderer {
     } else {
       if (gameState.isRoundOver()) {
         output += generateRoundWinnerRow(gameState);
+        if (gameState.getCurrentPlayer() == Game.HOST) {
+          output += "\nWaiting for player...";
+        }
       } else {
         if (gameState.getCurrentPlayer() == playerToDraw) {
           output += String.format("%s%s",
@@ -49,16 +53,16 @@ public class ConsoleRenderer implements Renderer {
   }
 
   public String generateGameOverRow(GameState gameState) {
-    return String.format("Game Over!\nWinner is %s with the score %d",
+    return String.format("Game Over!\n♠♠♠ Winner is %s with the score %d ♠♠♠",
            TextUtil.pimpString(gameState.getPlayer(gameState.getGameWinner()).getName(), TextUtil.LEVEL_INFO),
             gameState.getPlayer(gameState.getGameWinner()).getScore());
   }
 
   public String generateRoundWinnerRow(GameState gameState) {
     if (gameState.getRoundWinner() == Game.TIE) {
-      return "Round is a tie, both players lose their cards!";
+      return "\nRound is a tie, both players lose their cards!\n";
     }
-    return String.format("Round winner is %s with the current score %d",
+    return String.format("\nRound winner is ♠ %s ♠ with the current score %d\n",
             TextUtil.pimpString(gameState.getPlayer(gameState.getRoundWinner()).getName(), TextUtil.LEVEL_INFO),
             gameState.getPlayer(gameState.getRoundWinner()).getScore());
   }
@@ -154,5 +158,15 @@ public class ConsoleRenderer implements Renderer {
     Scanner scanner = new Scanner(System.in);
     System.out.print("\nEnter name: ");
     return scanner.nextLine();
+  }
+
+  @Override
+  public void continueGame() {
+    System.out.println("Press <Enter> to continue game..");
+    try {
+      System.in.read();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
