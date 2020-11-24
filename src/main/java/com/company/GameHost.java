@@ -50,6 +50,8 @@ public class GameHost extends Game {
     do {
       gameState.setRoundWinner(-1);
       int index1 = getCardFromStartPlayer();
+      if (index1 == -1) break;
+
       Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
       gameState.addPlayedCard(c1);
 
@@ -58,6 +60,8 @@ public class GameHost extends Game {
       }
 
       int index2 = getCardFromSecondPlayer();
+      if (index2 == -1) break;
+
       Card c2 = gameState.getPlayer(gameState.getCurrentPlayer()).getCard(index2);
       gameState.addPlayedCard(c2);
       int winner = getRoundWinner(c1, c2);

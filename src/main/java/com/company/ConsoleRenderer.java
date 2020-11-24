@@ -68,6 +68,10 @@ public class ConsoleRenderer implements Renderer {
   }
 
   public String generateCardsString(ArrayList<Card> cards){
+    if (cards.size() == 0) {
+      return "\n";
+    }
+
     String [][] cardOutput = new String[cards.size()][CARD_HEIGHT];
     for (int i = 0; i < cards.size(); i++){
       var ref = new Object() {

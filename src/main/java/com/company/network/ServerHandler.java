@@ -45,11 +45,15 @@ public class ServerHandler extends NetworkComHandler {
 
   @Override
   public int getCardFromClient(Renderer renderer, GameState gameState) {
+    int card = -1;
+
     Packet packet = new Packet(CommandType.GET_CARD_FROM_CLIENT, new GameState[]{gameState});
     send(packet);
     packet = receive();
-    int card = (int) packet.getParams()[0];
-    gameState = (GameState) packet.getParams()[1];
+    if (packet != null) {
+      card = (int) packet.getParams()[0];
+      gameState = (GameState) packet.getParams()[1];
+    }
     return card;
   }
 
