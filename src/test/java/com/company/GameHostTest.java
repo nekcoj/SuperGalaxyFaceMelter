@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.*;
 import com.company.interfaces.ComHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -98,8 +97,9 @@ class GameHostTest {
     gameHost.dealCardsToHost();
     simulateUserInput("1");
     Card c1 = gameHost.getGameState().getPlayer(0).getCardOnHandAsList().get(0);
-    int c2 = gameHost.getCardFromPlayer1();
-    assertNotNull(c2, "card is null!");
+    int card = gameHost.getCardFromPlayer1();
+    Card c2 = gameHost.getGameState().getPlayer(0).getCard(card);
+    assertNotEquals(-1, card, "incorrect value!");
     assertEquals(c1, c2, "Cards are not the same!");
   }
 

@@ -24,9 +24,10 @@ class ServerHandlerTest{
   @Test
   void getOutputStream() throws IOException {
     System.out.println("-------- getOutputSteam TEST --------");
-    ServerHandler serverHandler = new ServerHandler(12345);
+    ServerHandler serverHandler = new ServerHandler(12347);
+    serverHandler.getStreams();
     System.out.println("ServerHandler in setup: " + serverHandler);
-    assertNotNull(serverHandler.getOutputStream(), "OutputStream returned null!");
+    assertNull(serverHandler.getOutputStream(), "OutputStream returned null!");
     serverHandler.close();
   }
 
@@ -34,8 +35,9 @@ class ServerHandlerTest{
   void getInputStream() throws IOException {
     System.out.println("-------- getInputStream TEST --------");
     ServerHandler serverHandler = new ServerHandler(13246);
+    serverHandler.getStreams();
     System.out.println("ServerHandler in setup: " + serverHandler);
-    assertNotNull(serverHandler.getInputStream(), "InputStream returned null!");
+    assertNull(serverHandler.getInputStream(), "InputStream returned null!");
     serverHandler.close();
   }
 

@@ -54,10 +54,10 @@ class ClientHandlerTest {
     void sendAndReceive() throws IOException {
       System.out.println("-------- sendAndReceive TEST --------");
 
-      MyRunnable myRunnable = new MyRunnable(50001);
+      MyRunnable myRunnable = new MyRunnable(50002);
       Thread thread = new Thread(myRunnable);
       thread.start();
-      ClientHandler clientHandler = new ClientHandler("localhost", 50001);
+      ClientHandler clientHandler = new ClientHandler("localhost", 50002);
 
       Packet p1 = new Packet(CommandType.RENDER_CLIENT, new String[]{"Hej"});
       myRunnable.serverHandler.send(p1);
@@ -75,10 +75,10 @@ class ClientHandlerTest {
   void getPlayerNameFromClient() throws IOException {
     System.out.println("-------- getPlayerNameFromClient TEST --------");
 
-    MyRunnable myRunnable = new MyRunnable(50001);
+    MyRunnable myRunnable = new MyRunnable(50003);
     Thread thread = new Thread(myRunnable);
     thread.start();
-    ClientHandler clientHandler = new ClientHandler("localhost", 50001);
+    ClientHandler clientHandler = new ClientHandler("localhost", 50003);
 
     Packet p1 = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
     myRunnable.serverHandler.send(p1);

@@ -60,8 +60,8 @@ class DispatcherTest {
     simulateUserInput("1");
     clientDispatcher.getCommandFromHost();
     packet = myRunnable.serverHandler.receive();
-    Card c1 = (Card)packet.getParams()[0];
-    assertEquals(5, c1.getPower(), "Incorrect power value!");
+    int c1 = (int)packet.getParams()[0];
+    assertEquals(5, gs.getPlayer(Game.CLIENT).getCard(c1).getPower(), "Incorrect power value!");
 
   }
 

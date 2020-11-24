@@ -11,7 +11,7 @@ abstract public class NetworkComHandler implements ComHandler {
 
   protected static final int PORT = 42069;
 
-  protected Socket socket;
+  protected Socket socket = null;
   protected ObjectOutputStream oos;
   protected ObjectInputStream ois;
 
@@ -27,6 +27,7 @@ abstract public class NetworkComHandler implements ComHandler {
   }
 
   public void getStreams() {
+    if (socket == null) return;
     try {
       oos = new ObjectOutputStream(socket.getOutputStream());
       ois = new ObjectInputStream(socket.getInputStream());
@@ -57,6 +58,7 @@ abstract public class NetworkComHandler implements ComHandler {
   }
 
   public void close()  {
+    if(socket == null) return;
     try {
       oos.close();
       ois.close();
