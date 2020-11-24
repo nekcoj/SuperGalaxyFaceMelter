@@ -37,14 +37,17 @@ public class ConsoleRenderer implements Renderer {
       if (gameState.isRoundOver()) {
         output += generateRoundWinnerRow(gameState);
         if (!gameState.isLocalGame() &&
-                gameState.getCurrentPlayer() != gameState.getStartPlayer()) {
-          output += "\nWaiting for player...HOST";
+                gameState.getCurrentPlayer() != playerToDraw) {
+          output += "\nWaiting for opponent...";
         }
-      } else
-        if (gameState.getPlayedCards().size() == 1 &&
-            !gameState.isLocalGame() &&
-                gameState.getCurrentPlayer() != gameState.getStartPlayer()) {
-          output += "\nWaiting for player...CLIENT";
+      } else {
+        System.out.printf("start: %d, current: %d, playertodraw: %d\n", gameState.getStartPlayer(), gameState.getCurrentPlayer(), playerToDraw);
+        if (!gameState.isLocalGame() &&
+                ((gameState.getPlayedCards().size() == 0 && gameState.getCurrentPlayer() != playerToDraw ) ||
+                (gameState.getPlayedCards().size() == 1 && gameState.getCurrentPlayer() ==
+                        playerToDraw && gameState.getStartPlayer() == gameState.getCurrentPlayer()))) {
+          output += "\nWaiting for opponent...";
+        }
       }
     }
     System.out.println(output);

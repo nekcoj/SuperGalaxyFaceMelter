@@ -41,6 +41,7 @@ public class GameHost extends Game {
   public void runGame() {
     if (!gameState.isLocalGame()) {
       getPlayerNameFromClient();
+      gameLobby.renderClient(gameState, Game.CLIENT);
     }
 
     dealCards();
@@ -52,9 +53,11 @@ public class GameHost extends Game {
       Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
       gameState.addPlayedCard(c1);
 
-      if (!gameState.isLocalGame() && gameState.getStartPlayer() == CLIENT) {
+      /*if (!gameState.isLocalGame() && gameState.getStartPlayer() == CLIENT) {
         gameLobby.renderClient(gameState, Game.CLIENT);
-      }
+      }*/
+
+      renderStartPlayer();
 
       int index2 = getCardFromSecondPlayer();
       if (index2 == -1) break;
@@ -63,10 +66,10 @@ public class GameHost extends Game {
       gameState.addPlayedCard(c2);
       int winner = getRoundWinner(c1, c2);
       gameState.setRoundWinner(winner);
-      gameState.changeStartPlayer();
       redrawGameBoard();
       continueGame();
       gameState.clearPlayedCards();
+      gameState.changeStartPlayer();
     } while (!isGameOver());
 
     redrawGameBoard();
@@ -80,6 +83,14 @@ public class GameHost extends Game {
   private void redrawGameBoard() {
     gameBoard.render(gameState, Game.HOST);
     if (!gameState.isLocalGame()) {
+      gameLobby.renderClient(gameState, Game.CLIENT);
+    }
+  }
+
+  private void renderStartPlayer() {
+    if (gameState.getStartPlayer() == Game.HOST) {
+      gameBoard.render(gameState, Game.HOST);
+    } else {
       gameLobby.renderClient(gameState, Game.CLIENT);
     }
   }
