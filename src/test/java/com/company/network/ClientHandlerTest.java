@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ClientHandlerTest {
-
+    private final String ipaddress = "0.0.0.0";
     @BeforeAll
     static void start(){
         System.out.println("======== STARTING ClientHandler TESTS ========");
@@ -29,7 +29,7 @@ class ClientHandlerTest {
         Thread thread = new Thread(myRunnable);
         thread.start();
         System.out.println("-------- getOutputSteam TEST --------");
-        ClientHandler clientHandler = new ClientHandler("localhost", 50000);
+        ClientHandler clientHandler = new ClientHandler(ipaddress, 50000);
         System.out.println("ServerHandler in setup: " + clientHandler);
         assertNotNull(clientHandler.getOutputStream(), "OutputStream returned null!");
         clientHandler.close();
@@ -43,7 +43,7 @@ class ClientHandlerTest {
       MyRunnable myRunnable = new MyRunnable(50001);
       Thread thread = new Thread(myRunnable);
       thread.start();
-        ClientHandler clientHandler = new ClientHandler("localhost", 50001);
+        ClientHandler clientHandler = new ClientHandler(ipaddress, 50001);
         System.out.println("ServerHandler in setup: " + clientHandler);
         assertNotNull(clientHandler.getInputStream(), "InputStream returned null!");
         clientHandler.close();
@@ -57,7 +57,7 @@ class ClientHandlerTest {
       MyRunnable myRunnable = new MyRunnable(50002);
       Thread thread = new Thread(myRunnable);
       thread.start();
-      ClientHandler clientHandler = new ClientHandler("localhost", 50002);
+      ClientHandler clientHandler = new ClientHandler(ipaddress, 50002);
 
       Packet p1 = new Packet(CommandType.RENDER_CLIENT, new String[]{"Hej"});
       myRunnable.serverHandler.send(p1);
@@ -78,7 +78,7 @@ class ClientHandlerTest {
     MyRunnable myRunnable = new MyRunnable(50003);
     Thread thread = new Thread(myRunnable);
     thread.start();
-    ClientHandler clientHandler = new ClientHandler("localhost", 50003);
+    ClientHandler clientHandler = new ClientHandler(ipaddress, 50003);
 
     Packet p1 = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
     myRunnable.serverHandler.send(p1);

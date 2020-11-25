@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DispatcherTest {
-
+  private final String ipaddress = "0.0.0.0";
   private void simulateUserInput(String data) {
     System.setIn(new ByteArrayInputStream(data.getBytes()));
   }
@@ -42,7 +42,7 @@ class DispatcherTest {
     Thread thread = new Thread(myRunnable);
     thread.start();
     Dispatcher serverDispatcher = new Dispatcher(myRunnable.serverHandler, new ConsoleRenderer());
-    ClientHandler clientHandler = new ClientHandler("localhost", 12345);
+    ClientHandler clientHandler = new ClientHandler(ipaddress, 12345);
     Dispatcher clientDispatcher = new Dispatcher(clientHandler, new ConsoleRenderer());
 
     gs.getPlayer(Game.CLIENT).addCardToHand(card1);
