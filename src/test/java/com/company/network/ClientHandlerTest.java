@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClientHandlerTest {
     private final String IPADRESS = "127.0.0.1";
+    private final long SLEEP_TIME = 500L;
 
     private void simulateUserInput(String data) {
         System.setIn(new ByteArrayInputStream(data.getBytes()));
@@ -42,7 +43,7 @@ class ClientHandlerTest {
         Thread thread = new Thread(myServerRunnable);
         thread.start();
         System.out.println("-------- getOutputSteam TEST --------");
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         ClientHandler clientHandler = new ClientHandler(IPADRESS, 50000);
         System.out.println("ServerHandler in setup: " + clientHandler);
         assertNotNull(clientHandler.getOutputStream(), "OutputStream returned null!");
@@ -57,7 +58,7 @@ class ClientHandlerTest {
       MyServerRunnable myServerRunnable = new MyServerRunnable(50001);
       Thread thread = new Thread(myServerRunnable);
       thread.start();
-      Thread.sleep(200L);
+      Thread.sleep(SLEEP_TIME);
 
       ClientHandler clientHandler = new ClientHandler(IPADRESS, 50001);
         System.out.println("ServerHandler in setup: " + clientHandler);
@@ -83,7 +84,7 @@ class ClientHandlerTest {
         MyServerRunnable myServerRunnable = new MyServerRunnable(50004);
         Thread thread = new Thread(myServerRunnable);
         thread.start();
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         ClientHandler myClientRunnable = new ClientHandler(IPADRESS,50004);
         Dispatcher dispatcher = new Dispatcher(myClientRunnable, renderer);
 
@@ -91,7 +92,7 @@ class ClientHandlerTest {
         simulateUserInput("1");
         Packet p = new Packet(CommandType.GET_CARD_FROM_CLIENT, new GameState[]{gs});
         myServerRunnable.serverHandler.send(p);
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         dispatcher.getCommandFromHost();
         p = myServerRunnable.serverHandler.receive();
         int receivedCard = -1;
@@ -123,14 +124,14 @@ class ClientHandlerTest {
         MyServerRunnable myServerRunnable = new MyServerRunnable(50005);
         Thread thread = new Thread(myServerRunnable);
         thread.start();
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         ClientHandler myClientRunnable = new ClientHandler(IPADRESS,50005);
 
         Dispatcher dispatcher = new Dispatcher(myClientRunnable, renderer);
 
         Packet p = new Packet(CommandType.ADD_TO_CLIENT_VICTORY_PILE, new Object[]{card1, gs});
         myServerRunnable.serverHandler.send(p);
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         dispatcher.getCommandFromHost();
         p = myServerRunnable.serverHandler.receive();
 
@@ -147,9 +148,9 @@ class ClientHandlerTest {
       MyServerRunnable myServerRunnable = new MyServerRunnable(50002);
       Thread thread = new Thread(myServerRunnable);
       thread.start();
-      Thread.sleep(400L);
+      Thread.sleep(SLEEP_TIME);
       ClientHandler clientHandler = new ClientHandler(IPADRESS, 50002);
-      Thread.sleep(400L);
+      Thread.sleep(SLEEP_TIME);
 
       Packet p1 = new Packet(CommandType.RENDER_CLIENT, new String[]{"Hej"});
         System.out.println("serverrunnable: " + myServerRunnable);
@@ -172,7 +173,7 @@ class ClientHandlerTest {
     MyServerRunnable myServerRunnable = new MyServerRunnable(50003);
     Thread thread = new Thread(myServerRunnable);
     thread.start();
-    Thread.sleep(200L);
+    Thread.sleep(SLEEP_TIME);
     ClientHandler clientHandler = new ClientHandler(IPADRESS, 50003);
 
     Packet p1 = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
@@ -217,14 +218,14 @@ class ClientHandlerTest {
         MyServerRunnable myServerRunnable = new MyServerRunnable(50006);
         Thread thread = new Thread(myServerRunnable);
         thread.start();
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         ClientHandler myClientRunnable = new ClientHandler(IPADRESS,50006);
 
         Dispatcher dispatcher = new Dispatcher(myClientRunnable, renderer);
 
         Packet p = new Packet(CommandType.SEND_CARD_TO_CLIENT, new Object[]{cardsToAdd, gs});
         myServerRunnable.serverHandler.send(p);
-        Thread.sleep(200L);
+        Thread.sleep(SLEEP_TIME);
         dispatcher.getCommandFromHost();
         p = myServerRunnable.serverHandler.receive();
 
