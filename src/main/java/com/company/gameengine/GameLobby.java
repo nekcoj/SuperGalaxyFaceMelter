@@ -1,5 +1,10 @@
-package com.company;
+package com.company.gameengine;
 
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
+import com.company.local.LocalGameHandler;
+import com.company.renderer.ConsoleRenderer;
 import com.company.interfaces.ComHandler;
 import com.company.network.ClientHandler;
 import com.company.network.NetworkComHandler;

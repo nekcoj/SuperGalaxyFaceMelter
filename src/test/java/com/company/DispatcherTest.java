@@ -1,5 +1,11 @@
 package com.company;
 
+import com.company.gameengine.Dispatcher;
+import com.company.gameengine.Game;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
+import com.company.renderer.ConsoleRenderer;
 import com.company.network.ClientHandler;
 import com.company.network.CommandType;
 import com.company.network.Packet;

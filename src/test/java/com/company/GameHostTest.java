@@ -1,5 +1,14 @@
 package com.company;
 
+import com.company.gameengine.Dispatcher;
+import com.company.gameengine.Game;
+import com.company.gameengine.GameHost;
+import com.company.gameengine.GameLobby;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
+import com.company.local.LocalGameHandler;
+import com.company.renderer.ConsoleRenderer;
 import com.company.interfaces.ComHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -54,7 +63,7 @@ class GameHostTest {
     gameHost.dealCardsToHost();
     simulateUserInput("1");
     int card = gameHost.getCardFromStartPlayer();
-    assertNotNull(card, "card is null!");
+    assertEquals(card,  1, "card is not 1!");
     System.out.println(card);
   }
 
@@ -64,7 +73,7 @@ class GameHostTest {
     gameHost.dealCardsToClient();
     simulateUserInput("2");
     int card = gameHost.getCardFromSecondPlayer();
-    assertNotNull(card, "card is null!");
+    assertEquals(card,  1, "card is not 1!");
     System.out.println(card);
   }
 
@@ -109,7 +118,7 @@ class GameHostTest {
     simulateUserInput("1");
     gameHost.dealCardsToClient();
     int card = gameHost.getCardFromPlayer2();
-    assertNotNull(card, "card is null!");
+    assertEquals(card,  1, "card is not 1!");
   }
 
   @Test

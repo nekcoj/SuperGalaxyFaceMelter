@@ -1,6 +1,9 @@
 package com.company;
 
-import com.company.*;
+import com.company.gameengine.Game;
+import com.company.gameengine.GameLobby;
+import com.company.gameobjects.GameState;
+import com.company.renderer.ConsoleRenderer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,11 @@
 package com.company.network;
 
-import com.company.*;
+import com.company.gameengine.Dispatcher;
+import com.company.gameengine.Game;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
+import com.company.renderer.ConsoleRenderer;
 import com.company.interfaces.Renderer;
 import com.company.utils.TextUtil;
 import org.junit.jupiter.api.AfterAll;

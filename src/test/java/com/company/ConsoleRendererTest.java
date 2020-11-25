@@ -1,6 +1,10 @@
 package com.company;
 
-import com.company.*;
+import com.company.gameengine.Game;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
+import com.company.renderer.ConsoleRenderer;
 import com.company.utils.TextUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,9 +52,9 @@ class ConsoleRendererTest {
     System.out.println("-------- generateRow Test --------");
     String str = sr.generateRow("<", "!", ">");
     assertEquals(str.length(), ConsoleRenderer.CARD_WIDTH, "Got incorrect row length!");
-    assertTrue(str.charAt(0) == '<', "Wrong character at index 0!");
-    assertTrue(str.charAt(1) == '!', "Wrong character at index 1!");
-    assertTrue(str.charAt(str.length() - 1) == '>', "Wrong character at index .length() - 1!");
+    assertEquals(str.charAt(0), '<', "Wrong character at index 0!");
+    assertEquals(str.charAt(1), '!', "Wrong character at index 1!");
+    assertEquals(str.charAt(str.length() - 1), '>', "Wrong character at index .length() - 1!");
   }
 
   @Test

@@ -1,7 +1,7 @@
 package com.company.network;
 
-import com.company.Card;
-import com.company.GameState;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
 import com.company.interfaces.Renderer;
 
 import java.io.IOException;

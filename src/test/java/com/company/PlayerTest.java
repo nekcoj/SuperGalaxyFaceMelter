@@ -1,6 +1,7 @@
 package com.company;
 
-import com.company.*;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.Player;
 import org.junit.jupiter.api.*;
 import java.util.ArrayList;
 
