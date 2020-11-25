@@ -147,7 +147,7 @@ class ClientHandlerTest {
       MyServerRunnable myServerRunnable = new MyServerRunnable(50002);
       Thread thread = new Thread(myServerRunnable);
       thread.start();
-      Thread.sleep(200L);
+      Thread.sleep(400L);
       ClientHandler clientHandler = new ClientHandler(IPADRESS, 50002);
 
       Packet p1 = new Packet(CommandType.RENDER_CLIENT, new String[]{"Hej"});

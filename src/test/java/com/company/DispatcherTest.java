@@ -48,7 +48,7 @@ class DispatcherTest {
     Thread thread = new Thread(myRunnable);
     thread.start();
     Dispatcher serverDispatcher = new Dispatcher(myRunnable.serverHandler, new ConsoleRenderer());
-    Thread.sleep(200L);
+    Thread.sleep(400L);
 
     ClientHandler clientHandler = new ClientHandler(ipaddress, 12345);
     Dispatcher clientDispatcher = new Dispatcher(clientHandler, new ConsoleRenderer());

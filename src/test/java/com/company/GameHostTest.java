@@ -71,7 +71,7 @@ class GameHostTest {
   void getCardFromSecondPlayerTest() {
     System.out.println("-------- getCardFromSecondPlayer Test --------");
     gameHost.dealCardsToClient();
-    simulateUserInput("2");
+    simulateUserInput("1");
     int card = gameHost.getCardFromSecondPlayer();
     assertEquals(card,  1, "card is not 1!");
     System.out.println(card);
