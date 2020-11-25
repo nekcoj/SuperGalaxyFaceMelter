@@ -86,6 +86,9 @@ class ClientHandlerTest {
     ClientHandler clientHandler = new ClientHandler(ipaddress, 50003);
 
     Packet p1 = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
+    System.out.println("packet:" + p1);
+    System.out.println("myRunnable:" + myRunnable);
+    System.out.println("serverHandler:" + myRunnable.serverHandler);
     myRunnable.serverHandler.send(p1);
 
     Packet p2 = clientHandler.receive();
