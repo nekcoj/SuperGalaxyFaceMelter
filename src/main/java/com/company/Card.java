@@ -2,7 +2,9 @@ package com.company;
 
 import com.company.utils.TextUtil;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
 
     private int power;
     private String name;
@@ -40,11 +42,7 @@ public class Card {
     }
 
     public void setCurrentPower(int currentPower) {
-        if (currentPower < 0) {
-            this.currentPower = 0;
-        } else {
-            this.currentPower = currentPower;
-        }
+        this.currentPower = Math.max(currentPower, 0);
     }
     public boolean isDead() {
         return currentPower == 0;

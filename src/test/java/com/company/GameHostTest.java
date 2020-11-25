@@ -1,6 +1,5 @@
-package company;
+package com.company;
 
-import com.company.*;
 import com.company.interfaces.ComHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,13 +33,13 @@ class GameHostTest {
     ArrayList<Player> players = new ArrayList<>();
     players.add(p1);
     players.add(p2);
-    gameState = new GameState(1, players);
+    gameState = new GameState(1, players, true);
     ConsoleRenderer renderer = new ConsoleRenderer();
     ComHandler comHandler = new LocalGameHandler();
     Dispatcher dispatcher = new Dispatcher(comHandler, renderer);
     GameLobby gameLobby = new GameLobby(false);
     gameLobby.setDispatcher(dispatcher);
-    gameHost = new GameHost(gameLobby, new ConsoleRenderer(), gameState, 5, true);
+    gameHost = new GameHost(gameLobby, new ConsoleRenderer(), gameState, 5);
   }
 
   @Test
@@ -54,7 +53,7 @@ class GameHostTest {
     System.out.println("-------- getCardFromStartPlayer Test --------");
     gameHost.dealCardsToHost();
     simulateUserInput("1");
-    Card card = gameHost.getCardFromStartPlayer();
+    int card = gameHost.getCardFromStartPlayer();
     assertNotNull(card, "card is null!");
     System.out.println(card);
   }
@@ -64,7 +63,7 @@ class GameHostTest {
     System.out.println("-------- getCardFromSecondPlayer Test --------");
     gameHost.dealCardsToClient();
     simulateUserInput("2");
-    Card card = gameHost.getCardFromSecondPlayer();
+    int card = gameHost.getCardFromSecondPlayer();
     assertNotNull(card, "card is null!");
     System.out.println(card);
   }
@@ -98,8 +97,9 @@ class GameHostTest {
     gameHost.dealCardsToHost();
     simulateUserInput("1");
     Card c1 = gameHost.getGameState().getPlayer(0).getCardOnHandAsList().get(0);
-    Card c2 = gameHost.getCardFromPlayer1();
-    assertNotNull(c2, "card is null!");
+    int card = gameHost.getCardFromPlayer1();
+    Card c2 = gameHost.getGameState().getPlayer(0).getCard(card);
+    assertNotEquals(-1, card, "incorrect value!");
     assertEquals(c1, c2, "Cards are not the same!");
   }
 
@@ -108,7 +108,7 @@ class GameHostTest {
     System.out.println("-------- getCardFromPlayer2 Test --------");
     simulateUserInput("1");
     gameHost.dealCardsToClient();
-    Card card = gameHost.getCardFromPlayer2();
+    int card = gameHost.getCardFromPlayer2();
     assertNotNull(card, "card is null!");
   }
 

@@ -1,14 +1,18 @@
 package com.company;
 
 import com.company.interfaces.ComHandler;
+import com.company.network.ClientHandler;
+import com.company.network.NetworkComHandler;
+import com.company.network.ServerHandler;
 import com.company.utils.GameLobbyMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameLobby {
 
-    private GameLobbyMenu menu;
+    private final GameLobbyMenu menu;
     private Dispatcher dispatcher;
 
     public GameLobby(Boolean runGame) {
@@ -27,13 +31,12 @@ public class GameLobby {
         players.add(player1);
         players.add(player2);
         GameState gs = new GameState(
-                inputGameSettings("Enter points to win", 10, 20, 15), players);
+                inputGameSettings("Enter points to win", 10, 20, 15), players, true);
         ComHandler comHandler = new LocalGameHandler();
         ConsoleRenderer renderer = new ConsoleRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, gs,
-                inputGameSettings("Enter amount of cards on hand", 1, 8, 5), true);
-//        GameClient client = new GameClient(this, renderer, gs);
+                inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
         host.runGame();
     }
 
@@ -69,21 +72,62 @@ public class GameLobby {
     }
 
     public void startNetworkGame(Object o) {
-        // Create a GameHost
-        System.out.println("i startNetworkGame");
+        Player player1 = new Player(inputPlayerName("player 1"));
+        Player player2 = new Player("Player 2");
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        GameState gameState = new GameState(
+            inputGameSettings("Enter points to win", 10, 20, 15), players, false);
+        ConsoleRenderer renderer = new ConsoleRenderer();
+        ServerHandler serverHandler = null;
+        try {
+          serverHandler = new ServerHandler();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        dispatcher = new Dispatcher(serverHandler, renderer);
+
+        GameHost gameHost = new GameHost(this, renderer, gameState,
+            inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
+      try {
+        assert serverHandler != null;
+        serverHandler.startServer();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      gameHost.runGame();
+      serverHandler.close();
     }
 
     public void connectToNetworkGame(Object o) {
-        // Create a GameClient
-        System.out.println("i connectToNetworkGame");
+        NetworkComHandler comHandler;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter ip to connect to [localhost]: ");
+        String ipaddress = scanner.nextLine();
+        System.out.println("Connecting to game...");
+        if(ipaddress.isEmpty()) ipaddress = "localhost";
+        try {
+            comHandler = new ClientHandler(ipaddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        ConsoleRenderer renderer = new ConsoleRenderer();
+        dispatcher = new Dispatcher(comHandler, renderer);
+        GameClient gameClient = new GameClient(this);
+        gameClient.runGame();
+
+        comHandler.close();
     }
 
-    public Card requestCardFromClient(GameState gameState){
+    public int requestCardFromClient(GameState gameState){
        return dispatcher.getCardFromClient(gameState);
     }
 
-    public void addToClientVictoryPile(Card cardToClient, GameState gameState){
-        dispatcher.addToClientVictoryPile(cardToClient, gameState);
+    public GameState addToClientVictoryPile(Card cardToClient, GameState gameState){
+       return dispatcher.addToClientVictoryPile(cardToClient, gameState);
     }
 
     public GameState sendCardToClient(ArrayList<Card> cardsToClient, GameState gameState){
@@ -92,5 +136,17 @@ public class GameLobby {
 
     public void renderClient(GameState gs, int playerToDraw){
         dispatcher.renderClient(gs, playerToDraw);
+    }
+
+    public String getPlayerNameFromClient() {
+        return dispatcher.getPlayerNameFromClient();
+    }
+
+    public boolean getCommandFromHost() {
+        return dispatcher.getCommandFromHost();
+    }
+
+    public void sendGameOver(){
+      dispatcher.sendGameOver();
     }
 }

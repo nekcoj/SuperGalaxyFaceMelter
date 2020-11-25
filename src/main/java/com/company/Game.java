@@ -6,7 +6,6 @@ public class Game {
     public static final byte HOST = 0;
     public static final byte CLIENT = 1;
     public static final int TIE = 2;
-    public static final int PLAYER_COUNT = 2;
 
     protected GameLobby gameLobby;
     protected Renderer gameBoard;

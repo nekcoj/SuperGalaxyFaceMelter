@@ -1,4 +1,4 @@
-package company;
+package com.company;
 
 import com.company.GameLobby;
 import org.junit.jupiter.api.Assertions;

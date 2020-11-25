@@ -1,13 +1,15 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameState {
-  private ArrayList<Card> playedCards = new ArrayList<>();
+public class GameState implements Serializable {
   private int pointsToWin;
   private ArrayList<Player> players = new ArrayList<>();
+  private final ArrayList<Card> playedCards = new ArrayList<>();
   private int startPlayer = 0;
   private int currentPlayer = 0;
+  private boolean isLocalGame = false;
 
   // -1: game still going,
   //  0: host (player 1) won,
@@ -17,11 +19,16 @@ public class GameState {
   private int roundWinner = -1;
 
   public GameState() {
-    }
+  }
 
-  public GameState(int pointsToWin, ArrayList<Player> players) {
-    this.pointsToWin = pointsToWin;
+  public GameState(int pointsToWin, ArrayList<Player> players, boolean isLocalGame) {
     this.players = players;
+    this.pointsToWin = pointsToWin;
+    this.isLocalGame = isLocalGame;
+  }
+
+  public boolean isLocalGame() {
+    return isLocalGame;
   }
 
   public int getCurrentPlayer() {

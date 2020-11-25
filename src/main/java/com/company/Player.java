@@ -1,15 +1,13 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
 
   private String name;
-  private ArrayList<Card> victoryPile = new ArrayList<>();
-  private ArrayList<Card> cardsOnHand = new ArrayList<>();
-
-  public Player(){}
-
+  private final ArrayList<Card> victoryPile = new ArrayList<>();
+  private final ArrayList<Card> cardsOnHand = new ArrayList<>();
 
   public Player(String name){
     this.name = name;
@@ -28,7 +26,7 @@ public class Player {
   }
 
   public Card getCard(int selectedCard){
-    return selectedCard != 0 && selectedCard <= cardsOnHand.size() ? cardsOnHand.remove(selectedCard-1) : null;
+    return selectedCard != 0 && selectedCard <= cardsOnHand.size() ? cardsOnHand.get(selectedCard-1) : null;
   }
 
   public boolean addToVictoryPile(Card wonCard){
@@ -47,4 +45,7 @@ public class Player {
     return this.cardsOnHand.add(card);
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
 }

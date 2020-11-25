@@ -2,10 +2,9 @@ package com.company;
 
 import com.company.interfaces.Renderer;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class GameHost extends Game {
 
@@ -21,14 +20,12 @@ public class GameHost extends Game {
     add(new CardSettings(9, "Radiated zombie", 4));
     add(new CardSettings(10, "Super Galaxy Face Melter", 2));
   }};
-  private final boolean isLocalGame;
   private final Deck deck = new Deck(cardSettings);
   private final int handSize;
 
-  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize, boolean isLocalGame) {
+  public GameHost(GameLobby gameLobby, Renderer renderer, GameState gameState, int handSize) {
     super(gameLobby, renderer, gameState);
     this.handSize = handSize;
-    this.isLocalGame = isLocalGame;
   }
 
   /**
@@ -42,14 +39,29 @@ public class GameHost extends Game {
    *      Byt startspelare -> gameState.changeStartPlayer()
    */
   public void runGame() {
+    if (!gameState.isLocalGame()) {
+      getPlayerNameFromClient();
+      gameLobby.renderClient(gameState, Game.CLIENT);
+    }
+
     dealCards();
     do {
       gameState.setRoundWinner(-1);
-      Card card1 = getCardFromStartPlayer();
-      gameState.addPlayedCard(card1);
-      Card card2 = getCardFromSecondPlayer();
-      gameState.addPlayedCard(card2);
-      gameState.setRoundWinner(getRoundWinner(card1, card2));
+      int index1 = getCardFromStartPlayer();
+      if (index1 == -1) break;
+
+      Card c1 = gameState.getPlayer(gameState.getStartPlayer()).getCard(index1);
+      gameState.addPlayedCard(c1);
+
+      renderStartPlayer();
+
+      int index2 = getCardFromSecondPlayer();
+      if (index2 == -1) break;
+
+      Card c2 = gameState.getPlayer(gameState.getCurrentPlayer()).getCard(index2);
+      gameState.addPlayedCard(c2);
+      int winner = getRoundWinner(c1, c2);
+      gameState.setRoundWinner(winner);
       redrawGameBoard();
       continueGame();
       gameState.clearPlayedCards();
@@ -57,21 +69,31 @@ public class GameHost extends Game {
     } while (!isGameOver());
 
     redrawGameBoard();
+    gameLobby.sendGameOver();
+  }
+
+  private void getPlayerNameFromClient() {
+    gameState.getPlayer(Game.CLIENT).setName(gameLobby.getPlayerNameFromClient());
   }
 
   private void redrawGameBoard() {
     gameBoard.render(gameState, Game.HOST);
-    if (!isLocalGame) {
+    if (!gameState.isLocalGame()) {
+      gameLobby.renderClient(gameState, Game.CLIENT);
+    }
+  }
+
+  private void renderStartPlayer() {
+    if (gameState.getStartPlayer() == Game.HOST) {
+      gameBoard.render(gameState, Game.HOST);
+    } else {
       gameLobby.renderClient(gameState, Game.CLIENT);
     }
   }
 
   private void continueGame() {
-    System.out.println("Press enter to continue game..");
-    try {
-      System.in.read();
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (gameState.isLocalGame()) {
+      gameBoard.continueGame();
     }
   }
 
@@ -80,16 +102,18 @@ public class GameHost extends Game {
    * Är spelare1 först? Begär från den egna spelare direkt
    * Annars, begär kort från klienten via gameLobby
    *
+   * @return an integer with the selected card
    */
-  public Card getCardFromStartPlayer() {
+  public int getCardFromStartPlayer() {
     return gameState.getStartPlayer() == HOST ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
   /**
    *  Är spelare1 andraspelaren? Begär från den egna spelare direkt
    *  Annars, begär kort från klienten via gameLobby
+   * @return an integer with the selected card
    */
-  public Card getCardFromSecondPlayer() {
+  public int getCardFromSecondPlayer() {
     return gameState.getStartPlayer() == CLIENT ? getCardFromPlayer1() : getCardFromPlayer2();
   }
 
@@ -111,23 +135,34 @@ public class GameHost extends Game {
   }
 
   public void finalizingRound(int winner, Card card1, Card card2) {
-
+    gameState.getPlayer(gameState.getStartPlayer()).getCardOnHandAsList().remove(card1);
+    gameState.getPlayer(gameState.getCurrentPlayer()).getCardOnHandAsList().remove(card2);
     if (winner >= 0) {
       if (winner == gameState.getStartPlayer()) {
         handleWinnerCardForStartPlayer(winner, card1, card2);
-      } else {
+      } else if( winner == gameState.getCurrentPlayer() ) {
         handleWinnerCardForSecondPlayer(winner, card2, card1);
       }
 
-      if (winner == HOST) {
-        gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
-      } else {
+      //Deal new card to LOSER, if TIE both players receive a new card.
+      switch (winner) {
+        case HOST:
+          gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+          break;
 
-        gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+        case CLIENT:
+          gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+          break;
+
+        case TIE:
+          gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
+          gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
+          break;
+
+        default:
+          System.out.println("Wrong winner state!");
+          break;
       }
-    } else {
-      gameState.getPlayer(HOST).addCardToHand(deck.getTopCard());
-      gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(deck.getTopCard())), gameState);
     }
   }
 
@@ -154,9 +189,9 @@ public class GameHost extends Game {
   }
 
   public void handleWinnerCardForPlayer2(Card card1, Card card2){
-    gameLobby.addToClientVictoryPile(card2, gameState);
+    gameState = gameLobby.addToClientVictoryPile(card2, gameState);
     card1.decreasePower(card2.getCurrentPower());
-    gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(card1)), gameState);
+    gameState = gameLobby.sendCardToClient(new ArrayList<>(Collections.singletonList(card1)), gameState);
   }
 
   public boolean isGameOver() {
@@ -171,14 +206,14 @@ public class GameHost extends Game {
     return false;
   }
 
-  public Card getCardFromPlayer1() {
+  public int getCardFromPlayer1() {
     //be den lokala spelaren om ett kort
     gameState.setCurrentPlayer(Game.HOST);
     gameBoard.render(gameState, Game.HOST);
     return gameBoard.getCard(gameState, Game.HOST);
   }
 
-  public Card getCardFromPlayer2() {
+  public int getCardFromPlayer2() {
     gameState.setCurrentPlayer(Game.CLIENT);
     return gameLobby.requestCardFromClient(gameState);
   }
