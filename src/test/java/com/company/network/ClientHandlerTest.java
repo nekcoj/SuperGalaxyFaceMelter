@@ -149,8 +149,11 @@ class ClientHandlerTest {
       thread.start();
       Thread.sleep(400L);
       ClientHandler clientHandler = new ClientHandler(IPADRESS, 50002);
+      Thread.sleep(400L);
 
       Packet p1 = new Packet(CommandType.RENDER_CLIENT, new String[]{"Hej"});
+        System.out.println("serverrunnable: " + myServerRunnable);
+        System.out.println("serverrunnable.serverhandler: " + myServerRunnable.serverHandler);
       myServerRunnable.serverHandler.send(p1);
 
       Packet p2 = clientHandler.receive();
