@@ -98,6 +98,7 @@ class ClientHandlerTest {
         assertEquals(card1, card, "Wrong card!");
         assertEquals(1, receivedCard, "received card number not 1!");
         assertNotEquals(-1, receivedCard, "Wrong card!");
+        myClientRunnable.close();
         myServerRunnable.doStop();
     }
 
@@ -189,12 +190,49 @@ class ClientHandlerTest {
     myServerRunnable.doStop();
   }
 
+    @Test
+    void sendCardToClient() throws InterruptedException, IOException {
+
+        System.out.println("-------- sendCardToClient TEST --------");
+
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+        ArrayList<Player> players  = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        Card card1 = new Card(5, "Angry teacher");
+        ArrayList<Card> cardsToAdd = new ArrayList<>();
+        cardsToAdd.add(card1);
+        GameState gs = new GameState(10, players, false);
+        Renderer renderer = new ConsoleRenderer();
+
+        MyServerRunnable myServerRunnable = new MyServerRunnable(50006);
+        Thread thread = new Thread(myServerRunnable);
+        thread.start();
+        Thread.sleep(200L);
+        ClientHandler myClientRunnable = new ClientHandler(IPADRESS,50006);
+
+        Dispatcher dispatcher = new Dispatcher(myClientRunnable, renderer);
+
+        Packet p = new Packet(CommandType.SEND_CARD_TO_CLIENT, new Object[]{cardsToAdd, gs});
+        myServerRunnable.serverHandler.send(p);
+        Thread.sleep(200L);
+        dispatcher.getCommandFromHost();
+        p = myServerRunnable.serverHandler.receive();
+
+        gs = (GameState) p.getParams()[0];
+
+        assertEquals(card1, gs.getPlayer(Game.CLIENT).getCard(0), "Cards doesn't match!");
+        myServerRunnable.doStop();
+
+    }
+
   @AfterAll
     static void end()  {
         System.out.println("======== ENDING ClientHandler TESTS ========");
     }
 
-  public class MyServerRunnable implements Runnable {
+    public class MyServerRunnable implements Runnable {
 
     int port;
     ServerHandler serverHandler = null;
