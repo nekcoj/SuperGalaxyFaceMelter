@@ -24,11 +24,12 @@ class ClientHandlerTest {
     }
 
     @Test
-    void getOutputStream() throws IOException {
+    void getOutputStream() throws IOException, InterruptedException {
         MyRunnable myRunnable = new MyRunnable(50000);
         Thread thread = new Thread(myRunnable);
         thread.start();
         System.out.println("-------- getOutputSteam TEST --------");
+        Thread.sleep(200L);
         ClientHandler clientHandler = new ClientHandler(ipaddress, 50000);
         System.out.println("ServerHandler in setup: " + clientHandler);
         assertNotNull(clientHandler.getOutputStream(), "OutputStream returned null!");
@@ -37,13 +38,15 @@ class ClientHandlerTest {
     }
 
     @Test
-    void getInputStream() throws IOException {
+    void getInputStream() throws IOException, InterruptedException {
       System.out.println("-------- getInputStream TEST --------");
 
       MyRunnable myRunnable = new MyRunnable(50001);
       Thread thread = new Thread(myRunnable);
       thread.start();
-        ClientHandler clientHandler = new ClientHandler(ipaddress, 50001);
+      Thread.sleep(200L);
+
+      ClientHandler clientHandler = new ClientHandler(ipaddress, 50001);
         System.out.println("ServerHandler in setup: " + clientHandler);
         assertNotNull(clientHandler.getInputStream(), "InputStream returned null!");
         clientHandler.close();
@@ -51,12 +54,13 @@ class ClientHandlerTest {
     }
 
     @Test
-    void sendAndReceive() throws IOException {
+    void sendAndReceive() throws IOException, InterruptedException {
       System.out.println("-------- sendAndReceive TEST --------");
 
       MyRunnable myRunnable = new MyRunnable(50002);
       Thread thread = new Thread(myRunnable);
       thread.start();
+      Thread.sleep(200L);
       ClientHandler clientHandler = new ClientHandler(ipaddress, 50002);
 
       Packet p1 = new Packet(CommandType.RENDER_CLIENT, new String[]{"Hej"});
@@ -72,12 +76,13 @@ class ClientHandlerTest {
     }
 
   @Test
-  void getPlayerNameFromClient() throws IOException {
+  void getPlayerNameFromClient() throws IOException, InterruptedException {
     System.out.println("-------- getPlayerNameFromClient TEST --------");
 
     MyRunnable myRunnable = new MyRunnable(50003);
     Thread thread = new Thread(myRunnable);
     thread.start();
+    Thread.sleep(200L);
     ClientHandler clientHandler = new ClientHandler(ipaddress, 50003);
 
     Packet p1 = new Packet(CommandType.GET_PLAYER_NAME_FROM_CLIENT, null);
@@ -126,7 +131,7 @@ class ClientHandlerTest {
 
     @Override
     public void run() {
-
+      System.out.println("MyRunnable in run, Dispatcher test");
       try {
         serverHandler = new ServerHandler(port);
         serverHandler.startServer();

@@ -29,7 +29,7 @@ class DispatcherTest {
   }
 
   @Test
-  void getCommandFromHost() throws IOException {
+  void getCommandFromHost() throws IOException, InterruptedException {
     Player p1 = new Player("Player 1");
     Player p2 = new Player("Player 2");
     ArrayList<Player> players  = new ArrayList<>();
@@ -42,6 +42,8 @@ class DispatcherTest {
     Thread thread = new Thread(myRunnable);
     thread.start();
     Dispatcher serverDispatcher = new Dispatcher(myRunnable.serverHandler, new ConsoleRenderer());
+    Thread.sleep(200L);
+
     ClientHandler clientHandler = new ClientHandler(ipaddress, 12345);
     Dispatcher clientDispatcher = new Dispatcher(clientHandler, new ConsoleRenderer());
 
@@ -93,7 +95,7 @@ class DispatcherTest {
 
     @Override
     public void run() {
-
+      System.out.println("MyRunnable in run, Dispatcher test");
       try {
         serverHandler = new ServerHandler(port);
         serverHandler.startServer();
