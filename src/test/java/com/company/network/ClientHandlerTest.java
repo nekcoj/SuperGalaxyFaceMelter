@@ -222,9 +222,10 @@ class ClientHandlerTest {
 
         gs = (GameState) p.getParams()[0];
 
-        assertEquals(card1, gs.getPlayer(Game.CLIENT).getCard(0), "Cards doesn't match!");
+        assertEquals(card1.getName(), gs.getPlayer(Game.CLIENT).getCard(1).getName(), "That card's name doesn't match!");
+        assertEquals(card1.getPower(), gs.getPlayer(Game.CLIENT).getCard(1).getPower(), "That card's power doesn't match!");
         myServerRunnable.doStop();
-
+        myClientRunnable.close();
     }
 
   @AfterAll
