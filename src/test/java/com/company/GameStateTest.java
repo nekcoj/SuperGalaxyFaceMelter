@@ -1,7 +1,9 @@
 package com.company;
 
-import com.company.*;
-
+import com.company.gameengine.Game;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

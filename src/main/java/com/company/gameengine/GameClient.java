@@ -1,4 +1,4 @@
-package com.company;
+package com.company.gameengine;
 
 public class GameClient extends Game {
     public GameClient(GameLobby gameLobby) {

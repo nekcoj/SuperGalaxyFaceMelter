@@ -1,4 +1,4 @@
-package com.company;
+package com.company.gameobjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;

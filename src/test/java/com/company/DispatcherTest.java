@@ -1,5 +1,11 @@
 package com.company;
 
+import com.company.gameengine.Dispatcher;
+import com.company.gameengine.Game;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
+import com.company.gameobjects.Player;
+import com.company.renderer.ConsoleRenderer;
 import com.company.network.ClientHandler;
 import com.company.network.CommandType;
 import com.company.network.Packet;
@@ -42,7 +48,7 @@ class DispatcherTest {
     Thread thread = new Thread(myRunnable);
     thread.start();
     Dispatcher serverDispatcher = new Dispatcher(myRunnable.serverHandler, new ConsoleRenderer());
-    Thread.sleep(200L);
+    Thread.sleep(400L);
 
     ClientHandler clientHandler = new ClientHandler(ipaddress, 12345);
     Dispatcher clientDispatcher = new Dispatcher(clientHandler, new ConsoleRenderer());

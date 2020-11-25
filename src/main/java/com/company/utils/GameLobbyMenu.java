@@ -1,13 +1,13 @@
 package com.company.utils;
 
-import com.company.GameLobby;
+import com.company.gameengine.GameLobby;
 
 import java.util.ArrayList;
 
 public class GameLobbyMenu extends Menu {
 
-    private ArrayList<MenuChoiceBaseClass> mainMenu = new ArrayList<MenuChoiceBaseClass>();
-    private ArrayList<MenuChoiceBaseClass> networkGameMenu = new ArrayList<MenuChoiceBaseClass>();
+    private ArrayList<MenuChoiceBaseClass> mainMenu = new ArrayList<>();
+    private ArrayList<MenuChoiceBaseClass> networkGameMenu = new ArrayList<>();
 
     public GameLobbyMenu(GameLobby p){
         mainMenu.add(new MenuChoiceConsumer("Start a local game", '1', p::startLocalGame));

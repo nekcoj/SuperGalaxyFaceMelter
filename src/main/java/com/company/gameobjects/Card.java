@@ -1,4 +1,4 @@
-package com.company;
+package com.company.gameobjects;
 
 import com.company.utils.TextUtil;
 

@@ -1,11 +1,9 @@
 package com.company;
 
-import com.company.GameLobby;
+import com.company.gameengine.GameLobby;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameLobbyTest {
 

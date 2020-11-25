@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.gameobjects.Card;
+import com.company.gameobjects.CardSettings;
+import com.company.gameobjects.Deck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

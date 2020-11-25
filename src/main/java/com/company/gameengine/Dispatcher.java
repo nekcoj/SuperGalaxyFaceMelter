@@ -1,5 +1,7 @@
-package com.company;
+package com.company.gameengine;
 
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
 import com.company.interfaces.ComHandler;
 import com.company.interfaces.Renderer;
 import com.company.network.ClientHandler;

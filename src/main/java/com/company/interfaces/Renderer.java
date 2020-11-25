@@ -1,6 +1,6 @@
 package com.company.interfaces;
 
-import com.company.GameState;
+import com.company.gameobjects.GameState;
 
 public interface Renderer {
   void continueGame();

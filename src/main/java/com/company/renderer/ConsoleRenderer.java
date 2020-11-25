@@ -1,5 +1,8 @@
-package com.company;
+package com.company.renderer;
 
+import com.company.gameengine.Game;
+import com.company.gameobjects.Card;
+import com.company.gameobjects.GameState;
 import com.company.interfaces.Renderer;
 import com.company.utils.Menu;
 import com.company.utils.MenuChoiceBaseClass;
