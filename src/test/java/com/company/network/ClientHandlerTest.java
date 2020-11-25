@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ClientHandlerTest {
-    private final String ipaddress = "0.0.0.0";
+    private final String ipaddress = "127.0.0.1";
     @BeforeAll
     static void start(){
         System.out.println("======== STARTING ClientHandler TESTS ========");

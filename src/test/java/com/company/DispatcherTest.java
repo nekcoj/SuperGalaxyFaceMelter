@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DispatcherTest {
-  private final String ipaddress = "0.0.0.0";
+  private final String ipaddress = "127.0.0.1";
   private void simulateUserInput(String data) {
     System.setIn(new ByteArrayInputStream(data.getBytes()));
   }
