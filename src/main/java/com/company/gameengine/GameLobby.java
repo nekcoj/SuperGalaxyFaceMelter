@@ -17,6 +17,13 @@ import java.util.Scanner;
 
 public class GameLobby {
 
+    public static final int MIN_POINTS_TO_WIN = 10;
+    public static final int MAX_POINTS_TO_WIN = 50;
+    public static final int DEF_POINTS_TO_WIN = 15;
+    public static final int MIN_CARDS_ON_HAND = 3;
+    public static final int MAX_CARDS_ON_HAND = 8;
+    public static final int DEF_CARDS_ON_HAND = 5;
+
     private final GameLobbyMenu menu;
     private Dispatcher dispatcher;
 
@@ -36,12 +43,14 @@ public class GameLobby {
         players.add(player1);
         players.add(player2);
         GameState gs = new GameState(
-                inputGameSettings("Enter points to win", 10, 20, 15), players, true);
+                inputGameSettings("Enter points to win",
+                    MIN_POINTS_TO_WIN, MAX_POINTS_TO_WIN, DEF_POINTS_TO_WIN), players, true);
         ComHandler comHandler = new LocalGameHandler();
         ConsoleRenderer renderer = new ConsoleRenderer();
         dispatcher = new Dispatcher(comHandler, renderer);
         GameHost host = new GameHost(this, renderer, gs,
-                inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
+                inputGameSettings("Enter amount of cards on hand",
+                    MIN_CARDS_ON_HAND, MAX_CARDS_ON_HAND, DEF_CARDS_ON_HAND));
         host.runGame();
     }
 
@@ -83,7 +92,8 @@ public class GameLobby {
         players.add(player1);
         players.add(player2);
         GameState gameState = new GameState(
-            inputGameSettings("Enter points to win", 10, 20, 15), players, false);
+            inputGameSettings("Enter points to win",
+                MIN_POINTS_TO_WIN, MAX_POINTS_TO_WIN, DEF_POINTS_TO_WIN), players, false);
         ConsoleRenderer renderer = new ConsoleRenderer();
         ServerHandler serverHandler = null;
         try {
@@ -94,7 +104,8 @@ public class GameLobby {
         dispatcher = new Dispatcher(serverHandler, renderer);
 
         GameHost gameHost = new GameHost(this, renderer, gameState,
-            inputGameSettings("Enter amount of cards on hand", 1, 8, 5));
+            inputGameSettings("Enter amount of cards on hand",
+                MIN_CARDS_ON_HAND, MAX_CARDS_ON_HAND, DEF_CARDS_ON_HAND));
       try {
         assert serverHandler != null;
         serverHandler.startServer();
