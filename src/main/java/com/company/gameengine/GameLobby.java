@@ -23,7 +23,7 @@ public class GameLobby {
     public static final int MIN_CARDS_ON_HAND = 3;
     public static final int MAX_CARDS_ON_HAND = 8;
     public static final int DEF_CARDS_ON_HAND = 5;
-    
+
     private final GameLobbyMenu menu;
     private Dispatcher dispatcher;
 
